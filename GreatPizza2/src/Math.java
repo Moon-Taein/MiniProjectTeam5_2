@@ -15,4 +15,9 @@ public class Math {
 	// 조원4 나누기
 
 	// 조원5 나누기
+	
+	// 청운2
+	public int name(int a, int b) {
+		return a + b;
+	}
 }
