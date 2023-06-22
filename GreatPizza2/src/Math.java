@@ -16,8 +16,13 @@ public class Math {
 		return a / b ;
 	}
 
-	// 조원5 나누기
+	// 청운2
+	public int name(int a, int b) {
+		return a + b;
+ 
+  	// 조원5 나누기
 	public void printHello() {
 		System.out.println("Hello Team5~");
+
 	}
 }
