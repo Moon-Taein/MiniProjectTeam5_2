@@ -15,4 +15,7 @@ public class Math {
 	// 조원4 나누기
 
 	// 조원5 나누기
+	public void printHello() {
+		System.out.println("Hello Team5~");
+	}
 }
