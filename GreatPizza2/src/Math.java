@@ -12,6 +12,9 @@ public class Math {
 		return a * b;
 	}
 	// 조원4 나누기
+	public int twonumberDivide(int a, int b) {
+		return a / b ;
+	}
 
 	// 조원5 나누기
 	public void printHello() {
