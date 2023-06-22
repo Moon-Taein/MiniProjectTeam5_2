@@ -13,6 +13,9 @@ public class Math {
 	// 조원3 곱하기
 
 	// 조원4 나누기
+	public int twonumberDivide(int a, int b) {
+		return a / b ;
+	}
 
 	// 조원5 나누기
 }
