@@ -11,7 +11,9 @@ public class Math {
 	// 조원2 빼기
 
 	// 조원3 곱하기
-
+	public int multiply(int a, int b) {
+		return a * b;
+	}
 	// 조원4 나누기
 
 	// 조원5 나누기
