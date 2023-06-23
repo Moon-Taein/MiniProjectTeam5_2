@@ -32,7 +32,7 @@ public class Test1 {
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				String name = rs.getString("name");
+				String name = rs.getString("title");
 				System.out.println(name);
 			}
 		} catch (SQLException e) {
