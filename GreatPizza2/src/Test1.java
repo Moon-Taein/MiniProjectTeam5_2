@@ -1,12 +1,12 @@
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class Test1 {
 	public static void main(String[] args) {
 		System.out.println("Hello World!");
 		// 문태인 바보 ㅠㅠ
+
+		// 일단 포스기 쪽에서
+
+		// 키오스크 프레임
 
 		// 주문을 어떤 형식으로 받고 어떤 형식으로 전달할지
 		// 일일현황, 정산결과 등을 어떻게 보관할것인지
@@ -22,26 +22,24 @@ public class Test1 {
 		// 주문부터 고객전달까지 일련의 과정에서 필요한 동작
 		// 위 동작이 완료 되었을때 데이터 처리
 
-		String sql = "select * from test_table";
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		try {
-			conn = DBUtil.getConnection();
-			stmt = conn.prepareStatement(sql);
-			rs = stmt.executeQuery();
+		// mainorder count 필요하고 초기화 시키는 시점 필요할듯
+		MainOrder mo = new MainOrder(1, 97500);
 
-			while (rs.next()) {
-				String name = rs.getString("name");
-				System.out.println(name);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBUtil.close(rs);
-			DBUtil.close(stmt);
-			DBUtil.close(conn);
-		}
+		// detailorder 또한 동일
+		DetailOrder deo = new DetailOrder(1, "피자_페퍼로니피자M", 1, mo.getOrderNumber());
 
+		// gui 상에서 읽어온 데이터를 기반으로 위와 아래의 string 값을 넣어줘야됨
+		MenuItem mi = new MenuItem(deo.getDetailOrderNumber(), "토핑_페퍼로니");
+
+		Sql_Methods sqm = new Sql_Methods();
+
+		// mainorder insert
+//		sqm.mainOrderInsert(mo);
+
+		// detailorder insert
+//		sqm.detailOrderInsert(deo);
+
+		// menuitem insert
+//		sqm.menuitemInsert(mi);
 	}
 }
