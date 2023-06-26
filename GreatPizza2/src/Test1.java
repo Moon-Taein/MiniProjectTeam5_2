@@ -22,7 +22,7 @@ public class Test1 {
 		// 주문부터 고객전달까지 일련의 과정에서 필요한 동작
 		// 위 동작이 완료 되었을때 데이터 처리
 
-		String sql = "select * from movie";
+		String sql = "select * from test_table";
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -32,7 +32,7 @@ public class Test1 {
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				String name = rs.getString("title");
+				String name = rs.getString("name");
 				System.out.println(name);
 			}
 		} catch (SQLException e) {
