@@ -1,5 +1,8 @@
+package Function;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Sql_Methods {
@@ -67,6 +70,40 @@ public class Sql_Methods {
 			stmt.setInt(1, mi.getDetailOrderNumber());
 			stmt.setString(2, mi.getInventory_id());
 			return stmt.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
+		}
+
+		return false;
+	}
+
+	public static boolean findMenuEverything(String target) {
+
+		String sql = "select * from menu where menu_name = ?";
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		// 세팅해줘서 넣어주기
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, target);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				int no = rs.getInt("no");
+				String menu_id = rs.getString("menu_id");
+				int price = rs.getInt("price");
+				String size = rs.getString("size");
+
+				System.out.printf("%d %s %d %s\n", no, menu_id, price, size);
+			}
+
+			return true;
 
 		} catch (SQLException e) {
 			e.printStackTrace();

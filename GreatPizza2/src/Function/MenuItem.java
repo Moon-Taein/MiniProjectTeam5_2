@@ -1,3 +1,5 @@
+package Function;
+
 
 public class MenuItem {
 	private int detailOrderNumber;

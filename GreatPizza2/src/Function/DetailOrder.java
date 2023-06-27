@@ -1,3 +1,5 @@
+package Function;
+
 
 public class DetailOrder {
 	private int detailOrderNumber;
