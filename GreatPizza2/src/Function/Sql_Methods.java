@@ -162,7 +162,7 @@ public class Sql_Methods {
 
 			// sql workbench에서 올린거는 그냥 bytes로 받아오면 써지네
 			if (rs.next()) {
-				bytes = rs.getBytes("image");
+				bytes = rs.getBytes("image_big");
 			}
 
 		} catch (SQLException e) {

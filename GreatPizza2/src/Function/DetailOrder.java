@@ -1,11 +1,14 @@
 package Function;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class DetailOrder {
 	private int detailOrderNumber;
 	private String menu;
 	private int menu_count;
 	private int mainOrderNumber;
+	private List<MenuItem> miList;
 
 	public DetailOrder(int detailOrderNumber, String menu, int menu_count, int mainOrderNumber) {
 		super();
@@ -13,6 +16,7 @@ public class DetailOrder {
 		this.menu = menu;
 		this.menu_count = menu_count;
 		this.mainOrderNumber = mainOrderNumber;
+		this.miList = new ArrayList<>();
 	}
 
 	public int getDetailOrderNumber() {
@@ -47,6 +51,14 @@ public class DetailOrder {
 		this.mainOrderNumber = mainOrderNumber;
 	}
 
+	public List<MenuItem> getMiList() {
+		return miList;
+	}
+
+	public void setMiList(List<MenuItem> miList) {
+		this.miList = miList;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -55,6 +67,7 @@ public class DetailOrder {
 		result = prime * result + mainOrderNumber;
 		result = prime * result + ((menu == null) ? 0 : menu.hashCode());
 		result = prime * result + menu_count;
+		result = prime * result + ((miList == null) ? 0 : miList.hashCode());
 		return result;
 	}
 
@@ -62,9 +75,7 @@ public class DetailOrder {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof DetailOrder))
 			return false;
 		DetailOrder other = (DetailOrder) obj;
 		if (detailOrderNumber != other.detailOrderNumber)
@@ -78,13 +89,18 @@ public class DetailOrder {
 			return false;
 		if (menu_count != other.menu_count)
 			return false;
+		if (miList == null) {
+			if (other.miList != null)
+				return false;
+		} else if (!miList.equals(other.miList))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
 		return "DetailOrder [detailOrderNumber=" + detailOrderNumber + ", menu=" + menu + ", menu_count=" + menu_count
-				+ ", mainOrderNumber=" + mainOrderNumber + "]";
+				+ ", mainOrderNumber=" + mainOrderNumber + ", miList=" + miList + "]";
 	}
 
 }

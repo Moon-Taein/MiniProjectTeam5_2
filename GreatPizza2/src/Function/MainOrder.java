@@ -3,6 +3,8 @@ package Function;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainOrder {
 	private int orderNumber;
@@ -10,6 +12,7 @@ public class MainOrder {
 	private String date;
 	private String time;
 	private String state;
+	private List<DetailOrder> deoList;
 
 	public MainOrder(int orderNumber, int total_Price) {
 		super();
@@ -20,6 +23,7 @@ public class MainOrder {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
 		this.time = LocalTime.now().format(formatter).toString();
 		this.state = "미확인";
+		this.deoList = new ArrayList<>();
 	}
 
 	public int getTotal_Price() {
@@ -62,11 +66,21 @@ public class MainOrder {
 		this.orderNumber = orderNumber;
 	}
 
+	public List<DetailOrder> getDeoList() {
+		return deoList;
+	}
+
+	public void setDeoList(List<DetailOrder> deoList) {
+		this.deoList = deoList;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((deoList == null) ? 0 : deoList.hashCode());
+		result = prime * result + orderNumber;
 		result = prime * result + ((state == null) ? 0 : state.hashCode());
 		result = prime * result + ((time == null) ? 0 : time.hashCode());
 		result = prime * result + total_Price;
@@ -77,15 +91,20 @@ public class MainOrder {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof MainOrder))
 			return false;
 		MainOrder other = (MainOrder) obj;
 		if (date == null) {
 			if (other.date != null)
 				return false;
 		} else if (!date.equals(other.date))
+			return false;
+		if (deoList == null) {
+			if (other.deoList != null)
+				return false;
+		} else if (!deoList.equals(other.deoList))
+			return false;
+		if (orderNumber != other.orderNumber)
 			return false;
 		if (state == null) {
 			if (other.state != null)
@@ -104,7 +123,8 @@ public class MainOrder {
 
 	@Override
 	public String toString() {
-		return "MainOrder [total_Price=" + total_Price + ", date=" + date + ", time=" + time + ", state=" + state + "]";
+		return "MainOrder [orderNumber=" + orderNumber + ", total_Price=" + total_Price + ", date=" + date + ", time="
+				+ time + ", state=" + state + ", deoList=" + deoList + "]";
 	}
 
 }
