@@ -66,7 +66,7 @@ public class MenuFrame extends JFrame {
 		setSize(800, 900);
 		setLocationRelativeTo(null);
 
-		exiteKey(); // 프로그램 종료ㅁ
+//		exiteKey(); // 프로그램 종료ㅁ
 
 	}
 
@@ -86,10 +86,10 @@ public class MenuFrame extends JFrame {
 		ActionListener al = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Pizza_PopUp_Frame ppf = new Pizza_PopUp_Frame();
 				JButton a = (JButton) e.getSource();
 				String target = a.getText();
-				sqm.findMenuEverything(target);
+				Pizza_PopUp_Frame ppf = new Pizza_PopUp_Frame(target);
+				ppf.setVisible(true);
 			}
 		};
 

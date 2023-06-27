@@ -99,8 +99,12 @@ public class Sql_Methods {
 				String menu_id = rs.getString("menu_id");
 				int price = rs.getInt("price");
 				String size = rs.getString("size");
+				byte[] image = rs.getBytes("image");
 
 				System.out.printf("%d %s %d %s\n", no, menu_id, price, size);
+				if (image != null) {
+					System.out.println(image.toString());
+				}
 			}
 
 			return true;
@@ -113,5 +117,61 @@ public class Sql_Methods {
 		}
 
 		return false;
+	}
+
+	public String findPriceMenuId(String string) {
+		String sql = "select price from menu where menu_id like ?";
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		// 세팅해줘서 넣어주기
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, "%" + string + "%");
+			rs = stmt.executeQuery();
+			int price = 0;
+
+			while (rs.next()) {
+				price = rs.getInt("price");
+			}
+
+			return String.valueOf(price);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
+		}
+
+		return "";
+	}
+
+	public byte[] findPizzaImageMenuId(String string) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		byte[] bytes = null;
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement("SELECT * FROM menu WHERE menu_id = ?");
+			stmt.setString(1, string);
+
+			rs = stmt.executeQuery();
+
+			// sql workbench에서 올린거는 그냥 bytes로 받아오면 써지네
+			if (rs.next()) {
+				bytes = rs.getBytes("image");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(rs);
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
+		}
+		return bytes;
 	}
 }
