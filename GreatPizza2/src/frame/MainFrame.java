@@ -9,14 +9,16 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 
-import utilty.Icon;
+import img.imageIcon;
+import utilty.invisibility;
 
 public class MainFrame extends JFrame {
-
-	private JPanel contentPane;
-	private Icon icon = new Icon();
+	private imageIcon icon = new imageIcon();
+	private JLayeredPane jlp;
+	private JLabel lbl;
+	private invisibility util = new invisibility();
+	private JButton orderBtn;
 
 	/**
 	 * Launch the application.
@@ -27,6 +29,7 @@ public class MainFrame extends JFrame {
 				try {
 					MainFrame frame = new MainFrame();
 					frame.setVisible(true);
+					frame.requestFocus();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -38,39 +41,55 @@ public class MainFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFrame() {
-		JLabel lbl = new JLabel(icon.getMainFrame1());
+
+		frameSetting();
 		
-		JButton orderBtn = new JButton(icon.getOrderBtn());
-		orderBtn.setBounds(250, 650, 300, 100);
-		
-		icon.invisibility(orderBtn);//버튼 투명화
+
+		BtnSetting();
 		
 		orderBtn.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				
+				MenuFrame menu = new MenuFrame();
+				setVisible(false);
+
 			}
 		});
 		
-		JLayeredPane jpn = new JLayeredPane();
-		
-		jpn.setPreferredSize(new Dimension(800,900));
-		
-		//불러온 이미지의 너비와 높이사이즈
-		lbl.setBounds(0, 0, icon.getMainFrame1().getIconWidth(), icon.getMainFrame1().getIconHeight());
-		
-		jpn.add(lbl, new Integer(1));
-		jpn.add(orderBtn, new Integer(2));
-		
-		setContentPane(jpn);
-		
 		setVisible(true);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800, 900);
-		setLocationRelativeTo(null);// 창이 화면중앙에 위치시킴
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+
+	}
+
+	private void frameSetting() {
+
+		lbl = new JLabel(icon.getMainFrame());
+
+		jlp = new JLayeredPane();
+		jlp.setPreferredSize(new Dimension(800, 900));
+
+		lbl.setBounds(0, 0, 800, 900);
+
+		jlp.add(lbl, new Integer(1));
+
+		setContentPane(jlp);
 		
+		setUndecorated(true);
+
+		
+	}
+
+	private void BtnSetting() {
+		orderBtn = new JButton(icon.getOrderBtn());
+		orderBtn.setBounds(250, 648, 300, 100);
+
+		util.invisible(orderBtn);
+
+		jlp.add(orderBtn, new Integer(2));
+
 	}
 
 }

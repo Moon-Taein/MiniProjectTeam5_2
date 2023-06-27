@@ -4,17 +4,24 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
-import utilty.Icon;
+import img.imageIcon;
+import utilty.invisibility;
 
-public class MenuFrame extends JFrame {
+public class MenuFrame extends JFrame{
+	private imageIcon icon = new imageIcon();
+	private JLayeredPane jlp;
+	private JLabel lbl;
+	private invisibility util = new invisibility();
+	private JButton orderBtn;
 
-	private Icon icon = new Icon();
 
 	/**
 	 * Launch the application.
@@ -25,6 +32,7 @@ public class MenuFrame extends JFrame {
 				try {
 					MenuFrame frame = new MenuFrame();
 					frame.setVisible(true);
+					frame.requestFocus();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -36,39 +44,113 @@ public class MenuFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MenuFrame() {
-		JLabel lbl = new JLabel(icon.getMainFrame1());
+		frameSetting();
 		
-		JButton orderBtn = new JButton(icon.getOrderBtn());
-		orderBtn.setBounds(250, 650, 300, 100);
+		pizzaTapBtn();
 		
-		icon.invisibility(orderBtn);//버튼 투명화
 		
-		orderBtn.addActionListener(new ActionListener() {
+
+	}
+	private void frameSetting() {
+		lbl = new JLabel(icon.getMenuTapPizza());
+		lbl.setBounds(0, 0, 800,900);
+		
+		jlp = new JLayeredPane();
+		jlp.setPreferredSize(new Dimension(icon.getMainFrame().getIconWidth(), icon.getMainFrame().getIconHeight()));
+		
+		
+		jlp.add(lbl, new Integer(1));
+		
+		setContentPane(jlp);
+		
+		setUndecorated(true);
+		setVisible(true);
+		setSize(800, 900);
+		setLocationRelativeTo(null);
+		
+		exiteKey(); //프로그램 종료
+		
+		
+	}
+	private void pizzaTapBtn() {
+		JButton pizzaTap = new JButton();
+		pizzaTap.setBounds(0, 150, 200, 50);
+		
+		util.invisible(pizzaTap);
+		
+		jlp.add(pizzaTap, new Integer(2));
+		
+		sideTapBtn();
+		
+		JButton btn1 = new JButton("1");
+		btn1.setBounds(50, 300, 200, 50);
+		
+		jlp.add(btn1, new Integer(2));
+		
+		JButton btn2 = new JButton("2");
+		btn2.setBounds(300, 300, 200, 50);
+		
+		jlp.add(btn2, new Integer(2));
+		
+		JButton btn3 = new JButton("3");
+		btn3.setBounds(600, 300, 200, 50);
+		
+		jlp.add(btn3, new Integer(2));
+		
+		JButton btn4 = new JButton("4");
+		btn4.setBounds(50, 400, 200, 50);
+		
+		jlp.add(btn4, new Integer(2));
+		
+		JButton btn5 = new JButton("5");
+		btn5.setBounds(300, 400, 200, 50);
+		
+		jlp.add(btn5, new Integer(2));
+		
+		JButton btn6 = new JButton("6");
+		btn6.setBounds(600, 400, 200, 50);
+		
+		jlp.add(btn6, new Integer(2));
+		
+	}
+	
+	private void sideTapBtn() {
+		JButton sideTap = new JButton();
+		sideTap.setBounds(200, 150, 200, 50);
+		
+		util.invisible(sideTap);
+		
+		jlp.add(sideTap, new Integer(2));
+		
+		
+		
+		sideTap.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				SideTapFrame sideTap = new SideTapFrame();
 				
 			}
 		});
-		
-		JLayeredPane jpn = new JLayeredPane();
-		
-		jpn.setPreferredSize(new Dimension(800,900));
-		
-		//불러온 이미지의 너비와 높이사이즈
-		lbl.setBounds(0, 0, icon.getMainFrame1().getIconWidth(), icon.getMainFrame1().getIconHeight());
-		
-		jpn.add(lbl, new Integer(1));
-		jpn.add(orderBtn, new Integer(2));
-		
-		setContentPane(jpn);
-		
-		setVisible(true);
-		setSize(800, 900);
-		setLocationRelativeTo(null);// 창이 화면중앙에 위치시킴
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 	}
-
+	
+	private void exiteKey() {
+		addKeyListener(new KeyAdapter() {
+			
+			
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int exite = e.getKeyCode();
+				System.out.println("종료");
+				if(exite == KeyEvent.VK_ESCAPE) {
+				System.exit(0);
+				}
+				
+			}
+		});
+	}
+		
+	
+	
 }
