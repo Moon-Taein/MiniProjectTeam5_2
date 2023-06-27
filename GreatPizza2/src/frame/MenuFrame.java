@@ -44,14 +44,17 @@ public class MenuFrame extends JFrame{
 	 * Create the frame.
 	 */
 	public MenuFrame() {
-		frameSetting();
+		lblSetting();
 		
 		pizzaTapBtn();
 		
-		
+		setUndecorated(true);
+		setVisible(true);
+	
+		setLocationRelativeTo(null);
 
 	}
-	private void frameSetting() {
+	private void lblSetting() {
 		lbl = new JLabel(icon.getMenuTapPizza());
 		lbl.setBounds(0, 0, 800,900);
 		
@@ -59,18 +62,11 @@ public class MenuFrame extends JFrame{
 		jlp.setPreferredSize(new Dimension(icon.getMainFrame().getIconWidth(), icon.getMainFrame().getIconHeight()));
 		
 		
-		jlp.add(lbl, new Integer(1));
+		jlp.add(lbl, new Integer(1));		
 		
-		setContentPane(jlp);
 		
-		setUndecorated(true);
-		setVisible(true);
-		setSize(800, 900);
-		setLocationRelativeTo(null);
 		
 		exiteKey(); //프로그램 종료ㅁ
-		
-		
 	}
 	private void pizzaTapBtn() {
 		JButton pizzaTap = new JButton();
@@ -137,14 +133,13 @@ public class MenuFrame extends JFrame{
 	private void exiteKey() {
 		addKeyListener(new KeyAdapter() {
 			
-			
-			
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int exite = e.getKeyCode();
 				System.out.println("종료");
 				if(exite == KeyEvent.VK_ESCAPE) {
 				System.exit(0);
+				
 				}
 				
 			}

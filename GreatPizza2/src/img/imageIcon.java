@@ -12,5 +12,8 @@ public class imageIcon {
 	public ImageIcon getMenuTapPizza() {
 		return new ImageIcon(getClass().getClassLoader().getResource("MenuTapPizza.png"));
 	}
+	public ImageIcon getOrderBtnKor() {
+		return new ImageIcon(getClass().getClassLoader().getResource("OrderBtnKor.png"));
+	}
 
 }
