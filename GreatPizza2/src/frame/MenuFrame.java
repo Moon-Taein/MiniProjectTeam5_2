@@ -68,7 +68,7 @@ public class MenuFrame extends JFrame{
 		setSize(800, 900);
 		setLocationRelativeTo(null);
 		
-		exiteKey(); //프로그램 종료
+		exiteKey(); //프로그램 종료ㅁ
 		
 		
 	}
