@@ -20,7 +20,6 @@ public class MenuFrame extends JFrame{
 	private JLayeredPane jlp;
 	private JLabel lbl;
 	private invisibility util = new invisibility();
-	private JButton orderBtn;
 
 
 	/**
@@ -44,30 +43,32 @@ public class MenuFrame extends JFrame{
 	 * Create the frame.
 	 */
 	public MenuFrame() {
-		lblSetting();
+		FrameSetting();
 		
 		pizzaTapBtn();
 		
-		setUndecorated(true);
-		setVisible(true);
-	
-		setLocationRelativeTo(null);
+		
 
 	}
-	private void lblSetting() {
+	private void FrameSetting() {
 		lbl = new JLabel(icon.getMenuTapPizza());
 		lbl.setBounds(0, 0, 800,900);
 		
 		jlp = new JLayeredPane();
 		jlp.setPreferredSize(new Dimension(icon.getMainFrame().getIconWidth(), icon.getMainFrame().getIconHeight()));
 		
-		
 		jlp.add(lbl, new Integer(1));		
 		
-		
+		setContentPane(jlp);
 		
 		exiteKey(); //프로그램 종료ㅁ
+		
+		setUndecorated(true);
+		setVisible(true);
+		setSize(800,900);
+		setLocationRelativeTo(null);
 	}
+	
 	private void pizzaTapBtn() {
 		JButton pizzaTap = new JButton();
 		pizzaTap.setBounds(0, 150, 200, 50);
@@ -124,7 +125,9 @@ public class MenuFrame extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SideTapFrame sideTap = new SideTapFrame();
+				setVisible(false);
+				
+				SideTapFrame sideTap = new SideTapFrame();		
 				
 			}
 		});

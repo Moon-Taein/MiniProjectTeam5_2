@@ -51,8 +51,9 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MenuFrame menu = new MenuFrame();
 				setVisible(false);
+				
+				MenuFrame menu = new MenuFrame();
 
 			}
 		});

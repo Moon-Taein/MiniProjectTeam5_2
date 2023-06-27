@@ -13,7 +13,7 @@ import javax.swing.JLayeredPane;
 import img.imageIcon;
 import utilty.invisibility;
 
-public class SideTapFrame extends JFrame {
+public class DrinkTapFrame extends JFrame {
 	private invisibility util = new invisibility();
 	private imageIcon icon = new imageIcon();
 	private JLayeredPane jlp;
@@ -26,7 +26,7 @@ public class SideTapFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SideTapFrame frame = new SideTapFrame();
+					DrinkTapFrame frame = new DrinkTapFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,46 +38,38 @@ public class SideTapFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SideTapFrame() {
-		FrameStting();
+	public DrinkTapFrame() {
+		JLabel lbl = new JLabel(icon.getMenuTapDrink());
+
+		jlp = new JLayeredPane();
+		jlp.setPreferredSize(new Dimension(800, 900));
+
+		lbl.setBounds(0, 0, 800, 900);
+
+		jlp.add(lbl, new Integer(1));
+
+		setContentPane(jlp);
 		
-		JButton drinkTap = new JButton();
-		drinkTap.setBounds(400, 150, 200, 50);
-		jlp.add(drinkTap, new Integer(2));
-		//util.invisible(drinkTap);
+		JButton btn = new JButton();
+		btn.setBounds(600, 150, 200, 50);
+		jlp.add(btn, new Integer(2));
+		util.invisible(btn);
 		
-		drinkTap.addActionListener(new ActionListener() {
+		btn.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				
-				DrinkTapFrame drinkTap = new DrinkTapFrame();
+				MakePizzaTap makePizza = new MakePizzaTap();
 				
 			}
 		});
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
 		setVisible(true);
 		setSize(800,900);
 		setLocationRelativeTo(null);
-	}
-	private void FrameStting() {
-		JLabel lbl = new JLabel(icon.getMenuTapSide());
-		
-		jlp = new JLayeredPane();
-		jlp.setPreferredSize(new Dimension(800, 900));
-		
-		lbl.setBounds(0, 0, 800, 900);
-		
-		jlp.add(lbl, new Integer(1));
-		
-		setContentPane(jlp);
-		
-	}
-	private void drinkTapBtn() {
-		
 	}
 
 }
