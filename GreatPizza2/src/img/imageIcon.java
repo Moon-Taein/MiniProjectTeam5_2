@@ -12,17 +12,33 @@ public class imageIcon {
 	public ImageIcon getMainFrame() {
 		return new ImageIcon(getClass().getClassLoader().getResource("MainFrame.png"));
 	}
-	public ImageIcon getMenuTapPizza() {
-		return new ImageIcon(getClass().getClassLoader().getResource("MenuTapPizza.png"));
+	public ImageIcon getMenuFrame() {
+		return new ImageIcon(getClass().getClassLoader().getResource("MenuFrame.png"));
 	}
-	public ImageIcon getMenuTapSide() {
-		return new ImageIcon(getClass().getClassLoader().getResource("MenuTapSide.png"));
+	
+	public ImageIcon getwhitePizzaBtn() {
+		return new ImageIcon(getClass().getClassLoader().getResource("whitePizzaBtn.png"));
 	}
-	public ImageIcon getMenuTapDrink() {
-		return new ImageIcon(getClass().getClassLoader().getResource("MenuTapDrink.png"));
+	public ImageIcon getdarkPizzaBtn() {
+		return new ImageIcon(getClass().getClassLoader().getResource("darkPizzaBtn.png"));
 	}
-	public ImageIcon getMenuTapMakePizza() {
-		return new ImageIcon(getClass().getClassLoader().getResource("MenuTapMakePizza.png"));
+	public ImageIcon getwhiteSideBtn() {
+		return new ImageIcon(getClass().getClassLoader().getResource("whiteSideBtn.png"));
+	}
+	public ImageIcon getdarkSideBtn() {
+		return new ImageIcon(getClass().getClassLoader().getResource("darkSideBtn.png"));
+	}
+	public ImageIcon getwhiteDrinkBtn() {
+		return new ImageIcon(getClass().getClassLoader().getResource("whiteDrinkBtn.png"));
+	}
+	public ImageIcon getdarkDrinkBtn() {
+		return new ImageIcon(getClass().getClassLoader().getResource("darkDrinkBtn.png"));
+	}
+	public ImageIcon getwhiteMakePizzaBtn() {
+		return new ImageIcon(getClass().getClassLoader().getResource("whiteMakePizzaBtn.png"));
+	}
+	public ImageIcon getdarkMakePizzaBtn() {
+		return new ImageIcon(getClass().getClassLoader().getResource("darkMakePizzaBtn.png"));
 	}
 
 }
