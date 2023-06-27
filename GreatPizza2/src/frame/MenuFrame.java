@@ -180,32 +180,32 @@ public class MenuFrame extends JFrame {
 		JButton btn1 = new JButton("불고기피자");
 		btn1.setBounds(50, 300, 200, 50);
 		btn1.addActionListener(al);
-		jlp.add(btn1);
+		jlp.add(btn1, new Integer(3));
 
 		JButton btn2 = new JButton("페퍼로니피자");
 		btn2.setBounds(300, 300, 200, 50);
 		btn2.addActionListener(al);
-		jlp.add(btn2);
+		jlp.add(btn2, new Integer(3));
 
 		JButton btn3 = new JButton("쉬림프피자");
 		btn3.setBounds(550, 300, 200, 50);
 		btn3.addActionListener(al);
-		jlp.add(btn3);
+		jlp.add(btn3, new Integer(3));
 
 		JButton btn4 = new JButton("치즈피자");
 		btn4.setBounds(50, 400, 200, 50);
 		btn4.addActionListener(al);
-		jlp.add(btn4);
+		jlp.add(btn4, new Integer(3));
 
 		JButton btn5 = new JButton("콤비네이션피자");
 		btn5.setBounds(300, 400, 200, 50);
 		btn5.addActionListener(al);
-		jlp.add(btn5);
+		jlp.add(btn5, new Integer(3));
 
 		JButton btn6 = new JButton("포테이토피자");
 		btn6.setBounds(550, 400, 200, 50);
 		btn6.addActionListener(al);
-		jlp.add(btn6);
+		jlp.add(btn6, new Integer(3));
 
 	}
 
