@@ -51,6 +51,7 @@ public class MenuFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MenuFrame() {
+
 		// 오더를 눌렀을때 mainorder 객체 생성
 		mainOrderCount++;
 		mo = new MainOrder(mainOrderCount);
@@ -79,6 +80,9 @@ public class MenuFrame extends JFrame {
 				sideBtn.setIcon(icon.getdarkSideBtn());
 				drinkBtn.setIcon(icon.getdarkDrinkBtn());
 				makePizzaBtn.setIcon(icon.getdarkMakePizzaBtn());
+				//종료메소드
+				exiteKey();
+				jlp.requestFocusInWindow();
 
 			}
 		});
@@ -97,7 +101,9 @@ public class MenuFrame extends JFrame {
 				pizzaBtn.setIcon(icon.getdarkPizzaBtn());
 				drinkBtn.setIcon(icon.getdarkDrinkBtn());
 				makePizzaBtn.setIcon(icon.getdarkMakePizzaBtn());
-				menuPnl.repaint();
+				
+				exiteKey();
+				jlp.requestFocusInWindow();
 
 			}
 		});
@@ -116,22 +122,18 @@ public class MenuFrame extends JFrame {
 				pizzaBtn.setIcon(icon.getdarkPizzaBtn());
 				sideBtn.setIcon(icon.getdarkSideBtn());
 				makePizzaBtn.setIcon(icon.getdarkMakePizzaBtn());
+				
+				exiteKey();
+				jlp.requestFocusInWindow();
 
 			}
 		});
 
 		makePizzaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				MakePizzaFrame newFrame = new MakePizzaFrame();
 
-				menuPnl.removeAll();
-				menuPnl.repaint();
-				MakePizzaTabBtn();
-
-				pizzaBtn.setIcon(icon.getdarkPizzaBtn());
-				sideBtn.setIcon(icon.getdarkSideBtn());
-				drinkBtn.setIcon(icon.getdarkDrinkBtn());
-
-				makePizzaBtn.setIcon(icon.getwhiteMakePizzaBtn());
+				
 			}
 		});
 
@@ -139,6 +141,9 @@ public class MenuFrame extends JFrame {
 		util.invisible(sideBtn);
 		util.invisible(drinkBtn);
 		util.invisible(makePizzaBtn);
+		
+
+
 
 	}
 
@@ -150,8 +155,8 @@ public class MenuFrame extends JFrame {
 		jlp.setPreferredSize(new Dimension(icon.getMainFrame().getIconWidth(), icon.getMainFrame().getIconHeight()));
 		jlp.setLayout(null);
 
-		jlp.add(lbl);
-
+		jlp.add(lbl, new Integer(1));
+		
 		setContentPane(jlp);
 
 		setUndecorated(true);
@@ -309,43 +314,9 @@ public class MenuFrame extends JFrame {
 		menuPnl.add(btn6, new Integer(3));
 		util.invisible(btn6);
 	}
-
-	private void MakePizzaTabBtn() {
-
-		JButton btn1 = new JButton(icon.getCoke1());
-		btn1.setBounds(60, 70, 180, 150);
-		menuPnl.add(btn1, new Integer(3));
-		util.invisible(btn1);
-
-		JButton btn2 = new JButton(icon.getCider1());
-		btn2.setBounds(300, 70, 180, 150);
-		menuPnl.add(btn2, new Integer(3));
-		util.invisible(btn2);
-
-		JButton btn3 = new JButton(icon.getFanta1());
-		btn3.setBounds(550, 70, 180, 150);
-		menuPnl.add(btn3, new Integer(3));
-		util.invisible(btn3);
-
-		JButton btn4 = new JButton(icon.getCoke2());
-		btn4.setBounds(60, 260, 180, 150);
-		menuPnl.add(btn4, new Integer(3));
-		util.invisible(btn4);
-
-		JButton btn5 = new JButton(icon.getCider2());
-		btn5.setBounds(300, 260, 180, 150);
-		menuPnl.add(btn5, new Integer(3));
-		util.invisible(btn5);
-
-		JButton btn6 = new JButton(icon.getFanta2());
-		btn6.setBounds(550, 260, 180, 150);
-		menuPnl.add(btn6, new Integer(3));
-		util.invisible(btn6);
-
-	}
-
+	
 	private void exiteKey() {
-		addKeyListener(new KeyAdapter() {
+		jlp.addKeyListener(new KeyAdapter() {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
