@@ -122,31 +122,43 @@ public class Pizza_PopUp_Frame extends JDialog {
 		ButtonGroup edgeChoice = new ButtonGroup();
 
 		// radio버튼 구성
-		JRadioButton EdgeRadioButton_1 = new JRadioButton("기본");
-		EdgeRadioButton_1.setBounds(530, 335, 80, 23);
-		contentPane.add(EdgeRadioButton_1);
+		JRadioButton EdgeRadioButton_1 = new JRadioButton(
+				new ImageIcon(getClass().getClassLoader().getResource("popup\\\\기본0.png")));
+		EdgeRadioButton_1.setBounds(530, 335, 154, 24);
+		contentPane.add(EdgeRadioButton_1, new Integer(3));
 		EdgeRadioButton_1.setBorderPainted(true);
 		EdgeRadioButton_1.setSelected(true);
+		EdgeRadioButton_1.setSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("popup\\\\기본.png")));
 		edgeChoice.add(EdgeRadioButton_1);
 		Utility.invisibleRadio(EdgeRadioButton_1);
 
-		JRadioButton EdgeRadioButton_2 = new JRadioButton("노엣지");
-		EdgeRadioButton_2.setBounds(530, 367, 80, 23);
+		JRadioButton EdgeRadioButton_2 = new JRadioButton(
+				new ImageIcon(getClass().getClassLoader().getResource("popup\\\\노엣지0.png")));
+		EdgeRadioButton_2.setBounds(530, 367, 154, 24);
 		contentPane.add(EdgeRadioButton_2);
 		EdgeRadioButton_2.setBorderPainted(true);
+		EdgeRadioButton_2.setSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("popup\\\\노엣지.png")));
 		edgeChoice.add(EdgeRadioButton_2);
+		Utility.invisibleRadio(EdgeRadioButton_2);
 
-		JRadioButton EdgeRadioButton_3 = new JRadioButton("치즈크러스트");
-		EdgeRadioButton_3.setBounds(530, 400, 120, 23);
+		JRadioButton EdgeRadioButton_3 = new JRadioButton(
+				new ImageIcon(getClass().getClassLoader().getResource("popup\\\\치즈크러스트0.png")));
+		EdgeRadioButton_3.setBounds(530, 400, 154, 24);
 		contentPane.add(EdgeRadioButton_3);
 		EdgeRadioButton_3.setBorderPainted(true);
+		EdgeRadioButton_3
+				.setSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("popup\\\\치즈크러스트.png")));
 		edgeChoice.add(EdgeRadioButton_3);
+		Utility.invisibleRadio(EdgeRadioButton_3);
 
-		JRadioButton EdgeRadioButton_4 = new JRadioButton("고구마무스");
-		EdgeRadioButton_4.setBounds(530, 433, 120, 23);
+		JRadioButton EdgeRadioButton_4 = new JRadioButton(
+				new ImageIcon(getClass().getClassLoader().getResource("popup\\\\고구마무스0.png")));
+		EdgeRadioButton_4.setBounds(530, 433, 154, 24);
 		contentPane.add(EdgeRadioButton_4);
 		EdgeRadioButton_4.setBorderPainted(true);
+		EdgeRadioButton_4.setSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("popup\\\\고구마무스.png")));
 		edgeChoice.add(EdgeRadioButton_4);
+		Utility.invisibleRadio(EdgeRadioButton_4);
 
 		// 취소할 경우
 		JButton cancelButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("popup\\cancel.png")));
