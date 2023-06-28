@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Sql_Methods {
 
@@ -174,5 +177,75 @@ public class Sql_Methods {
 		}
 		return bytes;
 	}
+	
+	
+	
+	// 엣지 이름 담기
+	public List<String> pizzamakeSetEdge(String string) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<String> edgeName = new ArrayList<String>();
+		
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement("SELECT * FROM ingredient WHERE inventory_id like ?");
+			stmt.setString(1, "%" + string + "%");
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				String a = rs.getString("inventory_name");
+				edgeName.add(a);
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return edgeName;
+		
+	}
+	
+	
+	// 엣지이름 키값, 엣지 이미지 벨류로 갖고있는 해쉬맵
+	public HashMap<String, byte[]> pizzamakeSetEdgeimg(String string){
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<String>edgeName =  pizzamakeSetEdge(string);
+		byte[] bytes = null;
+		List<byte[]> edgeImg = new ArrayList<byte[]>();
+		HashMap<String, byte[]> edge = new HashMap<>();
+		
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement("SELECT * FROM ingredient WHERE inventory_id like ?");
+			stmt.setString(1, "%" + string + "%");
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				bytes = rs.getBytes("image");
+				edgeImg.add(bytes);
+			}
+			
+			for(int i = 0; i<edgeImg.size();i++) {
+				edge.put(edgeName.get(i), edgeImg.get(i));
+	
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return edge;
+		
+	}
+	
+	
 
 }
