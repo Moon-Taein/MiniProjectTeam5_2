@@ -3,6 +3,9 @@ package img;
 import javax.swing.ImageIcon;
 
 public class imageIcon {
+	public ImageIcon makePizzaFrame() {
+		return new ImageIcon(getClass().getClassLoader().getResource("나만의피자프레임.png"));
+	}
 	public ImageIcon getOrderBtnKor() {
 		return new ImageIcon(getClass().getClassLoader().getResource("주문하기.png"));
 	}
@@ -87,8 +90,44 @@ public class imageIcon {
 	public ImageIcon bigOrderBtn() {
 		return new ImageIcon(getClass().getClassLoader().getResource("주문완료버튼.png"));
 	}
-	public ImageIcon makePizzaFrame() {
-		return new ImageIcon(getClass().getClassLoader().getResource("나만의피자프레임.png"));
+	public ImageIcon getHotsource() {
+		return new ImageIcon(getClass().getClassLoader().getResource("핫소스.png"));
 	}
+	public ImageIcon getGarlic() {
+		return new ImageIcon(getClass().getClassLoader().getResource("갈릭디핑소스.png"));
+	}
+
+	public ImageIcon getWing() {
+		return new ImageIcon(getClass().getClassLoader().getResource("버팔로윙.png"));
+	}
+
+	public ImageIcon getPasta() {
+		return new ImageIcon(getClass().getClassLoader().getResource("스파게티.png"));
+	}
+
+	public ImageIcon getCheeseball() {
+		return new ImageIcon(getClass().getClassLoader().getResource("치즈볼.png"));
+	}
+
+	public ImageIcon getHashBrown() {
+		return new ImageIcon(getClass().getClassLoader().getResource("해쉬브라운.png"));
+	}
+	public ImageIcon getBulldak() {
+		return new ImageIcon(getClass().getClassLoader().getResource("불닭소스.png"));
+	}
+	public ImageIcon getHotSoy() {
+		return new ImageIcon(getClass().getClassLoader().getResource("핫간장.png"));
+	}
+	public ImageIcon getSoy() {
+		return new ImageIcon(getClass().getClassLoader().getResource("간장.png"));
+	}
+	public ImageIcon getCream() {
+		return new ImageIcon(getClass().getClassLoader().getResource("크림소스.png"));
+	}
+	public ImageIcon getTomato() {
+		return new ImageIcon(getClass().getClassLoader().getResource("토마토소스.png"));
+	}
+	
+
 
 }

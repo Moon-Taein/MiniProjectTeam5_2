@@ -247,32 +247,32 @@ public class MenuFrame extends JFrame {
 	}
 
 	private void sideTabBtn() {
-		JButton btn1 = new JButton(icon.getCoke1());
+		JButton btn1 = new JButton(icon.getHotsource());
 		btn1.setBounds(60, 70, 180, 150);
 		menuPnl.add(btn1, new Integer(3));
 		util.invisible(btn1);
 
-		JButton btn2 = new JButton(icon.getCider1());
+		JButton btn2 = new JButton(icon.getGarlic());
 		btn2.setBounds(300, 70, 180, 150);
 		menuPnl.add(btn2, new Integer(3));
 		util.invisible(btn2);
 
-		JButton btn3 = new JButton(icon.getFanta1());
+		JButton btn3 = new JButton(icon.getWing());
 		btn3.setBounds(550, 70, 180, 150);
 		menuPnl.add(btn3, new Integer(3));
 		util.invisible(btn3);
 
-		JButton btn4 = new JButton(icon.getCoke2());
+		JButton btn4 = new JButton(icon.getPasta());
 		btn4.setBounds(60, 260, 180, 150);
 		menuPnl.add(btn4, new Integer(3));
 		util.invisible(btn4);
 
-		JButton btn5 = new JButton(icon.getCider2());
+		JButton btn5 = new JButton(icon.getCheeseball());
 		btn5.setBounds(300, 260, 180, 150);
 		menuPnl.add(btn5, new Integer(3));
 		util.invisible(btn5);
 
-		JButton btn6 = new JButton(icon.getFanta2());
+		JButton btn6 = new JButton(icon.getHashBrown());
 		btn6.setBounds(550, 260, 180, 150);
 		menuPnl.add(btn6, new Integer(3));
 		util.invisible(btn6);
