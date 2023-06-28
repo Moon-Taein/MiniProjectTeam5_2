@@ -51,6 +51,9 @@ public class MenuFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MenuFrame() {
+		// 오더를 눌렀을때 mainorder 객체 생성
+		mainOrderCount++;
+		mo = new MainOrder(mainOrderCount);
 
 		FrameSetting();
 
@@ -176,7 +179,7 @@ public class MenuFrame extends JFrame {
 		makePizzaBtn = new JButton();
 		makePizzaBtn.setBounds(600, 154, 200, 50);
 		jlp.add(makePizzaBtn, new Integer(3));
-		
+
 		JButton orderBtn = new JButton(icon.getOrderBtnKor());
 		orderBtn.setBounds(640, 851, 140, 45);
 		jlp.add(orderBtn, new Integer(3));
@@ -193,11 +196,12 @@ public class MenuFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton a = (JButton) e.getSource();
 				String target = a.getText();
-				Pizza_PopUp_Frame ppf = new Pizza_PopUp_Frame(target, mo);
+				Pizza_PopUp_Frame ppf = new Pizza_PopUp_Frame(target, mo, detailOrderCount);
 				ppf.setVisible(true);
 			}
 		};
 
+		// image랑 이름 db에서 불러오게 만들기
 		JButton btn1 = new JButton(icon.getSmallBullgogiPizza());
 		btn1.setText("불고기피자");
 		btn1.setBounds(60, 70, 175, 150);
