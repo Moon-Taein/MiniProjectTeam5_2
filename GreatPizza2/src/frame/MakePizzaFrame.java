@@ -21,7 +21,7 @@ public class MakePizzaFrame extends JFrame {
 	private invisibility util = new invisibility();
 
 	/**
-	 * Launch the application.
+	 * Launch the application.ㅁ
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
