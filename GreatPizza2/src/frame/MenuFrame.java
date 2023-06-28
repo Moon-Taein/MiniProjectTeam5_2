@@ -133,10 +133,7 @@ public class MenuFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				MakePizzaFrame newFrame = new MakePizzaFrame();
 
-				makePizzaBtn.setIcon(icon.getwhiteMakePizzaBtn());
 				
-				exiteKey();
-				jlp.requestFocusInWindow();
 			}
 		});
 
