@@ -1,4 +1,4 @@
-package Function;
+package function;
 
 
 public class MenuItem {

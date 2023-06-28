@@ -1,4 +1,4 @@
-package Function;
+package function;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -112,6 +112,7 @@ public class Sql_Methods {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			DBUtil.close(rs);
 			DBUtil.close(stmt);
 			DBUtil.close(conn);
 		}
@@ -141,6 +142,7 @@ public class Sql_Methods {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			DBUtil.close(rs);
 			DBUtil.close(stmt);
 			DBUtil.close(conn);
 		}

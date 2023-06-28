@@ -1,6 +1,4 @@
-package Function;
-
-
+package function;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -20,9 +18,10 @@ public class DBUtil {
 
 	static {
 		try {
-			PROPS.load(DBUtil.class.getClassLoader().getResourceAsStream("\\Function\\mysql.properties"));
+			System.out.println("--클래스 로딩--");
+			PROPS.load(DBUtil.class.getClassLoader().getResourceAsStream("function/mysql.properties"));
 //			Class.forName(PROPS.getProperty("jdbc.DRIVER"));
-
+			System.out.println(PROPS);
 			BasicDataSource ds = new BasicDataSource();
 
 			// datasource에 dirver, 사용할 db, user, password 세팅ㅁ

@@ -1,4 +1,4 @@
-package Function;
+package function;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

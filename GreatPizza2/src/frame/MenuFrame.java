@@ -12,8 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
-import Function.MainOrder;
-import Function.Sql_Methods;
+import function.MainOrder;
+import function.Sql_Methods;
 import img.imageIcon;
 import utilty.invisibility;
 
@@ -80,7 +80,7 @@ public class MenuFrame extends JFrame {
 				sideBtn.setIcon(icon.getdarkSideBtn());
 				drinkBtn.setIcon(icon.getdarkDrinkBtn());
 				makePizzaBtn.setIcon(icon.getdarkMakePizzaBtn());
-				//종료메소드
+				// 종료메소드
 				exiteKey();
 				jlp.requestFocusInWindow();
 
@@ -101,7 +101,7 @@ public class MenuFrame extends JFrame {
 				pizzaBtn.setIcon(icon.getdarkPizzaBtn());
 				drinkBtn.setIcon(icon.getdarkDrinkBtn());
 				makePizzaBtn.setIcon(icon.getdarkMakePizzaBtn());
-				
+
 				exiteKey();
 				jlp.requestFocusInWindow();
 
@@ -122,7 +122,7 @@ public class MenuFrame extends JFrame {
 				pizzaBtn.setIcon(icon.getdarkPizzaBtn());
 				sideBtn.setIcon(icon.getdarkSideBtn());
 				makePizzaBtn.setIcon(icon.getdarkMakePizzaBtn());
-				
+
 				exiteKey();
 				jlp.requestFocusInWindow();
 
@@ -133,7 +133,6 @@ public class MenuFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				MakePizzaFrame newFrame = new MakePizzaFrame();
 
-				
 			}
 		});
 
@@ -141,9 +140,6 @@ public class MenuFrame extends JFrame {
 		util.invisible(sideBtn);
 		util.invisible(drinkBtn);
 		util.invisible(makePizzaBtn);
-		
-
-
 
 	}
 
@@ -156,7 +152,7 @@ public class MenuFrame extends JFrame {
 		jlp.setLayout(null);
 
 		jlp.add(lbl, new Integer(1));
-		
+
 		setContentPane(jlp);
 
 		setUndecorated(true);
@@ -314,7 +310,7 @@ public class MenuFrame extends JFrame {
 		menuPnl.add(btn6, new Integer(3));
 		util.invisible(btn6);
 	}
-	
+
 	private void exiteKey() {
 		jlp.addKeyListener(new KeyAdapter() {
 
