@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import Function.MainOrder;
 import Function.Sql_Methods;
 import img.imageIcon;
 import utilty.invisibility;
@@ -26,6 +27,8 @@ public class MenuFrame extends JFrame {
 	private JButton sideBtn;
 	private JButton drinkBtn;
 	private JButton makePizzaBtn;
+	private int mainOrderCount = 0; // order 누르면 ++ 되게
+	private int detailOrderCount = 0; // 피자 - 담기누를때 ++ 사이드,음료 - 담을때마다 ++
 
 	/**
 	 * Launch the application.
@@ -48,11 +51,17 @@ public class MenuFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MenuFrame() {
+		mainOrderCount++;
+		MainOrder mo = new MainOrder(mainOrderCount); // total_price는 마지막에 주문완료할때 넣어주자
+		// detailorder랑 menuitem은 피자만들어서 담기할때랑 사이드,음료 눌러서 넣을때 생성해서
+		// menuitem이 포함된 detailorder - 피자, 나만의피자
+		// menuitem이 없는 detailorder - 사이드, 음료
+
 		exiteKey();
 
 		FrameSetting();
 
-		pizzaTapBtn();
+		pizzaTapBtn(mo);
 
 		buttonSetting();// 버튼 생성 메소드
 
@@ -163,16 +172,18 @@ public class MenuFrame extends JFrame {
 
 	}
 
-	private void pizzaTapBtn() {
+	// 팝업화면으로 이동시 mainorder정보를 가지고가서 detailorder 입력해주기
+	private void pizzaTapBtn(MainOrder mo) {
 		Sql_Methods sqm = new Sql_Methods();
 
-		// 버튼 눌렀을시 동작하는 메소드 (사이드, 음료용으로 바뀔듯 )
+		// 피자 버튼 눌렀을시 동작하는 메소드
+		// 사이드 음료는 detailorder 바로 만들어서 mainorder에 넣어주기
 		ActionListener al = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JButton a = (JButton) e.getSource();
 				String target = a.getText();
-				Pizza_PopUp_Frame ppf = new Pizza_PopUp_Frame(target);
+				Pizza_PopUp_Frame ppf = new Pizza_PopUp_Frame(target, mo);
 				ppf.setVisible(true);
 			}
 		};

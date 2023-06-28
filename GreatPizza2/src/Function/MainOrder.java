@@ -12,12 +12,12 @@ public class MainOrder {
 	private String date;
 	private String time;
 	private String state;
-	private List<DetailOrder> deoList;
+	private List<DetailOrder> deoList; // 담기하거나 사이드, 음료 고를때 리스트에 detailorder로 만들어서 추가, 삭제 가능하게
 
-	public MainOrder(int orderNumber, int total_Price) {
+	public MainOrder(int orderNumber) {
 		super();
 		this.orderNumber = orderNumber;
-		this.total_Price = total_Price;
+		this.total_Price = 0;
 		this.date = LocalDate.now().toString();
 		String pattern = "HH:mm:ss";
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);

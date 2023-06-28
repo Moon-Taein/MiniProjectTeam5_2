@@ -1,6 +1,5 @@
 package Function;
 
-
 public class Test1 {
 	public static void main(String[] args) {
 		System.out.println("Hello World!");
@@ -27,17 +26,17 @@ public class Test1 {
 		// mainorder count 필요하고 초기화 시키는 시점 필요할듯
 		// 총가격을 넣어줘야되서 gui상에서 계산된 그 값을 주문완료 시점에 넣어줘야된다 생성할때는 0을 가지고 있게 만들고
 		// 프레임 밑의 가격 계산되는곳의 걸로 계속 갱신하던가 마지막에 넣던가
-		MainOrder mo = new MainOrder(1, 97500);
+//		MainOrder mo = new MainOrder(1, 97500);
 
 		// detailorder 또한 동일
 		// 버튼을 눌러서 피자메뉴의 id와 inventory안의 사이드, 음료 id를 가져와서 생성해야된다
-		DetailOrder deo = new DetailOrder(4, "음료_콜라500", 1, mo.getOrderNumber());
+//		DetailOrder deo = new DetailOrder(4, "음료_콜라500", 1, mo.getOrderNumber());
 
 		// gui 상에서 읽어온 데이터를 기반으로 위와 아래의 string 값을 넣어줘야됨
 		// 버튼을 눌러서 inventory의
-		MenuItem mi = new MenuItem(deo.getDetailOrderNumber(), "토핑_초콜릿");
-
-		Sql_Methods sqm = new Sql_Methods();
+//		MenuItem mi = new MenuItem(deo.getDetailOrderNumber(), "토핑_초콜릿");
+//
+//		Sql_Methods sqm = new Sql_Methods();
 
 		// mainorder insert
 //		sqm.mainOrderInsert(mo);
