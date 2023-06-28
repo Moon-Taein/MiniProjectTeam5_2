@@ -324,7 +324,6 @@ public class MenuFrame extends JFrame {
 				System.out.println("종료");
 				if (exite == KeyEvent.VK_ESCAPE) {
 					System.exit(0);
-
 				}
 			}
 		});
