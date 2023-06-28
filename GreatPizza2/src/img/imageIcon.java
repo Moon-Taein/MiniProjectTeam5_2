@@ -127,6 +127,10 @@ public class imageIcon {
 	public ImageIcon getTomato() {
 		return new ImageIcon(getClass().getClassLoader().getResource("토마토소스.png"));
 	}
+	public ImageIcon getBack() {
+		return new ImageIcon(getClass().getClassLoader().getResource("뒤로가기.png"));
+	}
+	
 	
 
 

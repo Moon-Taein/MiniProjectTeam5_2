@@ -131,6 +131,7 @@ public class MenuFrame extends JFrame {
 
 		makePizzaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
 				MakePizzaFrame newFrame = new MakePizzaFrame();
 
 			}
@@ -140,6 +141,9 @@ public class MenuFrame extends JFrame {
 		util.invisible(sideBtn);
 		util.invisible(drinkBtn);
 		util.invisible(makePizzaBtn);
+
+		exiteKey();
+		jlp.requestFocusInWindow();
 
 	}
 
