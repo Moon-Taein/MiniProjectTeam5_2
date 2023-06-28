@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetailOrder {
-	private int detailOrderNumber;
-	private String menu;
-	private int menu_count;
-	private int mainOrderNumber;
+	private int detailOrderNumber; 
+	private String menu; // menu_id
+	private int menu_count; // 수량
+	private int mainOrderNumber; 
 	private List<MenuItem> miList; // 피자 옵션 팝업화면에서 고른 옵션들 menuitem으로 만들어서 추가해주기
 
 	public DetailOrder(int detailOrderNumber, String menu, int menu_count, int mainOrderNumber) {

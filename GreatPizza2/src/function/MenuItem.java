@@ -2,8 +2,8 @@ package function;
 
 
 public class MenuItem {
-	private int detailOrderNumber;
-	private String inventory_id;
+	private int detailOrderNumber; // detailorderNumber 넣어주기
+	private String inventory_id; // ingredient_id 넣어주고
 
 	public MenuItem(int detailOrderNumber, String inventory_id) {
 		super();

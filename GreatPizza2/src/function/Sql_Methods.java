@@ -11,7 +11,6 @@ import java.util.List;
 public class Sql_Methods {
 
 	public static boolean mainOrderInsert(MainOrder mo) {
-
 		String sql = "insert into mainorder (no, total_price, `주문날짜`, `주문시간`, `state`) values (?,?,?,?,?)";
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -37,7 +36,6 @@ public class Sql_Methods {
 	}
 
 	public static boolean detailOrderInsert(DetailOrder deo) {
-
 		String sql = "insert into detailorder (no, menu, menu_count, mainorder) values (?,?,?,?)";
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -62,7 +60,6 @@ public class Sql_Methods {
 	}
 
 	public static boolean menuitemInsert(MenuItem mi) {
-
 		String sql = "insert into menuitem (detailorder_no, inventory_id) values (?,?)";
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -85,7 +82,6 @@ public class Sql_Methods {
 	}
 
 	public static boolean findMenuEverything(String target) {
-
 		String sql = "select * from menu where menu_name = ?";
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -177,6 +173,46 @@ public class Sql_Methods {
 		}
 		return bytes;
 	}
+	
+	public List<String> findToppingPriceMenuId(String string) {
+		String sql = "select A.inventory_id, A.price_retail\r\n" + 
+				"from ingredient as A\r\n" + 
+				"join (select menu_id, inventory_id, count from recipe where menu_id = ? and inventory_id like '토핑%') as B\r\n" + 
+				"on A.inventory_id = B.inventory_id;";
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<String> list = new ArrayList<>();
+		// 세팅해줘서 넣어주기
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, string);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				String inventory_id = rs.getString("inventory_id").substring(3);
+				int price = rs.getInt("price_retail");
+				String price_retail = String.valueOf(price+"원");
+				if(inventory_id != null && price_retail != null) {
+					list.add(inventory_id);
+					list.add(price_retail);
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
+		}
+		System.out.println(list.toString());
+		if(list.size() < 3) {
+			for(int i = 2 ; i < 8; i++) {
+				list.add(i, "");
+			}
+		}
+		return list;
+	}
 
 	// 엣지 이름 담기
 	public List<String> pizzamakeSetEdge(String string) {
@@ -195,7 +231,6 @@ public class Sql_Methods {
 			while (rs.next()) {
 				String a = rs.getString("inventory_name");
 				edgeName.add(a);
-
 			}
 
 		} catch (SQLException e) {
@@ -239,5 +274,4 @@ public class Sql_Methods {
 		return edge;
 
 	}
-
 }
