@@ -51,7 +51,6 @@ public class MenuFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MenuFrame() {
-		
 
 		FrameSetting();
 
@@ -62,8 +61,6 @@ public class MenuFrame extends JFrame {
 		pizzaTabBtn();
 
 		buttonSetting();// 버튼 생성 메소드
-
-		pizzaTapBtn();
 
 		pizzaBtn.addActionListener(new ActionListener() {
 
@@ -79,7 +76,6 @@ public class MenuFrame extends JFrame {
 				sideBtn.setIcon(icon.getdarkSideBtn());
 				drinkBtn.setIcon(icon.getdarkDrinkBtn());
 				makePizzaBtn.setIcon(icon.getdarkMakePizzaBtn());
-				
 
 			}
 		});
@@ -99,7 +95,6 @@ public class MenuFrame extends JFrame {
 				drinkBtn.setIcon(icon.getdarkDrinkBtn());
 				makePizzaBtn.setIcon(icon.getdarkMakePizzaBtn());
 				menuPnl.repaint();
-				
 
 			}
 		});
@@ -124,11 +119,11 @@ public class MenuFrame extends JFrame {
 
 		makePizzaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				menuPnl.removeAll();
 				menuPnl.repaint();
 				MakePizzaTabBtn();
-				
+
 				pizzaBtn.setIcon(icon.getdarkPizzaBtn());
 				sideBtn.setIcon(icon.getdarkSideBtn());
 				drinkBtn.setIcon(icon.getdarkDrinkBtn());
