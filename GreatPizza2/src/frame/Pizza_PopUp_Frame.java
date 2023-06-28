@@ -49,6 +49,34 @@ public class Pizza_PopUp_Frame extends JDialog {
 		imageLabel.setBounds(15, 80, 410, 380);
 		// image icon 사용해서 각 피자의 이미지 사용해서 넣어줘야함
 		ImageIcon ic = new ImageIcon(sqm.findPizzaImageMenuId("피자_" + target + "M"));
+		
+		JButton countPlus = new JButton(new ImageIcon(getClass().getClassLoader().getResource("popup/수량plus.png")));
+		countPlus.setBounds(269, 483, 65, 30);
+		countPlus.setBorderPainted(false);
+		countPlus.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("popup/수량plusBig.png")));
+		countPlus.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		contentPane.add(countPlus);
+		
+		JButton countMinus = new JButton(new ImageIcon(getClass().getClassLoader().getResource("popup/수량minus.png")));
+		countMinus.setBounds(107, 483, 65, 30);
+		countMinus.setBorderPainted(false);
+		countMinus.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("popup/수량minusBig.png")));
+		countMinus.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		contentPane.add(countMinus);
+		
+		JLabel dow_price = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("popup/도우옵션가격.png")));
+		dow_price.setBounds(630, 345, 90, 115);
+		contentPane.add(dow_price);
 
 		JLabel sizeLabel_L = new JLabel("L");
 		sizeLabel_L.setForeground(Color.WHITE);
