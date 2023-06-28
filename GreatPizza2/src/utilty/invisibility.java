@@ -1,6 +1,7 @@
 package utilty;
 
 import javax.swing.JButton;
+import javax.swing.JRadioButton;
 
 public class invisibility {
 	
@@ -10,5 +11,12 @@ public class invisibility {
 		button.setBorderPainted(false);
 		button.setFocusPainted(false);
 	}
+	public void invisibleRadio(JRadioButton rBtn) {		
+		rBtn.setOpaque(false);
+		rBtn.setContentAreaFilled(false);
+		rBtn.setBorderPainted(false);
+		rBtn.setFocusPainted(false);
+	}
+
 
 }

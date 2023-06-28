@@ -18,10 +18,12 @@ import javax.swing.border.EmptyBorder;
 
 import Function.MainOrder;
 import Function.Sql_Methods;
+import utilty.invisibility;
 
 public class Pizza_PopUp_Frame extends JDialog {
 
 	private ImagePanel contentPane;
+	private invisibility Utility = new invisibility();
 
 	// 피자_불고기피자M -> 불고기피자 라는 이름을 받아서 구현해보자
 	public Pizza_PopUp_Frame(String target, MainOrder mo) {
@@ -92,6 +94,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 		EdgeRadioButton_1.setBorderPainted(true);
 		EdgeRadioButton_1.setSelected(true);
 		edgeChoice.add(EdgeRadioButton_1);
+		Utility.invisibleRadio(EdgeRadioButton_1);
 
 		JRadioButton EdgeRadioButton_2 = new JRadioButton("노엣지");
 		EdgeRadioButton_2.setBounds(637, 214, 80, 23);

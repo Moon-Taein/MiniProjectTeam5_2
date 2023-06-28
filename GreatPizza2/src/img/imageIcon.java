@@ -81,6 +81,14 @@ public class imageIcon {
 	public ImageIcon getFanta2() {
 		return new ImageIcon(getClass().getClassLoader().getResource("환타작은거.png"));
 	}
-	
+	public ImageIcon orderComplete() {
+		return new ImageIcon(getClass().getClassLoader().getResource("주문완료프레임.png"));
+	}
+	public ImageIcon bigOrderBtn() {
+		return new ImageIcon(getClass().getClassLoader().getResource("주문완료버튼.png"));
+	}
+	public ImageIcon makePizzaFrame() {
+		return new ImageIcon(getClass().getClassLoader().getResource("나만의피자프레임.png"));
+	}
 
 }
