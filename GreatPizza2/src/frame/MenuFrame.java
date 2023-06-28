@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
+import function.DetailOrder;
 import function.MainOrder;
 import function.Sql_Methods;
 import img.imageIcon;
@@ -31,9 +32,10 @@ public class MenuFrame extends JFrame {
 	private JButton drinkBtn;
 	private JButton makePizzaBtn;
 	private int mainOrderCount = 0; // order 누르면 ++ 되게
-	private int detailOrderCount = 0; // 피자 - 담기누를때 ++ 사이드,음료 - 담을때마다 ++
+	static int detailOrderCount = 0; // 피자 - 담기누를때 ++ 사이드,음료 - 담을때마다 ++
 	private JLayeredPane menuPnl;
 	private MainOrder mo;
+	private DetailOrder deo;
 	// parameter로 크기값 받고 return으로 해당크기의 tftfont 해주는
 	private Font tftFont = getBMJUAFont(18f);
 	private Font tftFont2 = getBMJUAFont(25f);
@@ -218,6 +220,7 @@ public class MenuFrame extends JFrame {
 
 	// 추가 메뉴가 있어서 다음 버튼 누르면 6,6 12,6 으로 
 	private void pizzaTabBtn(int target) {
+		System.out.println(mo.getDeoList().toString());
 		Sql_Methods sqm = new Sql_Methods();
 		List<Object> list = sqm.findImageAndMenuIdTarget("%M", target);
 
@@ -333,13 +336,17 @@ public class MenuFrame extends JFrame {
 		ActionListener al = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				JButton target = (JButton) e.getSource();
+				detailOrderCount++;
+				DetailOrder deo = new DetailOrder(detailOrderCount, target.getText(), 1, mo.getOrderNumber());
+				mo.getDeoList().add(deo);
 			}
 		};
 		
 		JButton btn1 = new JButton(new ImageIcon((byte[])list.get(1)));
 		btn1.setBounds(60, 70, 180, 150);
 		btn1.setText((String)list.get(0));
+		btn1.addActionListener(al);
 		menuPnl.add(btn1, new Integer(3));
 		util.invisible(btn1);
 		
@@ -353,7 +360,8 @@ public class MenuFrame extends JFrame {
 
 		JButton btn2 = new JButton(new ImageIcon((byte[])list.get(3)));
 		btn2.setBounds(300, 70, 180, 150);
-		btn1.setText((String)list.get(2));
+		btn2.setText((String)list.get(2));
+		btn2.addActionListener(al);
 		menuPnl.add(btn2, new Integer(3));
 		util.invisible(btn2);
 		
@@ -367,7 +375,8 @@ public class MenuFrame extends JFrame {
 		
 		JButton btn3 = new JButton(new ImageIcon((byte[])list.get(5)));
 		btn3.setBounds(550, 70, 180, 150);
-		btn1.setText((String)list.get(4));
+		btn3.setText((String)list.get(4));
+		btn3.addActionListener(al);
 		menuPnl.add(btn3, new Integer(3));
 		util.invisible(btn3);
 		
@@ -381,7 +390,8 @@ public class MenuFrame extends JFrame {
 
 		JButton btn4 = new JButton(new ImageIcon((byte[])list.get(7)));
 		btn4.setBounds(60, 260, 180, 150);
-		btn1.setText((String)list.get(6));
+		btn4.setText((String)list.get(6));
+		btn4.addActionListener(al);
 		menuPnl.add(btn4, new Integer(3));
 		util.invisible(btn4);
 		
@@ -395,7 +405,8 @@ public class MenuFrame extends JFrame {
 
 		JButton btn5 = new JButton(new ImageIcon((byte[])list.get(9)));
 		btn5.setBounds(300, 260, 180, 150);
-		btn1.setText((String)list.get(8));
+		btn5.setText((String)list.get(8));
+		btn5.addActionListener(al);
 		menuPnl.add(btn5, new Integer(3));
 		util.invisible(btn5);
 		
@@ -409,7 +420,8 @@ public class MenuFrame extends JFrame {
 
 		JButton btn6 = new JButton(new ImageIcon((byte[])list.get(11)));
 		btn6.setBounds(550, 260, 180, 150);
-		btn1.setText((String)list.get(10));
+		btn6.setText((String)list.get(10));
+		btn6.addActionListener(al);
 		menuPnl.add(btn6, new Integer(3));
 		util.invisible(btn6);
 		
@@ -426,9 +438,20 @@ public class MenuFrame extends JFrame {
 		Sql_Methods sqm = new Sql_Methods();
 		List<Object> list = sqm.findImageAndMenuIdTarget("음료%", target);
 		
+		ActionListener al = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JButton target = (JButton) e.getSource();
+				detailOrderCount++;
+				DetailOrder deo = new DetailOrder(detailOrderCount, target.getText(), 1, mo.getOrderNumber());
+				mo.getDeoList().add(deo);
+			}
+		};
+		
 		JButton btn1 = new JButton(new ImageIcon((byte[])list.get(1)));
 		btn1.setBounds(60, 70, 180, 150);
 		btn1.setText((String)list.get(0));
+		btn1.addActionListener(al);
 		menuPnl.add(btn1, new Integer(3));
 		util.invisible(btn1);
 		
@@ -442,7 +465,8 @@ public class MenuFrame extends JFrame {
 
 		JButton btn2 = new JButton(new ImageIcon((byte[])list.get(3)));
 		btn2.setBounds(300, 70, 180, 150);
-		btn1.setText((String)list.get(2));
+		btn2.setText((String)list.get(2));
+		btn2.addActionListener(al);
 		menuPnl.add(btn2, new Integer(3));
 		util.invisible(btn2);
 		
@@ -456,7 +480,8 @@ public class MenuFrame extends JFrame {
 
 		JButton btn3 = new JButton(new ImageIcon((byte[])list.get(5)));
 		btn3.setBounds(550, 70, 180, 150);
-		btn1.setText((String)list.get(4));
+		btn3.setText((String)list.get(4));
+		btn3.addActionListener(al);
 		menuPnl.add(btn3, new Integer(3));
 		util.invisible(btn3);
 		
@@ -470,7 +495,8 @@ public class MenuFrame extends JFrame {
 
 		JButton btn4 = new JButton(new ImageIcon((byte[])list.get(7)));
 		btn4.setBounds(60, 260, 180, 150);
-		btn1.setText((String)list.get(6));
+		btn4.setText((String)list.get(6));
+		btn4.addActionListener(al);
 		menuPnl.add(btn4, new Integer(3));
 		util.invisible(btn4);
 		
@@ -484,7 +510,8 @@ public class MenuFrame extends JFrame {
 
 		JButton btn5 = new JButton(new ImageIcon((byte[])list.get(9)));
 		btn5.setBounds(300, 260, 180, 150);
-		btn1.setText((String)list.get(8));
+		btn5.setText((String)list.get(8));
+		btn5.addActionListener(al);
 		menuPnl.add(btn5, new Integer(3));
 		util.invisible(btn5);
 		
@@ -498,7 +525,8 @@ public class MenuFrame extends JFrame {
 
 		JButton btn6 = new JButton(new ImageIcon((byte[])list.get(11)));
 		btn6.setBounds(550, 260, 180, 150);
-		btn1.setText((String)list.get(10));
+		btn6.setText((String)list.get(10));
+		btn6.addActionListener(al);
 		menuPnl.add(btn6, new Integer(3));
 		util.invisible(btn6);
 		

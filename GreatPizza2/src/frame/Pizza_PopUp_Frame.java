@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
+import function.DetailOrder;
 import function.MainOrder;
 import function.Sql_Methods;
 import utilty.invisibility;
@@ -311,7 +312,24 @@ public class Pizza_PopUp_Frame extends JDialog {
 		addButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				// menuitem 체크해서 detailOrder 안에 다 넣어줘야된다
+				// m,l 인지
+				String newTarget = "";
+				if(sizeLButton.isSelected()) {
+					newTarget = target.replace('M', 'L');
+				} else {
+					newTarget = target;
+				}
+				// checkbox 확인해서 menuitem 만들어줘서 detailorder에 add
+				
+				// radioButton 확인해서 menuitem 만들어줘서 detailorder에 add
+				
+				// 합친 가격 어쩌지
+				
+				MenuFrame.detailOrderCount++;
+				DetailOrder deo = new DetailOrder(MenuFrame.detailOrderCount, newTarget, Integer.valueOf(currentCount.getText()), mo.getOrderNumber());
+				mo.getDeoList().add(deo);
+				dispose();
 			}
 		});
 		addButton.setBounds(600, 490, 143, 46);

@@ -99,8 +99,7 @@ public class DetailOrder {
 
 	@Override
 	public String toString() {
-		return "DetailOrder [detailOrderNumber=" + detailOrderNumber + ", menu=" + menu + ", menu_count=" + menu_count
-				+ ", mainOrderNumber=" + mainOrderNumber + ", miList=" + miList + "]";
+		return "" + detailOrderNumber + ", " + menu + ", " + menu_count + ", " + mainOrderNumber + ", " + miList;
 	}
 
 }
