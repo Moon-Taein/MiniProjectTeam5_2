@@ -33,11 +33,10 @@ public class Pizza_PopUp_Frame extends JDialog {
 	private JLabel currentCount;
 
 	// 피자_불고기피자M -> 불고기피자 라는 이름을 받아서 구현해보자
-	public Pizza_PopUp_Frame(String target, MainOrder mo, int detailOrderCount) {
-		
+	public Pizza_PopUp_Frame(String target, MainOrder mo, int detailOrderCount) {		
 		
 		// parameter로 크기값 받고 return으로 해당크기의 tftfont 해주는
-		Font tftFont = getBMJUAFont(15f);
+		Font tftFont = getBMJUAFont(18f);
 		Font tftFont2 = getBMJUAFont(25f);
 		Font tftFont3 = getBMJUAFont(35f);
 		
@@ -48,12 +47,9 @@ public class Pizza_PopUp_Frame extends JDialog {
 		System.out.println(mo.getOrderNumber());
 		
 		// 피자토핑 리스트 가져오기		
-		List<String> list = sqm.findToppingPriceMenuId("피자_" + target + "M");
-
-//		Font font = loadFont("BMJUA_ttf.ttf", Font.BOLD, 18);
+		List<String> list = sqm.findToppingPriceMenuId(target);
 
 		setBounds(100, 100, 800, 600);
-//		contentPane = new JPanel();
 		contentPane = new ImagePanel(
 				new ImageIcon(getClass().getClassLoader().getResource("popup/후보3.png")).getImage());
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -61,9 +57,9 @@ public class Pizza_PopUp_Frame extends JDialog {
 		contentPane.setLayout(null);
 
 		JLabel imageLabel = new JLabel("image");
-		imageLabel.setBounds(15, 80, 410, 380);
+		imageLabel.setBounds(10, 100, 410, 380);
 		// image icon 사용해서 각 피자의 이미지 사용해서 넣어줘야함
-		ImageIcon ic = new ImageIcon(sqm.findPizzaImageMenuId("피자_" + target + "M"));
+		ImageIcon ic = new ImageIcon(sqm.findPizzaImageMenuId(target));
 		imageLabel.setIcon(ic);
 		contentPane.add(imageLabel);
 		
@@ -71,43 +67,53 @@ public class Pizza_PopUp_Frame extends JDialog {
 		JLabel toppingName1 = new JLabel(list.get(0));
 		toppingName1.setBounds(505, 168, 100, 15);
 		toppingName1.setFont(tftFont);
+		toppingName1.setForeground(new Color(103, 51, 53));
 		contentPane.add(toppingName1);
 		
 		JLabel toppingName2 = new JLabel(list.get(2));
 		toppingName2.setBounds(505, 198, 100, 15);
 		toppingName2.setFont(tftFont);
+		toppingName2.setForeground(new Color(103, 51, 53));
 		contentPane.add(toppingName2);
 		
 		JLabel toppingName3 = new JLabel(list.get(4));
 		toppingName3.setBounds(505, 228, 100, 15);
 		toppingName3.setFont(tftFont);
+		toppingName3.setForeground(new Color(103, 51, 53));
 		contentPane.add(toppingName3);
 		
 		JLabel toppingName4 = new JLabel(list.get(6));
 		toppingName4.setBounds(505, 258, 100, 15);
 		toppingName4.setFont(tftFont);
+		toppingName4.setForeground(new Color(103, 51, 53));
 		contentPane.add(toppingName4);
+		//
 		
 		// 토핑 가격
 		JLabel toppingPrice1 = new JLabel(list.get(1));
-		toppingPrice1.setBounds(655, 168, 70, 15);
+		toppingPrice1.setBounds(645, 168, 70, 15);
 		toppingPrice1.setFont(tftFont);
+		toppingPrice1.setForeground(new Color(103, 51, 53));
 		contentPane.add(toppingPrice1);
 		
 		JLabel toppingPrice2 = new JLabel(list.get(3));
-		toppingPrice2.setBounds(655, 198, 70, 15);
+		toppingPrice2.setBounds(645, 198, 70, 15);
 		toppingPrice2.setFont(tftFont);
+		toppingPrice2.setForeground(new Color(103, 51, 53));
 		contentPane.add(toppingPrice2);
 
 		JLabel toppingPrice3 = new JLabel(list.get(5));
-		toppingPrice3.setBounds(655, 228, 70, 15);
+		toppingPrice3.setBounds(645, 228, 70, 15);
 		toppingPrice3.setFont(tftFont);
+		toppingPrice3.setForeground(new Color(103, 51, 53));
 		contentPane.add(toppingPrice3);
 		
 		JLabel toppingPrice4 = new JLabel(list.get(7));
-		toppingPrice4.setBounds(655, 258, 70, 15);
+		toppingPrice4.setBounds(645, 258, 70, 15);
 		toppingPrice4.setFont(tftFont);
+		toppingPrice4.setForeground(new Color(103, 51, 53));
 		contentPane.add(toppingPrice4);
+		//
 				
 		JLabel toppingOptionPrice = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("popup/토핑옵션가격.png")));
 		toppingOptionPrice.setBounds(630, 165, 90, 115);
@@ -140,6 +146,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 		
 		currentCount = new JLabel("1");
 		currentCount.setBounds(212, 485, 25, 25);
+		currentCount.setForeground(new Color(103, 51, 53));
 		currentCount.setFont(tftFont2);
 		contentPane.add(currentCount);
 		
@@ -170,9 +177,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 				}
 			}
 		});
-		contentPane.add(countPlus);
-		
-		
+		contentPane.add(countPlus);		
 		
 		JLabel dow_price = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("popup/도우옵션가격.png")));
 		dow_price.setBounds(630, 345, 90, 115);
@@ -190,29 +195,30 @@ public class Pizza_PopUp_Frame extends JDialog {
 		sizeLabel_M.setFont(tftFont2);
 		sizeLabel_M.setBounds(460, 68, 25, 46);
 		sizeLabel_M.setOpaque(false);
-		contentPane.add(sizeLabel_M);
-
-		
+		contentPane.add(sizeLabel_M);		
 
 		JLabel sizeMPrice = new JLabel("원");
 		sizeMPrice.setFont(tftFont2);
 		sizeMPrice.setBounds(490, 75, 100, 30);
+		sizeMPrice.setForeground(new Color(103, 51, 53));
 		// 피자M의 가격
-		sizeMPrice.setText(sqm.findPriceMenuId(target + "M") + "원");
+		sizeMPrice.setText(sqm.findPriceMenuId(target) + "원");
 		contentPane.add(sizeMPrice);
 
 		JLabel sizeLPrice = new JLabel("원");
 		sizeLPrice.setFont(tftFont2);
 		sizeLPrice.setBounds(645, 75, 100, 30);
+		sizeLPrice.setForeground(new Color(103, 51, 53));
 		// 피자L의 가격
-		sizeLPrice.setText(sqm.findPriceMenuId(target + "L") + "원");
+		sizeLPrice.setText(sqm.findPriceMenuId(target.replace('M', 'L')) + "원");
 		contentPane.add(sizeLPrice);
 
 		JLabel menu_name_Label = new JLabel("name");
-		menu_name_Label.setForeground(new Color(255, 182, 193));
+		menu_name_Label.setForeground(new Color(103, 51, 53));
 		menu_name_Label.setFont(tftFont3);
-		menu_name_Label.setBounds(135, 40, 200, 40);
-		menu_name_Label.setText(target);
+		menu_name_Label.setBounds(135, 70, 210, 40);
+		menu_name_Label.setText(target.substring(3).replace('M', ' '));
+		
 		contentPane.add(menu_name_Label);
 
 		sizeMButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("popup/pizzaSizeFalse.png")));

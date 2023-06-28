@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Sql_Methods {
 
@@ -202,12 +203,13 @@ public class Sql_Methods {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			DBUtil.close(rs);
 			DBUtil.close(stmt);
 			DBUtil.close(conn);
 		}
 		System.out.println(list.toString());
-		if(list.size() < 3) {
-			for(int i = 2 ; i < 8; i++) {
+		if(list.size() < 8) {
+			for(int i = list.size() ; i < 8; i++) {
 				list.add(i, "");
 			}
 		}
@@ -274,4 +276,47 @@ public class Sql_Methods {
 		return edge;
 
 	}
+
+	/**
+	 * @author TAEIN
+	 * @param name ( %M, 사이드%, 음료% )
+	 * @param target ( next 버튼 추가시 6씩만 더해주면됨 )
+	 * @return List<Object> ( 메뉴이름, 이미지 순서 )
+	 */
+	public List<Object> findImageAndMenuIdTarget(String name, int target) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<Object> list = new ArrayList<>();
+		byte[] bytes = null;
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement("select menu_id, image from menu where menu_id like ? order by no limit ?,6");
+			stmt.setString(1, name);
+			stmt.setInt(2, target);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				String menu_id = rs.getString("menu_id");
+				bytes = rs.getBytes("image");
+				list.add(menu_id);
+				list.add(bytes);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(rs);
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
+		}
+		System.out.println(list.toString());
+		if(list.size() < 12) {
+			for(int i = list.size() ; i < 12; i++) {
+				list.add(i, "");
+			}
+		}
+		return list;
+	}
+	
 }

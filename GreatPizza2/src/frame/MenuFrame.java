@@ -1,12 +1,17 @@
 package frame;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.InputStream;
+import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,6 +34,10 @@ public class MenuFrame extends JFrame {
 	private int detailOrderCount = 0; // 피자 - 담기누를때 ++ 사이드,음료 - 담을때마다 ++
 	private JLayeredPane menuPnl;
 	private MainOrder mo;
+	// parameter로 크기값 받고 return으로 해당크기의 tftfont 해주는
+	private Font tftFont = getBMJUAFont(18f);
+	private Font tftFont2 = getBMJUAFont(25f);
+	private Font tftFont3 = getBMJUAFont(35f);
 
 	/**
 	 * Launch the application.
@@ -47,6 +56,20 @@ public class MenuFrame extends JFrame {
 		});
 	}
 
+	private Font getBMJUAFont(float f) {
+		// TFT 폰트 파일 로드
+        InputStream fontStream = Pizza_PopUp_Frame.class.getResourceAsStream("/popup/BMJUA_ttf.ttf");
+        Font tftFont;
+        try {
+            tftFont = Font.createFont(Font.TRUETYPE_FONT, fontStream);
+            tftFont = tftFont.deriveFont(f);
+            return tftFont;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return null;
+	}
+
 	/**
 	 * Create the frame.
 	 */
@@ -62,7 +85,8 @@ public class MenuFrame extends JFrame {
 		menuPnl.setBounds(0, 196, 800, 469);
 		jlp.add(menuPnl, new Integer(3));
 
-		pizzaTabBtn();
+		// 초기화면 피자탭
+		pizzaTabBtn(0);
 
 		buttonSetting();// 버튼 생성 메소드
 
@@ -73,7 +97,7 @@ public class MenuFrame extends JFrame {
 				// 탭 전환시 지우고 다시 메뉴패널 위 버튼 생성
 				menuPnl.removeAll();
 				menuPnl.repaint();
-				pizzaTabBtn();
+				pizzaTabBtn(0);
 
 				pizzaBtn.setIcon(icon.getwhitePizzaBtn());
 
@@ -94,7 +118,7 @@ public class MenuFrame extends JFrame {
 
 				menuPnl.removeAll();
 				menuPnl.repaint();
-				sideTabBtn();
+				sideTabBtn(0);
 
 				sideBtn.setIcon(icon.getwhiteSideBtn());
 				// 버튼을 눌렀을 때 해당버튼 외 버튼들을 회색으로 바꿈
@@ -115,7 +139,7 @@ public class MenuFrame extends JFrame {
 
 				menuPnl.removeAll();
 				menuPnl.repaint();
-				drinkTabBtn();
+				drinkTabBtn(0);
 
 				drinkBtn.setIcon(icon.getwhiteDrinkBtn());
 
@@ -192,8 +216,10 @@ public class MenuFrame extends JFrame {
 
 	}
 
-	private void pizzaTabBtn() {
+	// 추가 메뉴가 있어서 다음 버튼 누르면 6,6 12,6 으로 
+	private void pizzaTabBtn(int target) {
 		Sql_Methods sqm = new Sql_Methods();
+		List<Object> list = sqm.findImageAndMenuIdTarget("%M", target);
 
 		// 버튼 눌렀을시 동작하는 메소드 (사이드, 음료용으로 바뀔듯 )
 		ActionListener al = new ActionListener() {
@@ -207,112 +233,282 @@ public class MenuFrame extends JFrame {
 		};
 
 		// image랑 이름 db에서 불러오게 만들기
-		JButton btn1 = new JButton(icon.getSmallBullgogiPizza());
-		btn1.setText("불고기피자");
+		JButton btn1 = new JButton(new ImageIcon((byte[])list.get(1)));
+		btn1.setText((String)list.get(0));
 		btn1.setBounds(60, 70, 175, 150);
 		btn1.addActionListener(al);
 		menuPnl.add(btn1, new Integer(3));
 		util.invisible(btn1);
+		
+		String replaceString1 = (String) list.get(0);
+		JLabel pizzaName1 = new JLabel();
+		pizzaName1.setText(replaceString1.substring(3).replace('M', ' '));
+		pizzaName1.setBounds(90, 220, 150, 30);
+		pizzaName1.setForeground(new Color(103, 51, 53));
+		pizzaName1.setFont(tftFont2);
+		menuPnl.add(pizzaName1, new Integer(3));
 
-		JButton btn2 = new JButton(icon.getSmallPepperoniPizza());
-		btn2.setText("페퍼로니피자");
+		JButton btn2 = new JButton(new ImageIcon((byte[])list.get(3)));
+		btn2.setText((String)list.get(2));
 		btn2.setBounds(300, 70, 175, 150);
 		btn2.addActionListener(al);
 		menuPnl.add(btn2, new Integer(3));
 		util.invisible(btn2);
+		
+		String replaceString2 = (String) list.get(2);
+		JLabel pizzaName2 = new JLabel();
+		pizzaName2.setText(replaceString2.substring(3).replace('M', ' '));
+		pizzaName2.setBounds(320, 220, 150, 30);
+		pizzaName2.setForeground(new Color(103, 51, 53));
+		pizzaName2.setFont(tftFont2);
+		menuPnl.add(pizzaName2, new Integer(3));
 
-		JButton btn3 = new JButton(icon.getSmallShrimpPizza());
-		btn3.setText("쉬림프피자");
+		JButton btn3 = new JButton(new ImageIcon((byte[])list.get(5)));
+		btn3.setText((String)list.get(4));
 		btn3.setBounds(550, 70, 175, 150);
 		btn3.addActionListener(al);
 		menuPnl.add(btn3, new Integer(3));
 		util.invisible(btn3);
+		
+		String replaceString3 = (String) list.get(4);
+		JLabel pizzaName3 = new JLabel();
+		pizzaName3.setText(replaceString3.substring(3).replace('M', ' '));
+		pizzaName3.setBounds(580, 220, 150, 30);
+		pizzaName3.setForeground(new Color(103, 51, 53));
+		pizzaName3.setFont(tftFont2);
+		menuPnl.add(pizzaName3, new Integer(3));
 
-		JButton btn4 = new JButton(icon.getSmallCheesePizza());
-		btn4.setText("치즈피자");
+		JButton btn4 = new JButton(new ImageIcon((byte[])list.get(7)));
+		btn4.setText((String)list.get(6));
 		btn4.setBounds(60, 260, 175, 150);
 		btn4.addActionListener(al);
 		menuPnl.add(btn4, new Integer(3));
 		util.invisible(btn4);
+		
+		String replaceString4 = (String) list.get(6);
+		JLabel pizzaName4 = new JLabel();
+		pizzaName4.setText(replaceString4.substring(3).replace('M', ' '));
+		pizzaName4.setBounds(100, 410, 150, 30);
+		pizzaName4.setForeground(new Color(103, 51, 53));
+		pizzaName4.setFont(tftFont2);
+		menuPnl.add(pizzaName4, new Integer(3));
 
-		JButton btn5 = new JButton(icon.getSmallCombinationPizza());
-		btn5.setText("콤비네이션피자");
+		JButton btn5 = new JButton(new ImageIcon((byte[])list.get(9)));
+		btn5.setText((String)list.get(8));
 		btn5.setBounds(300, 260, 175, 150);
 		btn5.addActionListener(al);
 		menuPnl.add(btn5, new Integer(3));
 		util.invisible(btn5);
+		
+		String replaceString5 = (String) list.get(8);
+		JLabel pizzaName5 = new JLabel();
+		pizzaName5.setText(replaceString5.substring(3).replace('M', ' '));
+		pizzaName5.setBounds(315, 410, 150, 30);
+		pizzaName5.setForeground(new Color(103, 51, 53));
+		pizzaName5.setFont(tftFont2);
+		menuPnl.add(pizzaName5, new Integer(3));
 
-		JButton btn6 = new JButton(icon.getSmallPotatoPizza());
-		btn6.setText("포테이토피자");
+		JButton btn6 = new JButton(new ImageIcon((byte[])list.get(11)));
+		btn6.setText((String)list.get(10));
 		btn6.setBounds(550, 260, 175, 150);
 		btn6.addActionListener(al);
 		menuPnl.add(btn6, new Integer(3));
 		util.invisible(btn6);
+		
+		String replaceString6 = (String) list.get(10);
+		JLabel pizzaName6 = new JLabel();
+		pizzaName6.setText(replaceString6.substring(3).replace('M', ' '));
+		pizzaName6.setBounds(570, 410, 150, 30);
+		pizzaName6.setForeground(new Color(103, 51, 53));
+		pizzaName6.setFont(tftFont2);
+		menuPnl.add(pizzaName6, new Integer(3));
 
 	}
 
-	private void sideTabBtn() {
-		JButton btn1 = new JButton(icon.getHotsource());
+	private void sideTabBtn(int target) {
+		Sql_Methods sqm = new Sql_Methods();
+		List<Object> list = sqm.findImageAndMenuIdTarget("사이드%", target);
+
+		// detailOrder에 넣어주는 동작 추가하기
+		ActionListener al = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		};
+		
+		JButton btn1 = new JButton(new ImageIcon((byte[])list.get(1)));
 		btn1.setBounds(60, 70, 180, 150);
+		btn1.setText((String)list.get(0));
 		menuPnl.add(btn1, new Integer(3));
 		util.invisible(btn1);
+		
+		String replaceString1 = (String) list.get(0);
+		JLabel sideName1 = new JLabel();
+		sideName1.setText(replaceString1.substring(4));
+		sideName1.setBounds(90, 220, 150, 30);
+		sideName1.setForeground(new Color(103, 51, 53));
+		sideName1.setFont(tftFont2);
+		menuPnl.add(sideName1, new Integer(3));
 
-		JButton btn2 = new JButton(icon.getGarlic());
+		JButton btn2 = new JButton(new ImageIcon((byte[])list.get(3)));
 		btn2.setBounds(300, 70, 180, 150);
+		btn1.setText((String)list.get(2));
 		menuPnl.add(btn2, new Integer(3));
 		util.invisible(btn2);
-
-		JButton btn3 = new JButton(icon.getWing());
+		
+		String replaceString2 = (String) list.get(2);
+		JLabel sideName2 = new JLabel();
+		sideName2.setText(replaceString2.substring(4));
+		sideName2.setBounds(320, 220, 150, 30);
+		sideName2.setForeground(new Color(103, 51, 53));
+		sideName2.setFont(tftFont2);
+		menuPnl.add(sideName2, new Integer(3));
+		
+		JButton btn3 = new JButton(new ImageIcon((byte[])list.get(5)));
 		btn3.setBounds(550, 70, 180, 150);
+		btn1.setText((String)list.get(4));
 		menuPnl.add(btn3, new Integer(3));
 		util.invisible(btn3);
+		
+		String replaceString3 = (String) list.get(4);
+		JLabel sideName3 = new JLabel();
+		sideName3.setText(replaceString3.substring(4));
+		sideName3.setBounds(580, 220, 150, 30);
+		sideName3.setForeground(new Color(103, 51, 53));
+		sideName3.setFont(tftFont2);
+		menuPnl.add(sideName3, new Integer(3));
 
-		JButton btn4 = new JButton(icon.getPasta());
+		JButton btn4 = new JButton(new ImageIcon((byte[])list.get(7)));
 		btn4.setBounds(60, 260, 180, 150);
+		btn1.setText((String)list.get(6));
 		menuPnl.add(btn4, new Integer(3));
 		util.invisible(btn4);
+		
+		String replaceString4 = (String) list.get(6);
+		JLabel sideName4 = new JLabel();
+		sideName4.setText(replaceString4.substring(4));
+		sideName4.setBounds(120, 410, 150, 30);
+		sideName4.setForeground(new Color(103, 51, 53));
+		sideName4.setFont(tftFont2);
+		menuPnl.add(sideName4, new Integer(3));
 
-		JButton btn5 = new JButton(icon.getCheeseball());
+		JButton btn5 = new JButton(new ImageIcon((byte[])list.get(9)));
 		btn5.setBounds(300, 260, 180, 150);
+		btn1.setText((String)list.get(8));
 		menuPnl.add(btn5, new Integer(3));
 		util.invisible(btn5);
+		
+		String replaceString5 = (String) list.get(8);
+		JLabel sideName5 = new JLabel();
+		sideName5.setText(replaceString5.substring(4));
+		sideName5.setBounds(330, 410, 150, 30);
+		sideName5.setForeground(new Color(103, 51, 53));
+		sideName5.setFont(tftFont2);
+		menuPnl.add(sideName5, new Integer(3));
 
-		JButton btn6 = new JButton(icon.getHashBrown());
+		JButton btn6 = new JButton(new ImageIcon((byte[])list.get(11)));
 		btn6.setBounds(550, 260, 180, 150);
+		btn1.setText((String)list.get(10));
 		menuPnl.add(btn6, new Integer(3));
 		util.invisible(btn6);
+		
+		String replaceString6 = (String) list.get(10);
+		JLabel sideName6 = new JLabel();
+		sideName6.setText(replaceString6.substring(4));
+		sideName6.setBounds(610, 410, 150, 30);
+		sideName6.setForeground(new Color(103, 51, 53));
+		sideName6.setFont(tftFont2);
+		menuPnl.add(sideName6, new Integer(3));
 	}
 
-	private void drinkTabBtn() {
-		JButton btn1 = new JButton(icon.getCoke1());
+	private void drinkTabBtn(int target) {
+		Sql_Methods sqm = new Sql_Methods();
+		List<Object> list = sqm.findImageAndMenuIdTarget("음료%", target);
+		
+		JButton btn1 = new JButton(new ImageIcon((byte[])list.get(1)));
 		btn1.setBounds(60, 70, 180, 150);
+		btn1.setText((String)list.get(0));
 		menuPnl.add(btn1, new Integer(3));
 		util.invisible(btn1);
+		
+		String replaceString1 = (String) list.get(0);
+		JLabel sideName1 = new JLabel();
+		sideName1.setText(replaceString1.substring(3));
+		sideName1.setBounds(90, 220, 150, 30);
+		sideName1.setForeground(new Color(103, 51, 53));
+		sideName1.setFont(tftFont2);
+		menuPnl.add(sideName1, new Integer(3));
 
-		JButton btn2 = new JButton(icon.getCider1());
+		JButton btn2 = new JButton(new ImageIcon((byte[])list.get(3)));
 		btn2.setBounds(300, 70, 180, 150);
+		btn1.setText((String)list.get(2));
 		menuPnl.add(btn2, new Integer(3));
 		util.invisible(btn2);
+		
+		String replaceString2 = (String) list.get(2);
+		JLabel sideName2 = new JLabel();
+		sideName2.setText(replaceString2.substring(3));
+		sideName2.setBounds(320, 220, 150, 30);
+		sideName2.setForeground(new Color(103, 51, 53));
+		sideName2.setFont(tftFont2);
+		menuPnl.add(sideName2, new Integer(3));
 
-		JButton btn3 = new JButton(icon.getFanta1());
+		JButton btn3 = new JButton(new ImageIcon((byte[])list.get(5)));
 		btn3.setBounds(550, 70, 180, 150);
+		btn1.setText((String)list.get(4));
 		menuPnl.add(btn3, new Integer(3));
 		util.invisible(btn3);
+		
+		String replaceString3 = (String) list.get(4);
+		JLabel sideName3 = new JLabel();
+		sideName3.setText(replaceString3.substring(3));
+		sideName3.setBounds(580, 220, 150, 30);
+		sideName3.setForeground(new Color(103, 51, 53));
+		sideName3.setFont(tftFont2);
+		menuPnl.add(sideName3, new Integer(3));
 
-		JButton btn4 = new JButton(icon.getCoke2());
+		JButton btn4 = new JButton(new ImageIcon((byte[])list.get(7)));
 		btn4.setBounds(60, 260, 180, 150);
+		btn1.setText((String)list.get(6));
 		menuPnl.add(btn4, new Integer(3));
 		util.invisible(btn4);
+		
+		String replaceString4 = (String) list.get(6);
+		JLabel sideName4 = new JLabel();
+		sideName4.setText(replaceString4.substring(3));
+		sideName4.setBounds(120, 410, 150, 30);
+		sideName4.setForeground(new Color(103, 51, 53));
+		sideName4.setFont(tftFont2);
+		menuPnl.add(sideName4, new Integer(3));
 
-		JButton btn5 = new JButton(icon.getCider2());
+		JButton btn5 = new JButton(new ImageIcon((byte[])list.get(9)));
 		btn5.setBounds(300, 260, 180, 150);
+		btn1.setText((String)list.get(8));
 		menuPnl.add(btn5, new Integer(3));
 		util.invisible(btn5);
+		
+		String replaceString5 = (String) list.get(8);
+		JLabel sideName5 = new JLabel();
+		sideName5.setText(replaceString5.substring(3));
+		sideName5.setBounds(330, 410, 150, 30);
+		sideName5.setForeground(new Color(103, 51, 53));
+		sideName5.setFont(tftFont2);
+		menuPnl.add(sideName5, new Integer(3));
 
-		JButton btn6 = new JButton(icon.getFanta2());
+		JButton btn6 = new JButton(new ImageIcon((byte[])list.get(11)));
 		btn6.setBounds(550, 260, 180, 150);
+		btn1.setText((String)list.get(10));
 		menuPnl.add(btn6, new Integer(3));
 		util.invisible(btn6);
+		
+		String replaceString6 = (String) list.get(10);
+		JLabel sideName6 = new JLabel();
+		sideName6.setText(replaceString6.substring(3));
+		sideName6.setBounds(610, 410, 150, 30);
+		sideName6.setForeground(new Color(103, 51, 53));
+		sideName6.setFont(tftFont2);
+		menuPnl.add(sideName6, new Integer(3));
 	}
 
 	private void exiteKey() {
