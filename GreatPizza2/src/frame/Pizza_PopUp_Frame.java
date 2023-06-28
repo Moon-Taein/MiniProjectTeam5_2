@@ -325,6 +325,8 @@ public class Pizza_PopUp_Frame extends JDialog {
 				// radioButton 확인해서 menuitem 만들어줘서 detailorder에 add
 				
 				// 합친 가격 어쩌지
+//				피자가격 + 모든 옵션 가격
+//				Integer.valueOf(currentCount.getText())곱해줘야되고
 				
 				MenuFrame.detailOrderCount++;
 				DetailOrder deo = new DetailOrder(MenuFrame.detailOrderCount, newTarget, Integer.valueOf(currentCount.getText()), mo.getOrderNumber());

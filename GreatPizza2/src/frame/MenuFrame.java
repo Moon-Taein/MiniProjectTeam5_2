@@ -449,7 +449,7 @@ public class MenuFrame extends JFrame {
 		};
 		
 		JButton btn1 = new JButton(new ImageIcon((byte[])list.get(1)));
-		btn1.setBounds(60, 70, 180, 150);
+		btn1.setBounds(65, 70, 180, 150);
 		btn1.setText((String)list.get(0));
 		btn1.addActionListener(al);
 		menuPnl.add(btn1, new Integer(3));
@@ -458,7 +458,7 @@ public class MenuFrame extends JFrame {
 		String replaceString1 = (String) list.get(0);
 		JLabel sideName1 = new JLabel();
 		sideName1.setText(replaceString1.substring(3));
-		sideName1.setBounds(90, 220, 150, 30);
+		sideName1.setBounds(110, 220, 150, 30);
 		sideName1.setForeground(new Color(103, 51, 53));
 		sideName1.setFont(tftFont2);
 		menuPnl.add(sideName1, new Integer(3));
@@ -488,13 +488,13 @@ public class MenuFrame extends JFrame {
 		String replaceString3 = (String) list.get(4);
 		JLabel sideName3 = new JLabel();
 		sideName3.setText(replaceString3.substring(3));
-		sideName3.setBounds(580, 220, 150, 30);
+		sideName3.setBounds(600, 220, 150, 30);
 		sideName3.setForeground(new Color(103, 51, 53));
 		sideName3.setFont(tftFont2);
 		menuPnl.add(sideName3, new Integer(3));
 
 		JButton btn4 = new JButton(new ImageIcon((byte[])list.get(7)));
-		btn4.setBounds(60, 260, 180, 150);
+		btn4.setBounds(65, 260, 180, 150);
 		btn4.setText((String)list.get(6));
 		btn4.addActionListener(al);
 		menuPnl.add(btn4, new Integer(3));
@@ -503,7 +503,7 @@ public class MenuFrame extends JFrame {
 		String replaceString4 = (String) list.get(6);
 		JLabel sideName4 = new JLabel();
 		sideName4.setText(replaceString4.substring(3));
-		sideName4.setBounds(120, 410, 150, 30);
+		sideName4.setBounds(100, 410, 150, 30);
 		sideName4.setForeground(new Color(103, 51, 53));
 		sideName4.setFont(tftFont2);
 		menuPnl.add(sideName4, new Integer(3));
@@ -518,7 +518,7 @@ public class MenuFrame extends JFrame {
 		String replaceString5 = (String) list.get(8);
 		JLabel sideName5 = new JLabel();
 		sideName5.setText(replaceString5.substring(3));
-		sideName5.setBounds(330, 410, 150, 30);
+		sideName5.setBounds(350, 410, 150, 30);
 		sideName5.setForeground(new Color(103, 51, 53));
 		sideName5.setFont(tftFont2);
 		menuPnl.add(sideName5, new Integer(3));
@@ -533,7 +533,7 @@ public class MenuFrame extends JFrame {
 		String replaceString6 = (String) list.get(10);
 		JLabel sideName6 = new JLabel();
 		sideName6.setText(replaceString6.substring(3));
-		sideName6.setBounds(610, 410, 150, 30);
+		sideName6.setBounds(590, 410, 150, 30);
 		sideName6.setForeground(new Color(103, 51, 53));
 		sideName6.setFont(tftFont2);
 		menuPnl.add(sideName6, new Integer(3));
