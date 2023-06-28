@@ -17,8 +17,7 @@ public class imageIcon {
 	}
 	public ImageIcon getMenuFrame() {
 		return new ImageIcon(getClass().getClassLoader().getResource("MenuFrame.png"));
-	}
-	
+	}	
 	public ImageIcon getwhitePizzaBtn() {
 		return new ImageIcon(getClass().getClassLoader().getResource("whitePizzaBtn.png"));
 	}
@@ -42,75 +41,12 @@ public class imageIcon {
 	}
 	public ImageIcon getdarkMakePizzaBtn() {
 		return new ImageIcon(getClass().getClassLoader().getResource("darkMakePizzaBtn.png"));
-	}
-	public ImageIcon getSmallBullgogiPizza() {
-		return new ImageIcon(getClass().getClassLoader().getResource("불고기.png"));
-	}
-	public ImageIcon getSmallPepperoniPizza() {
-		return new ImageIcon(getClass().getClassLoader().getResource("페퍼로니.png"));
-	}
-	public ImageIcon getSmallShrimpPizza() {
-		return new ImageIcon(getClass().getClassLoader().getResource("쉬림프.png"));
-	}
-	public ImageIcon getSmallCheesePizza() {
-		return new ImageIcon(getClass().getClassLoader().getResource("치즈.png"));
-	}
-	public ImageIcon getSmallCombinationPizza() {
-		return new ImageIcon(getClass().getClassLoader().getResource("콤비네이션.png"));
-	}
-	public ImageIcon getSmallPotatoPizza() {
-		return new ImageIcon(getClass().getClassLoader().getResource("포테이토.png"));
-	}
-
-	public ImageIcon getCoke1() {
-		return new ImageIcon(getClass().getClassLoader().getResource("콜라큰거.png"));
-	}
-	public ImageIcon getCoke2() {
-		return new ImageIcon(getClass().getClassLoader().getResource("콜라작은거.png"));
-	}
-
-	public ImageIcon getCider1() {
-		return new ImageIcon(getClass().getClassLoader().getResource("사이다큰거.png"));
-	}
-
-	public ImageIcon getCider2() {
-		return new ImageIcon(getClass().getClassLoader().getResource("사이다작은거.png"));
-	}
-
-	public ImageIcon getFanta1() {
-		return new ImageIcon(getClass().getClassLoader().getResource("환타큰거.png"));
-	}
-
-	public ImageIcon getFanta2() {
-		return new ImageIcon(getClass().getClassLoader().getResource("환타작은거.png"));
-	}
+	}	
 	public ImageIcon orderComplete() {
 		return new ImageIcon(getClass().getClassLoader().getResource("주문완료프레임.png"));
 	}
 	public ImageIcon bigOrderBtn() {
 		return new ImageIcon(getClass().getClassLoader().getResource("주문완료버튼.png"));
-	}
-	public ImageIcon getHotsource() {
-		return new ImageIcon(getClass().getClassLoader().getResource("핫소스.png"));
-	}
-	public ImageIcon getGarlic() {
-		return new ImageIcon(getClass().getClassLoader().getResource("갈릭디핑소스.png"));
-	}
-
-	public ImageIcon getWing() {
-		return new ImageIcon(getClass().getClassLoader().getResource("버팔로윙.png"));
-	}
-
-	public ImageIcon getPasta() {
-		return new ImageIcon(getClass().getClassLoader().getResource("스파게티.png"));
-	}
-
-	public ImageIcon getCheeseball() {
-		return new ImageIcon(getClass().getClassLoader().getResource("치즈볼.png"));
-	}
-
-	public ImageIcon getHashBrown() {
-		return new ImageIcon(getClass().getClassLoader().getResource("해쉬브라운.png"));
 	}
 	public ImageIcon getBulldak() {
 		return new ImageIcon(getClass().getClassLoader().getResource("불닭소스.png"));
@@ -130,8 +66,5 @@ public class imageIcon {
 	public ImageIcon getBack() {
 		return new ImageIcon(getClass().getClassLoader().getResource("뒤로가기.png"));
 	}
-	
-	
-
 
 }
