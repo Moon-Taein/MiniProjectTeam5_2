@@ -1,6 +1,5 @@
 package frame;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -12,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 
 import Function.MainOrder;
 import Function.Sql_Methods;
@@ -23,7 +21,6 @@ public class MenuFrame extends JFrame {
 	private imageIcon icon = new imageIcon();
 	private JLayeredPane jlp;
 	private invisibility util = new invisibility();
-	private JPanel panel;
 	private JButton pizzaBtn;
 	private JButton sideBtn;
 	private JButton drinkBtn;
@@ -54,17 +51,15 @@ public class MenuFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MenuFrame() {
-		mainOrderCount++;
-		mo = new MainOrder(mainOrderCount);
-
-		exiteKey();
+		
 
 		FrameSetting();
 
 		menuPnl = new JLayeredPane();
-		menuPnl.setBackground(Color.WHITE);
 		menuPnl.setBounds(0, 196, 800, 469);
 		jlp.add(menuPnl, new Integer(3));
+
+		pizzaTabBtn();
 
 		buttonSetting();// 버튼 생성 메소드
 
@@ -77,14 +72,14 @@ public class MenuFrame extends JFrame {
 				// 탭 전환시 지우고 다시 메뉴패널 위 버튼 생성
 				menuPnl.removeAll();
 				menuPnl.repaint();
-				pizzaTapBtn();
+				pizzaTabBtn();
 
 				pizzaBtn.setIcon(icon.getwhitePizzaBtn());
 
 				sideBtn.setIcon(icon.getdarkSideBtn());
 				drinkBtn.setIcon(icon.getdarkDrinkBtn());
 				makePizzaBtn.setIcon(icon.getdarkMakePizzaBtn());
-				// jlp.add(menuPnl, new Integer(3));
+				
 
 			}
 		});
@@ -104,6 +99,7 @@ public class MenuFrame extends JFrame {
 				drinkBtn.setIcon(icon.getdarkDrinkBtn());
 				makePizzaBtn.setIcon(icon.getdarkMakePizzaBtn());
 				menuPnl.repaint();
+				
 
 			}
 		});
@@ -128,11 +124,11 @@ public class MenuFrame extends JFrame {
 
 		makePizzaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
 				menuPnl.removeAll();
 				menuPnl.repaint();
 				MakePizzaTabBtn();
-
+				
 				pizzaBtn.setIcon(icon.getdarkPizzaBtn());
 				sideBtn.setIcon(icon.getdarkSideBtn());
 				drinkBtn.setIcon(icon.getdarkDrinkBtn());
@@ -188,12 +184,10 @@ public class MenuFrame extends JFrame {
 
 	}
 
-	// 팝업화면으로 이동시 mainorder정보를 가지고가서 detailorder 입력해주기
-	private void pizzaTapBtn() {
+	private void pizzaTabBtn() {
 		Sql_Methods sqm = new Sql_Methods();
 
-		// 피자 버튼 눌렀을시 동작하는 메소드
-		// 사이드 음료는 detailorder 바로 만들어서 mainorder에 넣어주기
+		// 버튼 눌렀을시 동작하는 메소드 (사이드, 음료용으로 바뀔듯 )
 		ActionListener al = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

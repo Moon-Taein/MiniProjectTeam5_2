@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 
 public class imageIcon {
 	public ImageIcon getOrderBtnKor() {
-		return new ImageIcon(getClass().getClassLoader().getResource("OrderBtnKor.png"));
+		return new ImageIcon(getClass().getClassLoader().getResource("주문하기.png"));
 	}
 	public ImageIcon getOrderBtn() {
 		return new ImageIcon(getClass().getClassLoader().getResource("OrderBtn.png"));
