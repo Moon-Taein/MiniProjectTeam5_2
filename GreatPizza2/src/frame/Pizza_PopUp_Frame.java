@@ -16,14 +16,15 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
+import Function.MainOrder;
 import Function.Sql_Methods;
 
 public class Pizza_PopUp_Frame extends JDialog {
 
 	private ImagePanel contentPane;
 
-	// 불고기피자 -> 불고기피자 라는 이름을 받아서 구현해보자
-	public Pizza_PopUp_Frame(String target) {
+	// 피자_불고기피자M -> 불고기피자 라는 이름을 받아서 구현해보자
+	public Pizza_PopUp_Frame(String target, MainOrder mo) {
 
 		setModal(true);
 		Sql_Methods sqm = new Sql_Methods();
@@ -34,12 +35,6 @@ public class Pizza_PopUp_Frame extends JDialog {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-//		JLabel backgroundImage = new JLabel();
-//		backgroundImage.setBounds(0, 0, 800, 500);
-//		ImageIcon backImg = new ImageIcon("background2.png");
-//		backgroundImage.setIcon(backImg);
-//		contentPane.add(backgroundImage);
 
 		JLabel imageLabel = new JLabel("image");
 		imageLabel.setBounds(24, 54, 410, 380);
@@ -116,6 +111,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 		EdgeRadioButton_4.setBorderPainted(true);
 		edgeChoice.add(EdgeRadioButton_4);
 
+		// 버튼에 이미지 넣기
 		JButton cancelButton = new JButton("취소");
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -124,6 +120,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 		cancelButton.setBounds(475, 411, 97, 23);
 		contentPane.add(cancelButton);
 
+		// 버튼에 이미지 넣기
 		JButton addButton = new JButton("담기");
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -132,6 +129,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 		addButton.setBounds(601, 411, 97, 23);
 		contentPane.add(addButton);
 
+		// 투명버튼일듯
 		JButton minusCountButton = new JButton("<");
 		contentPane.add(minusCountButton);
 		minusCountButton.addActionListener(new ActionListener() {
@@ -144,6 +142,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 		});
 		minusCountButton.setBounds(515, 326, 57, 23);
 
+		// 투명버튼일듯
 		JButton plusCountButton = new JButton(">");
 		contentPane.add(plusCountButton);
 		plusCountButton.addActionListener(new ActionListener() {
@@ -159,6 +158,8 @@ public class Pizza_PopUp_Frame extends JDialog {
 
 		setLocationRelativeTo(null);
 	}
+
+	// menuitem이 포함된 detailorder 반환해주는 메소드 필요함
 
 }
 

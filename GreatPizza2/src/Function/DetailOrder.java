@@ -8,7 +8,7 @@ public class DetailOrder {
 	private String menu;
 	private int menu_count;
 	private int mainOrderNumber;
-	private List<MenuItem> miList;
+	private List<MenuItem> miList; // 피자 옵션 팝업화면에서 고른 옵션들 menuitem으로 만들어서 추가해주기
 
 	public DetailOrder(int detailOrderNumber, String menu, int menu_count, int mainOrderNumber) {
 		super();

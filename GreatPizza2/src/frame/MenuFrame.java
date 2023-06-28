@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
+import Function.MainOrder;
 import Function.Sql_Methods;
 import img.imageIcon;
 import utilty.invisibility;
@@ -24,7 +25,10 @@ public class MenuFrame extends JFrame {
 	private JButton sideBtn;
 	private JButton drinkBtn;
 	private JButton makePizzaBtn;
+	private int mainOrderCount = 0; // order 누르면 ++ 되게
+	private int detailOrderCount = 0; // 피자 - 담기누를때 ++ 사이드,음료 - 담을때마다 ++
 	private JLayeredPane menuPnl;
+	private MainOrder mo;
 
 	/**
 	 * Launch the application.
@@ -175,12 +179,6 @@ public class MenuFrame extends JFrame {
 		makePizzaBtn = new JButton();
 		makePizzaBtn.setBounds(600, 154, 200, 50);
 		jlp.add(makePizzaBtn, new Integer(3));
-		
-		JButton orderBtn = new JButton(icon.getOrderBtnKor());
-		orderBtn.setBounds(640, 851, 140, 45);
-		jlp.add(orderBtn, new Integer(3));
-		util.invisible(orderBtn);
-		
 
 	}
 
@@ -193,7 +191,7 @@ public class MenuFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton a = (JButton) e.getSource();
 				String target = a.getText();
-				Pizza_PopUp_Frame ppf = new Pizza_PopUp_Frame(target);
+				Pizza_PopUp_Frame ppf = new Pizza_PopUp_Frame(target, mo);
 				ppf.setVisible(true);
 			}
 		};
