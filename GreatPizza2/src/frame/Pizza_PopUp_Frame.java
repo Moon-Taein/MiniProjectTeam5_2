@@ -124,7 +124,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 		// radio버튼 구성
 		JRadioButton EdgeRadioButton_1 = new JRadioButton(
 				new ImageIcon(getClass().getClassLoader().getResource("popup\\\\기본0.png")));
-		EdgeRadioButton_1.setBounds(530, 335, 154, 24);
+		EdgeRadioButton_1.setBounds(460, 345, 154, 24);
 		EdgeRadioButton_1.setText("도우_기본");
 		contentPane.add(EdgeRadioButton_1, new Integer(3));
 		EdgeRadioButton_1.setBorderPainted(true);
@@ -172,6 +172,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 		cancelButton.setBorderPainted(false);
 		cancelButton.setContentAreaFilled(false);
 		cancelButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("popup\\cancelRoll.png")));
+		cancelButton.setOpaque(false);
 		contentPane.add(cancelButton);
 
 		// 담기할 경우
@@ -185,6 +186,8 @@ public class Pizza_PopUp_Frame extends JDialog {
 		addButton.setBounds(600, 490, 143, 46);
 		addButton.setBorderPainted(false);
 		addButton.setContentAreaFilled(false);
+		addButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("popup\\선택Roll.png")));
+		addButton.setOpaque(false);
 		contentPane.add(addButton);
 
 		// 토핑 추가 부분
