@@ -45,7 +45,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 		contentPane.setLayout(null);
 
 		JLabel imageLabel = new JLabel("image");
-		imageLabel.setBounds(10, 80, 410, 380);
+		imageLabel.setBounds(15, 80, 410, 380);
 		// image icon 사용해서 각 피자의 이미지 사용해서 넣어줘야함
 		ImageIcon ic = new ImageIcon(sqm.findPizzaImageMenuId("피자_" + target + "M"));
 
@@ -124,7 +124,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 		// radio버튼 구성
 		JRadioButton EdgeRadioButton_1 = new JRadioButton(
 				new ImageIcon(getClass().getClassLoader().getResource("popup\\\\기본0.png")));
-		EdgeRadioButton_1.setBounds(530, 335, 154, 24);
+		EdgeRadioButton_1.setBounds(460, 345, 154, 24);
 		EdgeRadioButton_1.setText("도우_기본");
 		contentPane.add(EdgeRadioButton_1, new Integer(3));
 		EdgeRadioButton_1.setBorderPainted(true);
@@ -135,7 +135,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 
 		JRadioButton EdgeRadioButton_2 = new JRadioButton(
 				new ImageIcon(getClass().getClassLoader().getResource("popup\\\\노엣지0.png")));
-		EdgeRadioButton_2.setBounds(530, 367, 154, 24);
+		EdgeRadioButton_2.setBounds(460, 375, 154, 24);
 		contentPane.add(EdgeRadioButton_2);
 		EdgeRadioButton_2.setBorderPainted(true);
 		EdgeRadioButton_2.setSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("popup\\\\노엣지.png")));
@@ -144,7 +144,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 
 		JRadioButton EdgeRadioButton_3 = new JRadioButton(
 				new ImageIcon(getClass().getClassLoader().getResource("popup\\\\치즈크러스트0.png")));
-		EdgeRadioButton_3.setBounds(530, 400, 154, 24);
+		EdgeRadioButton_3.setBounds(460, 405, 154, 24);
 		contentPane.add(EdgeRadioButton_3);
 		EdgeRadioButton_3.setBorderPainted(true);
 		EdgeRadioButton_3
@@ -154,7 +154,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 
 		JRadioButton EdgeRadioButton_4 = new JRadioButton(
 				new ImageIcon(getClass().getClassLoader().getResource("popup\\\\고구마무스0.png")));
-		EdgeRadioButton_4.setBounds(530, 433, 154, 24);
+		EdgeRadioButton_4.setBounds(460, 435, 154, 24);
 		contentPane.add(EdgeRadioButton_4);
 		EdgeRadioButton_4.setBorderPainted(true);
 		EdgeRadioButton_4.setSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("popup\\\\고구마무스.png")));
@@ -165,12 +165,14 @@ public class Pizza_PopUp_Frame extends JDialog {
 		JButton cancelButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("popup\\cancel.png")));
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				dispose();
 			}
 		});
 		cancelButton.setBounds(450, 490, 143, 46);
 		cancelButton.setBorderPainted(false);
 		cancelButton.setContentAreaFilled(false);
+		cancelButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("popup\\cancelRoll.png")));
+		cancelButton.setOpaque(false);
 		contentPane.add(cancelButton);
 
 		// 담기할 경우
@@ -184,6 +186,8 @@ public class Pizza_PopUp_Frame extends JDialog {
 		addButton.setBounds(600, 490, 143, 46);
 		addButton.setBorderPainted(false);
 		addButton.setContentAreaFilled(false);
+		addButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("popup\\선택Roll.png")));
+		addButton.setOpaque(false);
 		contentPane.add(addButton);
 
 		// 토핑 추가 부분
@@ -193,7 +197,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 
 		// 엣지 변경 부분
 		JLabel changeEdge = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("popup\\엣지변경.png")));
-		changeEdge.setBounds(446, 307, 295, 162);
+		changeEdge.setBounds(446, 307, 298, 162);
 		contentPane.add(changeEdge);
 
 		// 수량 변경 부분
@@ -202,6 +206,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 		contentPane.add(countLabel);
 
 		setLocationRelativeTo(null);
+
 	}
 }
 
