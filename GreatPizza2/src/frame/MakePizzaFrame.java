@@ -1,5 +1,6 @@
 package frame;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -94,8 +95,15 @@ public class MakePizzaFrame extends JFrame {
 		jlp.add(btnNewButton_1, new Integer(2));
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(138, 685, 46, 42);
+		panel.setBackground(new Color(229,206,190));
+		panel.setBounds(88, 685, 170, 60);
 		jlp.add(panel, new Integer(2));
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("엣지");
+		lblNewLabel.setText("라라");
+		lblNewLabel.setBounds(50, 10, 80, 40);
+		panel.add(lblNewLabel);
 		
 		JButton backBtn = new JButton(icon.getBack());
 		backBtn.setBounds(12, 10, 150, 70);

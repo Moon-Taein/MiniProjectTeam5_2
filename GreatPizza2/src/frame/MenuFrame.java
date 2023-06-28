@@ -65,6 +65,7 @@ public class MenuFrame extends JFrame {
 		pizzaTabBtn();
 
 		buttonSetting();// 버튼 생성 메소드
+		
 
 		pizzaBtn.addActionListener(new ActionListener() {
 
@@ -143,7 +144,8 @@ public class MenuFrame extends JFrame {
 		util.invisible(drinkBtn);
 		util.invisible(makePizzaBtn);
 		
-
+		exiteKey();
+		jlp.requestFocusInWindow();
 
 
 	}
