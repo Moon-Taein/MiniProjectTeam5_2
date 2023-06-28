@@ -51,7 +51,6 @@ public class MenuFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MenuFrame() {
-		
 
 		FrameSetting();
 
@@ -77,7 +76,6 @@ public class MenuFrame extends JFrame {
 				sideBtn.setIcon(icon.getdarkSideBtn());
 				drinkBtn.setIcon(icon.getdarkDrinkBtn());
 				makePizzaBtn.setIcon(icon.getdarkMakePizzaBtn());
-				
 
 			}
 		});
@@ -97,7 +95,6 @@ public class MenuFrame extends JFrame {
 				drinkBtn.setIcon(icon.getdarkDrinkBtn());
 				makePizzaBtn.setIcon(icon.getdarkMakePizzaBtn());
 				menuPnl.repaint();
-				
 
 			}
 		});
@@ -122,11 +119,11 @@ public class MenuFrame extends JFrame {
 
 		makePizzaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				menuPnl.removeAll();
 				menuPnl.repaint();
 				MakePizzaTabBtn();
-				
+
 				pizzaBtn.setIcon(icon.getdarkPizzaBtn());
 				sideBtn.setIcon(icon.getdarkSideBtn());
 				drinkBtn.setIcon(icon.getdarkDrinkBtn());
@@ -202,37 +199,43 @@ public class MenuFrame extends JFrame {
 		};
 
 		JButton btn1 = new JButton(icon.getSmallBullgogiPizza());
-		btn1.setBounds(60, 70, 180, 150);
+		btn1.setText("불고기피자");
+		btn1.setBounds(60, 70, 175, 150);
 		btn1.addActionListener(al);
 		menuPnl.add(btn1, new Integer(3));
 		util.invisible(btn1);
 
 		JButton btn2 = new JButton(icon.getSmallPepperoniPizza());
-		btn2.setBounds(300, 70, 180, 150);
+		btn2.setText("페퍼로니피자");
+		btn2.setBounds(300, 70, 175, 150);
 		btn2.addActionListener(al);
 		menuPnl.add(btn2, new Integer(3));
 		util.invisible(btn2);
 
 		JButton btn3 = new JButton(icon.getSmallShrimpPizza());
-		btn3.setBounds(550, 70, 180, 150);
+		btn3.setText("쉬림프피자");
+		btn3.setBounds(550, 70, 175, 150);
 		btn3.addActionListener(al);
 		menuPnl.add(btn3, new Integer(3));
 		util.invisible(btn3);
 
 		JButton btn4 = new JButton(icon.getSmallCheesePizza());
-		btn4.setBounds(60, 260, 180, 150);
+		btn4.setText("치즈피자");
+		btn4.setBounds(60, 260, 175, 150);
 		btn4.addActionListener(al);
 		menuPnl.add(btn4, new Integer(3));
 		util.invisible(btn4);
 
 		JButton btn5 = new JButton(icon.getSmallCombinationPizza());
-		btn5.setBounds(300, 260, 180, 150);
+		btn5.setText("콤비네이션피자");
+		btn5.setBounds(300, 260, 175, 150);
 		btn5.addActionListener(al);
 		menuPnl.add(btn5, new Integer(3));
 		util.invisible(btn5);
 
 		JButton btn6 = new JButton(icon.getSmallPotatoPizza());
-		btn6.setBounds(550, 260, 180, 150);
+		btn6.setText("포테이토피자");
+		btn6.setBounds(550, 260, 175, 150);
 		btn6.addActionListener(al);
 		menuPnl.add(btn6, new Integer(3));
 		util.invisible(btn6);
