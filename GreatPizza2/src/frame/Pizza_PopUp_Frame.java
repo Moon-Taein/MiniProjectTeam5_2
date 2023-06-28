@@ -124,7 +124,8 @@ public class Pizza_PopUp_Frame extends JDialog {
 		// radio버튼 구성
 		JRadioButton EdgeRadioButton_1 = new JRadioButton(
 				new ImageIcon(getClass().getClassLoader().getResource("popup\\\\기본0.png")));
-		EdgeRadioButton_1.setBounds(460, 345, 154, 24);
+		EdgeRadioButton_1.setBounds(530, 335, 154, 24);
+		EdgeRadioButton_1.setText("도우_기본");
 		contentPane.add(EdgeRadioButton_1, new Integer(3));
 		EdgeRadioButton_1.setBorderPainted(true);
 		EdgeRadioButton_1.setSelected(true);
