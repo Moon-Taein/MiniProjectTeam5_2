@@ -1,6 +1,5 @@
 package frame;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -12,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 
 import Function.Sql_Methods;
 import img.imageIcon;
@@ -22,7 +20,6 @@ public class MenuFrame extends JFrame {
 	private imageIcon icon = new imageIcon();
 	private JLayeredPane jlp;
 	private invisibility util = new invisibility();
-	private JPanel panel;
 	private JButton pizzaBtn;
 	private JButton sideBtn;
 	private JButton drinkBtn;
@@ -50,12 +47,11 @@ public class MenuFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MenuFrame() {
-		exiteKey();
+		
 
 		FrameSetting();
 
 		menuPnl = new JLayeredPane();
-		menuPnl.setBackground(Color.WHITE);
 		menuPnl.setBounds(0, 196, 800, 469);
 		jlp.add(menuPnl, new Integer(3));
 
@@ -77,7 +73,7 @@ public class MenuFrame extends JFrame {
 				sideBtn.setIcon(icon.getdarkSideBtn());
 				drinkBtn.setIcon(icon.getdarkDrinkBtn());
 				makePizzaBtn.setIcon(icon.getdarkMakePizzaBtn());
-				// jlp.add(menuPnl, new Integer(3));
+				
 
 			}
 		});
@@ -97,6 +93,7 @@ public class MenuFrame extends JFrame {
 				drinkBtn.setIcon(icon.getdarkDrinkBtn());
 				makePizzaBtn.setIcon(icon.getdarkMakePizzaBtn());
 				menuPnl.repaint();
+				
 
 			}
 		});
@@ -178,6 +175,12 @@ public class MenuFrame extends JFrame {
 		makePizzaBtn = new JButton();
 		makePizzaBtn.setBounds(600, 154, 200, 50);
 		jlp.add(makePizzaBtn, new Integer(3));
+		
+		JButton orderBtn = new JButton(icon.getOrderBtnKor());
+		orderBtn.setBounds(640, 851, 140, 45);
+		jlp.add(orderBtn, new Integer(3));
+		util.invisible(orderBtn);
+		
 
 	}
 
