@@ -25,7 +25,7 @@ public class DBUtil {
 
 			BasicDataSource ds = new BasicDataSource();
 
-			// datasource에 dirver, 사용할 db, user, password 세팅
+			// datasource에 dirver, 사용할 db, user, password 세팅ㅁ
 			ds.setDriverClassName(PROPS.getProperty("jdbc.DRIVER"));
 			ds.setUrl(PROPS.getProperty("jdbc.URL"));
 			ds.setUsername(PROPS.getProperty("jdbc.USER"));
