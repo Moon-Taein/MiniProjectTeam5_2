@@ -2,6 +2,8 @@ package frame;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -84,15 +86,30 @@ public class MakePizzaFrame extends JFrame {
 		jlp.add(btn5, new Integer(1));
 		
 		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(198, 761, 195, 65);
+		btnNewButton.setBounds(199, 810, 195, 65);
 		jlp.add(btnNewButton, new Integer(2));
 		
 		JButton btnNewButton_1 = new JButton("New button");
-		btnNewButton_1.setBounds(461, 761, 195, 65);
+		btnNewButton_1.setBounds(463, 810, 195, 65);
 		jlp.add(btnNewButton_1, new Integer(2));
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(138, 685, 46, 42);
 		jlp.add(panel, new Integer(2));
+		
+		JButton backBtn = new JButton(icon.getBack());
+		backBtn.setBounds(12, 10, 150, 70);
+		jlp.add(backBtn, new Integer(2));
+		util.invisible(backBtn);
+		
+		backBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				MenuFrame backFrame = new MenuFrame();
+				
+			}
+		});
 	}
 }
