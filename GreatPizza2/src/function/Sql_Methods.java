@@ -114,6 +114,7 @@ public class Sql_Methods {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			DBUtil.close(rs);
 			DBUtil.close(stmt);
 			DBUtil.close(conn);
 		}
@@ -143,6 +144,7 @@ public class Sql_Methods {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			DBUtil.close(rs);
 			DBUtil.close(stmt);
 			DBUtil.close(conn);
 		}
@@ -172,6 +174,7 @@ public class Sql_Methods {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			DBUtil.close(rs);
 			DBUtil.close(stmt);
 			DBUtil.close(conn);
 		}
