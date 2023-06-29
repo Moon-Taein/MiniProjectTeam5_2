@@ -267,6 +267,10 @@ public class Sql_Methods {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			DBUtil.close(rs);
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
 		}
 
 		return edgeName;
@@ -301,6 +305,10 @@ public class Sql_Methods {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			DBUtil.close(rs);
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
 		}
 
 		return edge;
@@ -347,6 +355,56 @@ public class Sql_Methods {
 			}
 		}
 		return list;
+	}
+
+	public int findMainOrderCount() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement("select no from mainorder order by no desc limit 1");
+			rs = stmt.executeQuery();
+
+			int target = 0;
+			if (rs.next()) {
+				target = rs.getInt("no");
+				System.out.println(target);
+			}
+			return target;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(rs);
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
+		}
+		return 0;
+	}
+
+	public int findDetailOrderCount() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement("select no from detailorder order by no desc limit 1");
+			rs = stmt.executeQuery();
+
+			int target = 0;
+			if (rs.next()) {
+				target = rs.getInt("no");
+				System.out.println(target);
+			}
+			return target;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(rs);
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
+		}
+		return 0;
 	}
 
 }
