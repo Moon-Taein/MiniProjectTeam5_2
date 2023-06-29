@@ -19,6 +19,7 @@ public class DBUtil {
 	static {
 		try {
 			PROPS.load(DBUtil.class.getClassLoader().getResourceAsStream("function/mysql.properties"));
+			System.out.println(PROPS.toString());
 //			Class.forName(PROPS.getProperty("jdbc.DRIVER"));
 			BasicDataSource ds = new BasicDataSource();
 
