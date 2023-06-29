@@ -85,8 +85,8 @@ public class MainFrame extends JFrame {
 
 	private void BtnSetting() {
 		orderBtn = new JButton(icon.getOrderBtn());
-		orderBtn.setBounds(250, 648, 300, 100);
-
+		orderBtn.setBounds(250, 648, 300, 120);
+		
 		util.invisible(orderBtn);
 
 		jlp.add(orderBtn, new Integer(2));

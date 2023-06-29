@@ -1,6 +1,4 @@
-package Function;
-
-
+package function;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -20,9 +18,8 @@ public class DBUtil {
 
 	static {
 		try {
-			PROPS.load(DBUtil.class.getClassLoader().getResourceAsStream("\\Function\\mysql.properties"));
+			PROPS.load(DBUtil.class.getClassLoader().getResourceAsStream("function/mysql.properties"));
 //			Class.forName(PROPS.getProperty("jdbc.DRIVER"));
-
 			BasicDataSource ds = new BasicDataSource();
 
 			// datasource에 dirver, 사용할 db, user, password 세팅ㅁ
@@ -35,7 +32,7 @@ public class DBUtil {
 			ds.setInitialSize(0);
 
 			// 최대 connection 갯수
-			ds.setMaxTotal(8);
+			ds.setMaxTotal(20);
 
 			dataSource = ds;
 		}
