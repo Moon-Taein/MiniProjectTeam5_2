@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,6 +21,7 @@ public class MakePizzaFrame extends JFrame {
 	private JLayeredPane jlp;
 	private invisibility util = new invisibility();
 	private Sql_Methods edgeSql = new Sql_Methods();
+	private int countEdge = 0;
 
 	/**
 	 * Launch the application.ㅁ
@@ -45,27 +45,9 @@ public class MakePizzaFrame extends JFrame {
 	public MakePizzaFrame() {
 		frameSetting();
 		sourceBtnSetting();
+		edgeSetting();
 
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(229, 206, 190));
-		panel.setBounds(88, 685, 170, 60);
-		jlp.add(panel, new Integer(2));
-		panel.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("도우_M");
-		lblNewLabel.setBounds(50, 10, 80, 40);
-		panel.add(lblNewLabel);
-
-		JButton btnNewButton_2 = new JButton("이전");
-		btnNewButton_2.setBounds(0, 15, 38, 31);
-		panel.add(btnNewButton_2, new Integer(2));
-
-		JButton btnNewButton_2_1 = new JButton("다음");
-		btnNewButton_2_1.setBounds(120, 15, 38, 31);
-		panel.add(btnNewButton_2_1);
-
-		HashMap<String, byte[]> edge = edgeSql.pizzamakeSetEdgeimg(lblNewLabel.getText());
-		System.out.println(edge.keySet());
 
 	}
 
@@ -133,5 +115,105 @@ public class MakePizzaFrame extends JFrame {
 
 			}
 		});
+	}
+	private void edgeSetting() {
+
+		JPanel edgePnl = new JPanel();
+		edgePnl.setBackground(new Color(229, 206, 190));
+		edgePnl.setBounds(40, 685, 300, 100);
+		jlp.add(edgePnl, new Integer(2));
+		edgePnl.setLayout(null);
+
+		JLabel edgeLbl = new JLabel();
+		edgeLbl.setIcon(icon.getBasic());
+		edgeLbl.setBounds(55, 25, 139, 50);
+		
+		edgePnl.add(edgeLbl, new Integer(2));
+
+		JButton leftBtn = new JButton(icon.getLeft());
+		leftBtn.setBounds(0, 30, 45, 45);
+		edgePnl.add(leftBtn, new Integer(3));
+		util.invisible(leftBtn);
+
+		JButton rightBtn = new JButton(icon.getRight());
+		rightBtn.setBounds(210, 30, 45, 45);
+		edgePnl.add(rightBtn, new Integer(3));
+		util.invisible(rightBtn);
+		
+		
+		rightBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if(countEdge == 0) {
+					String sweetPotato = "엣지_고구마무스";
+					edgeLbl.setIcon(icon.getSweetPotato());
+					edgeLbl.setBounds(42, 25, 178, 50);
+					countEdge = 1;
+					
+				} else if (countEdge == 1){
+					String cheeseBite = "엣지_크러스트";
+					edgeLbl.setIcon(icon.getCheeseBite());
+					edgeLbl.setBounds(42, 25, 178, 50);
+					countEdge = 2;
+					
+				} else if (countEdge == 2) {
+					String no = "엣지_노";
+					edgeLbl.setIcon(icon.getNoEdge());
+					edgeLbl.setBounds(55, 25, 139, 50);
+					countEdge = 3;
+				}
+				else if (countEdge == 3) {
+					String basic = "엣지_기본";
+					edgeLbl.setIcon(icon.getBasic());
+					edgeLbl.setBounds(55, 25, 139, 50);
+					countEdge = 0;
+					
+				} 
+				
+			}
+		});
+		
+		countEdge = 0;
+		
+		leftBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(countEdge == 0) {
+					String basic = "엣지_기본";
+					edgeLbl.setIcon(icon.getBasic());
+					edgeLbl.setBounds(55, 25, 139, 50);
+					
+					countEdge = 3;
+					
+				}else if(countEdge == 1) {
+					String sweetPotato = "엣지_고구마무스";
+					edgeLbl.setBounds(42, 25, 178, 50);
+					edgeLbl.setIcon(icon.getSweetPotato());
+					
+					
+					countEdge = 0;
+					
+				} else if (countEdge == 2){
+					String cheeseBite = "엣지_치즈바이트";
+					edgeLbl.setIcon(icon.getCheeseBite());
+					edgeLbl.setBounds(42, 25, 178, 50);
+					
+					
+					countEdge = 1;
+					
+				} else if (countEdge == 3) {
+					String no = "엣지_노";
+					edgeLbl.setIcon(icon.getNoEdge());
+					edgeLbl.setBounds(55, 25, 139, 50);
+					
+					countEdge = 2;
+				}
+				
+			}
+		});
+		
 	}
 }
