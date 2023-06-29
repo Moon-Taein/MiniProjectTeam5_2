@@ -7,11 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Sql_Methods {
 
 	public static boolean mainOrderInsert(MainOrder mo) {
+		// select no from menu ORDER BY no DESC LIMIT 1;
+		// detailordernumber 도 똑같이 해야할듯
+		// 메인오더 no 디비에서 menu no 가져와서 + 1 해서 만들기
 		String sql = "insert into mainorder (no, total_price, `주문날짜`, `주문시간`, `state`) values (?,?,?,?,?)";
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -61,7 +63,7 @@ public class Sql_Methods {
 	}
 
 	public static boolean menuitemInsert(MenuItem mi) {
-		String sql = "insert into menuitem (detailorder_no, inventory_id) values (?,?)";
+		String sql = "insert into menuitem (detailorder_no, ingredient_id) values (?,?)";
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		// 세팅해줘서 넣어주기
@@ -69,7 +71,7 @@ public class Sql_Methods {
 			conn = DBUtil.getConnection();
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, mi.getDetailOrderNumber());
-			stmt.setString(2, mi.getInventory_id());
+			stmt.setString(2, mi.getingredient_id());
 			return stmt.execute();
 
 		} catch (SQLException e) {
@@ -148,6 +150,35 @@ public class Sql_Methods {
 		return "";
 	}
 
+	public int findPriceIngredient(String string) {
+		String sql = "select price_retail from ingredient where ingredient_id = ?";
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		// 세팅해줘서 넣어주기
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, string);
+			rs = stmt.executeQuery();
+			int price = 0;
+
+			if (rs.next()) {
+				price = rs.getInt("price_retail");
+			}
+
+			return price;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
+		}
+
+		return 0;
+	}
+
 	public byte[] findPizzaImageMenuId(String string) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -174,12 +205,11 @@ public class Sql_Methods {
 		}
 		return bytes;
 	}
-	
+
 	public List<String> findToppingPriceMenuId(String string) {
-		String sql = "select A.inventory_id, A.price_retail\r\n" + 
-				"from ingredient as A\r\n" + 
-				"join (select menu_id, inventory_id, count from recipe where menu_id = ? and inventory_id like '토핑%') as B\r\n" + 
-				"on A.inventory_id = B.inventory_id;";
+		String sql = "select A.ingredient_id, A.price_retail\r\n" + "from ingredient as A\r\n"
+				+ "join (select menu_id, ingredient_id, count from recipe where menu_id = ? and ingredient_id like '토핑%') as B\r\n"
+				+ "on A.ingredient_id = B.ingredient_id;";
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -191,11 +221,11 @@ public class Sql_Methods {
 			stmt.setString(1, string);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
-				String inventory_id = rs.getString("inventory_id").substring(3);
+				String ingredient_id = rs.getString("ingredient_id");
 				int price = rs.getInt("price_retail");
-				String price_retail = String.valueOf(price+"원");
-				if(inventory_id != null && price_retail != null) {
-					list.add(inventory_id);
+				String price_retail = String.valueOf(price + "원");
+				if (ingredient_id != null && price_retail != null) {
+					list.add(ingredient_id);
 					list.add(price_retail);
 				}
 			}
@@ -208,8 +238,8 @@ public class Sql_Methods {
 			DBUtil.close(conn);
 		}
 		System.out.println(list.toString());
-		if(list.size() < 8) {
-			for(int i = list.size() ; i < 8; i++) {
+		if (list.size() < 8) {
+			for (int i = list.size(); i < 8; i++) {
 				list.add(i, "");
 			}
 		}
@@ -225,13 +255,13 @@ public class Sql_Methods {
 
 		try {
 			conn = DBUtil.getConnection();
-			stmt = conn.prepareStatement("SELECT * FROM ingredient WHERE inventory_id like ?");
+			stmt = conn.prepareStatement("SELECT * FROM ingredient WHERE ingredient_id like ?");
 			stmt.setString(1, "%" + string + "%");
 
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				String a = rs.getString("inventory_name");
+				String a = rs.getString("ingredient_name");
 				edgeName.add(a);
 			}
 
@@ -255,7 +285,7 @@ public class Sql_Methods {
 
 		try {
 			conn = DBUtil.getConnection();
-			stmt = conn.prepareStatement("SELECT * FROM ingredient WHERE inventory_id like ?");
+			stmt = conn.prepareStatement("SELECT * FROM ingredient WHERE ingredient_id like ?");
 			stmt.setString(1, "%" + string + "%");
 
 			rs = stmt.executeQuery();
@@ -279,7 +309,7 @@ public class Sql_Methods {
 
 	/**
 	 * @author TAEIN
-	 * @param name ( %M, 사이드%, 음료% )
+	 * @param name   ( %M, 사이드%, 음료% )
 	 * @param target ( next 버튼 추가시 6씩만 더해주면됨 )
 	 * @return List<Object> ( 메뉴이름, 이미지 순서 )
 	 */
@@ -311,12 +341,12 @@ public class Sql_Methods {
 			DBUtil.close(conn);
 		}
 		System.out.println(list.toString());
-		if(list.size() < 12) {
-			for(int i = list.size() ; i < 12; i++) {
+		if (list.size() < 12) {
+			for (int i = list.size(); i < 12; i++) {
 				list.add(i, "");
 			}
 		}
 		return list;
 	}
-	
+
 }

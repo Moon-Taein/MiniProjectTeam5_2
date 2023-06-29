@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MainOrder {
 	private int orderNumber;
-	private int total_Price;
+	private int total_Price; // 총가격
 	private String date;
 	private String time;
 	private String state;

@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetailOrder {
-	private int detailOrderNumber; 
+	private int detailOrderNumber;
 	private String menu; // menu_id
 	private int menu_count; // 수량
-	private int mainOrderNumber; 
+	private int mainOrderNumber;
+	private int detailOrderFullPrice;
 	private List<MenuItem> miList; // 피자 옵션 팝업화면에서 고른 옵션들 menuitem으로 만들어서 추가해주기
 
 	public DetailOrder(int detailOrderNumber, String menu, int menu_count, int mainOrderNumber) {
@@ -17,6 +18,15 @@ public class DetailOrder {
 		this.menu_count = menu_count;
 		this.mainOrderNumber = mainOrderNumber;
 		this.miList = new ArrayList<>();
+		this.detailOrderFullPrice = 0;
+	}
+
+	public int getDetailOrderFullPrice() {
+		return detailOrderFullPrice;
+	}
+
+	public void setDetailOrderFullPrice(int detailOrderFullPrice) {
+		this.detailOrderFullPrice = detailOrderFullPrice;
 	}
 
 	public int getDetailOrderNumber() {
@@ -99,7 +109,9 @@ public class DetailOrder {
 
 	@Override
 	public String toString() {
-		return "" + detailOrderNumber + ", " + menu + ", " + menu_count + ", " + mainOrderNumber + ", " + miList;
+		return "DetailOrder [detailOrderNumber=" + detailOrderNumber + ", menu=" + menu + ", menu_count=" + menu_count
+				+ ", mainOrderNumber=" + mainOrderNumber + ", detailOrderFullPrice=" + detailOrderFullPrice
+				+ ", miList=" + miList + "]";
 	}
 
 }

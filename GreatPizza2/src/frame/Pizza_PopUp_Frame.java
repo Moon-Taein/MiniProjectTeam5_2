@@ -8,11 +8,13 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,9 +23,9 @@ import javax.swing.border.EmptyBorder;
 
 import function.DetailOrder;
 import function.MainOrder;
+import function.MenuItem;
 import function.Sql_Methods;
 import utilty.invisibility;
-import javax.swing.JCheckBox;
 
 public class Pizza_PopUp_Frame extends JDialog {
 
@@ -32,22 +34,25 @@ public class Pizza_PopUp_Frame extends JDialog {
 	private JButton sizeMButton;
 	private JButton sizeLButton;
 	private JLabel currentCount;
+	private List<JCheckBox> checkList;
+	private List<Integer> toppingPriceList;
+	private List<JRadioButton> radioButtonList;
 
 	// 피자_불고기피자M -> 불고기피자 라는 이름을 받아서 구현해보자
-	public Pizza_PopUp_Frame(String target, MainOrder mo, int detailOrderCount) {		
-		
+	public Pizza_PopUp_Frame(String target, MainOrder mo, int detailOrderCount) {
+
 		// parameter로 크기값 받고 return으로 해당크기의 tftfont 해주는
 		Font tftFont = getBMJUAFont(18f);
 		Font tftFont2 = getBMJUAFont(25f);
 		Font tftFont3 = getBMJUAFont(35f);
-		
+
 		setModal(true);
 		Sql_Methods sqm = new Sql_Methods();
-		
+
 		// 메인메뉴 넘버
 		System.out.println(mo.getOrderNumber());
-		
-		// 피자토핑 리스트 가져오기		
+
+		// 피자토핑 리스트 가져오기
 		List<String> list = sqm.findToppingPriceMenuId(target);
 
 		setBounds(100, 100, 800, 600);
@@ -63,40 +68,45 @@ public class Pizza_PopUp_Frame extends JDialog {
 		ImageIcon ic = new ImageIcon(sqm.findPizzaImageMenuId(target));
 		imageLabel.setIcon(ic);
 		contentPane.add(imageLabel);
-		
+
 		// 토핑 이름
-		JLabel toppingName1 = new JLabel(list.get(0));
+		JLabel toppingName1 = new JLabel(getSubStringBiggerThan3(list.get(0)));
 		toppingName1.setBounds(505, 168, 100, 15);
 		toppingName1.setFont(tftFont);
 		toppingName1.setForeground(new Color(103, 51, 53));
 		contentPane.add(toppingName1);
-		
-		JLabel toppingName2 = new JLabel(list.get(2));
+
+		JLabel toppingName2 = new JLabel(getSubStringBiggerThan3(list.get(2)));
 		toppingName2.setBounds(505, 198, 100, 15);
 		toppingName2.setFont(tftFont);
 		toppingName2.setForeground(new Color(103, 51, 53));
 		contentPane.add(toppingName2);
-		
-		JLabel toppingName3 = new JLabel(list.get(4));
+
+		JLabel toppingName3 = new JLabel(getSubStringBiggerThan3(list.get(4)));
 		toppingName3.setBounds(505, 228, 100, 15);
 		toppingName3.setFont(tftFont);
 		toppingName3.setForeground(new Color(103, 51, 53));
 		contentPane.add(toppingName3);
-		
-		JLabel toppingName4 = new JLabel(list.get(6));
+
+		JLabel toppingName4 = new JLabel(getSubStringBiggerThan3(list.get(6)));
 		toppingName4.setBounds(505, 258, 100, 15);
 		toppingName4.setFont(tftFont);
 		toppingName4.setForeground(new Color(103, 51, 53));
 		contentPane.add(toppingName4);
-		//
-		
+
+		toppingPriceList = new ArrayList<>();
+		toppingPriceList.add(getSubStringReplaceWon(list.get(1)));
+		toppingPriceList.add(getSubStringReplaceWon(list.get(3)));
+		toppingPriceList.add(getSubStringReplaceWon(list.get(5)));
+		toppingPriceList.add(getSubStringReplaceWon(list.get(7)));
+
 		// 토핑 가격
 		JLabel toppingPrice1 = new JLabel(list.get(1));
 		toppingPrice1.setBounds(645, 168, 70, 15);
 		toppingPrice1.setFont(tftFont);
 		toppingPrice1.setForeground(new Color(103, 51, 53));
 		contentPane.add(toppingPrice1);
-		
+
 		JLabel toppingPrice2 = new JLabel(list.get(3));
 		toppingPrice2.setBounds(645, 198, 70, 15);
 		toppingPrice2.setFont(tftFont);
@@ -108,50 +118,77 @@ public class Pizza_PopUp_Frame extends JDialog {
 		toppingPrice3.setFont(tftFont);
 		toppingPrice3.setForeground(new Color(103, 51, 53));
 		contentPane.add(toppingPrice3);
-		
+
 		JLabel toppingPrice4 = new JLabel(list.get(7));
 		toppingPrice4.setBounds(645, 258, 70, 15);
 		toppingPrice4.setFont(tftFont);
 		toppingPrice4.setForeground(new Color(103, 51, 53));
 		contentPane.add(toppingPrice4);
 		//
-				
-		JLabel toppingOptionPrice = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("popup/토핑옵션가격.png")));
+
+		JLabel toppingOptionPrice = new JLabel(
+				new ImageIcon(getClass().getClassLoader().getResource("popup/토핑옵션가격.png")));
 		toppingOptionPrice.setBounds(630, 165, 90, 115);
-		contentPane.add(toppingOptionPrice);		
-		
+		contentPane.add(toppingOptionPrice);
+
+		checkList = new ArrayList<>();
+
 		// 토핑 체크 박스
-		JCheckBox toppingCheckBox1 = new JCheckBox(new ImageIcon(getClass().getClassLoader().getResource("popup/toppingCheckFalse.png")));
-		toppingCheckBox1.setBounds(460, 165, 154, 23);
-		toppingCheckBox1.setSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("popup/toppingCheckTrue.png")));
+		JCheckBox toppingCheckBox1 = new JCheckBox(
+				new ImageIcon(getClass().getClassLoader().getResource("popup/toppingCheckFalse.png")));
+		toppingCheckBox1.setBounds(460, 165, 150, 23);
+		toppingCheckBox1
+				.setSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("popup/toppingCheckTrue.png")));
+		toppingCheckBox1.setText(list.get(0));
 		toppingCheckBox1.setOpaque(false);
 		contentPane.add(toppingCheckBox1);
-		
-		JCheckBox toppingCheckBox2 = new JCheckBox(new ImageIcon(getClass().getClassLoader().getResource("popup/toppingCheckFalse.png")));
-		toppingCheckBox2.setBounds(460, 195, 154, 23);
-		toppingCheckBox2.setSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("popup/toppingCheckTrue.png")));
+
+		JCheckBox toppingCheckBox2 = new JCheckBox(
+				new ImageIcon(getClass().getClassLoader().getResource("popup/toppingCheckFalse.png")));
+		toppingCheckBox2.setBounds(460, 195, 150, 23);
+		toppingCheckBox2
+				.setSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("popup/toppingCheckTrue.png")));
+		toppingCheckBox2.setText(list.get(2));
 		toppingCheckBox2.setOpaque(false);
 		contentPane.add(toppingCheckBox2);
-		
-		JCheckBox toppingCheckBox3 = new JCheckBox(new ImageIcon(getClass().getClassLoader().getResource("popup/toppingCheckFalse.png")));
-		toppingCheckBox3.setBounds(460, 225, 154, 23);
-		toppingCheckBox3.setSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("popup/toppingCheckTrue.png")));
+
+		JCheckBox toppingCheckBox3 = new JCheckBox(
+				new ImageIcon(getClass().getClassLoader().getResource("popup/toppingCheckFalse.png")));
+		toppingCheckBox3.setBounds(460, 225, 150, 23);
+		toppingCheckBox3
+				.setSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("popup/toppingCheckTrue.png")));
+		toppingCheckBox3.setText(list.get(4));
 		toppingCheckBox3.setOpaque(false);
 		contentPane.add(toppingCheckBox3);
-		
-		JCheckBox toppingCheckBox4 = new JCheckBox(new ImageIcon(getClass().getClassLoader().getResource("popup/toppingCheckFalse.png")));
-		toppingCheckBox4.setBounds(460, 255, 180, 23);
-		toppingCheckBox4.setSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("popup/toppingCheckTrue.png")));
+
+		JCheckBox toppingCheckBox4 = new JCheckBox(
+				new ImageIcon(getClass().getClassLoader().getResource("popup/toppingCheckFalse.png")));
+		toppingCheckBox4.setBounds(460, 255, 150, 23);
+		toppingCheckBox4
+				.setSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("popup/toppingCheckTrue.png")));
+		toppingCheckBox4.setText(list.get(6));
 		toppingCheckBox4.setOpaque(false);
-		contentPane.add(toppingCheckBox4);		
-		
+		contentPane.add(toppingCheckBox4);
+
+		// checkList에 토핑체크박스들 넣어두기
+		checkList.add(toppingCheckBox1);
+		checkList.add(toppingCheckBox2);
+		checkList.add(toppingCheckBox3);
+		checkList.add(toppingCheckBox4);
+
+		for (JCheckBox jcb : checkList) {
+			if (jcb.getText().equals("")) {
+				jcb.setEnabled(false);
+			}
+		}
+
 		currentCount = new JLabel("1");
 		currentCount.setBounds(212, 485, 25, 25);
 		currentCount.setForeground(new Color(103, 51, 53));
 		currentCount.setFont(tftFont2);
 		contentPane.add(currentCount);
-		
-		// 수량 +.- Button		
+
+		// 수량 +.- Button
 		JButton countMinus = new JButton(new ImageIcon(getClass().getClassLoader().getResource("popup/수량minus.png")));
 		countMinus.setBounds(107, 483, 65, 30);
 		countMinus.setBorderPainted(false);
@@ -159,13 +196,13 @@ public class Pizza_PopUp_Frame extends JDialog {
 		countMinus.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(Integer.parseInt(currentCount.getText()) > 1) {
+				if (Integer.parseInt(currentCount.getText()) > 1) {
 					currentCount.setText(String.valueOf(Integer.parseInt(currentCount.getText()) - 1));
 				}
 			}
 		});
 		contentPane.add(countMinus);
-		
+
 		JButton countPlus = new JButton(new ImageIcon(getClass().getClassLoader().getResource("popup/수량plus.png")));
 		countPlus.setBounds(269, 483, 65, 30);
 		countPlus.setBorderPainted(false);
@@ -173,14 +210,14 @@ public class Pizza_PopUp_Frame extends JDialog {
 		countPlus.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(Integer.parseInt(currentCount.getText()) < 5) {
+				if (Integer.parseInt(currentCount.getText()) < 5) {
 					currentCount.setText(String.valueOf(Integer.parseInt(currentCount.getText()) + 1));
 				}
 			}
 		});
-		contentPane.add(countPlus);		
-		
-		JLabel dow_price = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("popup/도우옵션가격.png")));
+		contentPane.add(countPlus);
+
+		JLabel dow_price = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("popup/도우옵션가격수정.png")));
 		dow_price.setBounds(630, 345, 90, 115);
 		contentPane.add(dow_price);
 
@@ -196,7 +233,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 		sizeLabel_M.setFont(tftFont2);
 		sizeLabel_M.setBounds(460, 68, 25, 46);
 		sizeLabel_M.setOpaque(false);
-		contentPane.add(sizeLabel_M);		
+		contentPane.add(sizeLabel_M);
 
 		JLabel sizeMPrice = new JLabel("원");
 		sizeMPrice.setFont(tftFont2);
@@ -219,7 +256,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 		menu_name_Label.setFont(tftFont3);
 		menu_name_Label.setBounds(135, 70, 210, 40);
 		menu_name_Label.setText(target.substring(3).replace('M', ' '));
-		
+
 		contentPane.add(menu_name_Label);
 
 		sizeMButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("popup/pizzaSizeFalse.png")));
@@ -253,12 +290,13 @@ public class Pizza_PopUp_Frame extends JDialog {
 		contentPane.add(sizeLButton);
 
 		ButtonGroup edgeChoice = new ButtonGroup();
+		radioButtonList = new ArrayList<>();
 
 		// radio버튼 구성
 		JRadioButton EdgeRadioButton_1 = new JRadioButton(
 				new ImageIcon(getClass().getClassLoader().getResource("popup/기본0.png")));
 		EdgeRadioButton_1.setBounds(460, 345, 154, 24);
-		EdgeRadioButton_1.setText("도우_기본");
+		EdgeRadioButton_1.setText("엣지_기본");
 		contentPane.add(EdgeRadioButton_1, new Integer(3));
 		EdgeRadioButton_1.setBorderPainted(true);
 		EdgeRadioButton_1.setSelected(true);
@@ -269,6 +307,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 		JRadioButton EdgeRadioButton_2 = new JRadioButton(
 				new ImageIcon(getClass().getClassLoader().getResource("popup/노엣지0.png")));
 		EdgeRadioButton_2.setBounds(460, 375, 154, 24);
+		EdgeRadioButton_2.setText("엣지_노");
 		contentPane.add(EdgeRadioButton_2);
 		EdgeRadioButton_2.setBorderPainted(true);
 		EdgeRadioButton_2.setSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("popup/노엣지.png")));
@@ -278,6 +317,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 		JRadioButton EdgeRadioButton_3 = new JRadioButton(
 				new ImageIcon(getClass().getClassLoader().getResource("popup/치즈크러스트0.png")));
 		EdgeRadioButton_3.setBounds(460, 405, 154, 24);
+		EdgeRadioButton_3.setText("엣지_치즈크러스트");
 		contentPane.add(EdgeRadioButton_3);
 		EdgeRadioButton_3.setBorderPainted(true);
 		EdgeRadioButton_3.setSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("popup/치즈크러스트.png")));
@@ -287,11 +327,17 @@ public class Pizza_PopUp_Frame extends JDialog {
 		JRadioButton EdgeRadioButton_4 = new JRadioButton(
 				new ImageIcon(getClass().getClassLoader().getResource("popup/고구마무스0.png")));
 		EdgeRadioButton_4.setBounds(460, 435, 154, 24);
+		EdgeRadioButton_4.setText("엣지_고구마무스");
 		contentPane.add(EdgeRadioButton_4);
 		EdgeRadioButton_4.setBorderPainted(true);
 		EdgeRadioButton_4.setSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("popup/고구마무스.png")));
 		edgeChoice.add(EdgeRadioButton_4);
 		Utility.invisibleRadio(EdgeRadioButton_4);
+
+		radioButtonList.add(EdgeRadioButton_1);
+		radioButtonList.add(EdgeRadioButton_2);
+		radioButtonList.add(EdgeRadioButton_3);
+		radioButtonList.add(EdgeRadioButton_4);
 
 		// 취소할 경우
 		JButton cancelButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("popup/cancel.png")));
@@ -313,24 +359,53 @@ public class Pizza_PopUp_Frame extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// menuitem 체크해서 detailOrder 안에 다 넣어줘야된다
+				int total_price = 0;
+
 				// m,l 인지
 				String newTarget = "";
-				if(sizeLButton.isSelected()) {
+				if (sizeLButton.isSelected()) {
 					newTarget = target.replace('M', 'L');
+					total_price += Integer.valueOf(sizeLPrice.getText().replaceAll("원", ""));
 				} else {
 					newTarget = target;
+					total_price += Integer.valueOf(sizeMPrice.getText().replaceAll("원", ""));
 				}
-				// checkbox 확인해서 menuitem 만들어줘서 detailorder에 add
-				
-				// radioButton 확인해서 menuitem 만들어줘서 detailorder에 add
-				
-				// 합친 가격 어쩌지
-//				피자가격 + 모든 옵션 가격
-//				Integer.valueOf(currentCount.getText())곱해줘야되고
-				
+
+				// detailOrder 생성
 				MenuFrame.detailOrderCount++;
-				DetailOrder deo = new DetailOrder(MenuFrame.detailOrderCount, newTarget, Integer.valueOf(currentCount.getText()), mo.getOrderNumber());
+				DetailOrder deo = new DetailOrder(MenuFrame.detailOrderCount, newTarget,
+						Integer.valueOf(currentCount.getText()), mo.getOrderNumber());
+
+				// checkbox 확인해서 menuitem 만들어줘서 detailorder에 add
+				for (int i = 0; i < 4; i++) {
+					if (checkList.get(i).isSelected()) {
+						// menuitem 만들어서 deatilorder에 넣기
+						MenuItem mi = new MenuItem(MenuFrame.detailOrderCount, checkList.get(i).getText(),
+								toppingPriceList.get(i));
+						total_price += toppingPriceList.get(i);
+						deo.getMiList().add(mi);
+					}
+				}
+
+				// radioButton 확인해서 menuitem 만들어줘서 detailorder에 add
+				// menuitem 만들 menuid, 가격 가져오고 가격은 토탈에 더해주기
+				for (JRadioButton jrb : radioButtonList) {
+					if (jrb.isSelected()) {
+						int price = sqm.findPriceIngredient(jrb.getText());
+						System.out.println("이그는 왜 또 0원임" + price);
+						MenuItem mi = new MenuItem(MenuFrame.detailOrderCount, jrb.getText(), price);
+						total_price += price;
+						deo.getMiList().add(mi);
+					}
+				}
+
+				// 피자가격 + 모든 옵션 가격
+				total_price = total_price * Integer.valueOf(currentCount.getText());
+
+				System.out.println("모든옵션이 합쳐진 총금액은" + total_price);
+				deo.setDetailOrderFullPrice(total_price);
 				mo.getDeoList().add(deo);
+				System.out.println(mo.toString());
 				dispose();
 			}
 		});
@@ -363,17 +438,32 @@ public class Pizza_PopUp_Frame extends JDialog {
 
 	private Font getBMJUAFont(float f) {
 		// TFT 폰트 파일 로드
-        InputStream fontStream = Pizza_PopUp_Frame.class.getResourceAsStream("/popup/BMJUA_ttf.ttf");
-        Font tftFont;
-        try {
-            tftFont = Font.createFont(Font.TRUETYPE_FONT, fontStream);
-            tftFont = tftFont.deriveFont(f);
-            return tftFont;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		InputStream fontStream = Pizza_PopUp_Frame.class.getResourceAsStream("/popup/BMJUA_ttf.ttf");
+		Font tftFont;
+		try {
+			tftFont = Font.createFont(Font.TRUETYPE_FONT, fontStream);
+			tftFont = tftFont.deriveFont(f);
+			return tftFont;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
+
+	private String getSubStringBiggerThan3(String string) {
+		if (string.length() > 3) {
+			return string.substring(3);
+		}
+		return string;
+	}
+
+	private int getSubStringReplaceWon(String string) {
+		if (string.length() > 4) {
+			return Integer.valueOf(string.replaceAll("원", ""));
+		}
+		return 0;
+	}
+
 }
 
 class ImagePanel extends JPanel {
