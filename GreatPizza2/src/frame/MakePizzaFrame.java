@@ -30,28 +30,28 @@ public class MakePizzaFrame extends JFrame {
 	private String edgeName;
 	private HashMap<String, byte[]> edgeMap;
 
-	/**
-	 * Launch the application.ㅁ
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MakePizzaFrame frame = new MakePizzaFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	/**
+//	 * Launch the application.ㅁ
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					MakePizzaFrame frame = new MakePizzaFrame();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public MakePizzaFrame() {
+	public MakePizzaFrame(MenuFrame menu) {
 		frameSetting();
-		sourceBtnSetting();
+		sourceBtnSetting(menu);
 		edgeSetting();
 		jlp.requestFocusInWindow();
 
@@ -77,7 +77,7 @@ public class MakePizzaFrame extends JFrame {
 		setLocationRelativeTo(null);
 	}
 
-	private void sourceBtnSetting() {
+	private void sourceBtnSetting(MenuFrame menu) {
 		JButton btn1 = new JButton(icon.getBulldak());
 		JButton btn2 = new JButton(icon.getHotSoy());
 		JButton btn3 = new JButton(icon.getSoy());
@@ -119,7 +119,7 @@ public class MakePizzaFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				MenuFrame backFrame = new MenuFrame();
+				menu.setVisible(true);
 
 			}
 		});

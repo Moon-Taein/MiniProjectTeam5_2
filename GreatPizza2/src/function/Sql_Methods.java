@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javafx.scene.image.Image;
+
 public class Sql_Methods {
 
 	public static boolean mainOrderInsert(MainOrder mo) {
@@ -352,9 +354,12 @@ public class Sql_Methods {
 			DBUtil.close(conn);
 		}
 		System.out.println(list.toString());
+		System.out.println(list.size());
 		if (list.size() < 12) {
-			for (int i = list.size(); i < 12; i++) {
-				list.add(i, "");
+			for (int i = list.size(); i < 12; i+=2) {
+				list.add(i, "준비중");
+				// 준비중 이미지 담기?
+				list.add(i+1, new Image("popup/담기.png"));
 			}
 		}
 		return list;
