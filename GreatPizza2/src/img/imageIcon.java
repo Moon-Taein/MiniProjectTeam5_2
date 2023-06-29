@@ -66,5 +66,24 @@ public class imageIcon {
 	public ImageIcon getBack() {
 		return new ImageIcon(getClass().getClassLoader().getResource("뒤로가기.png"));
 	}
+	public ImageIcon getRight() {
+		return new ImageIcon(getClass().getClassLoader().getResource("오른쪽.png"));
+	}
+	public ImageIcon getLeft() {
+		return new ImageIcon(getClass().getClassLoader().getResource("왼쪽.png"));
+	}
+	public ImageIcon getCheeseBite() {
+		return new ImageIcon(getClass().getClassLoader().getResource("치즈바이트.png"));
+	}
+	public ImageIcon getBasic() {
+		return new ImageIcon(getClass().getClassLoader().getResource("기본도우.png"));
+	}
+	public ImageIcon getSweetPotato() {
+		return new ImageIcon(getClass().getClassLoader().getResource("고구마무스.png"));
+	}
+	public ImageIcon getNoEdge() {
+		return new ImageIcon(getClass().getClassLoader().getResource("엣지없음.png"));
+	}
+
 
 }
