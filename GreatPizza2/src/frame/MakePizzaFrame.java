@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import Function.Sql_Methods;
 import img.imageIcon;
 import utilty.invisibility;
 
@@ -19,6 +21,7 @@ public class MakePizzaFrame extends JFrame {
 	private imageIcon icon = new imageIcon();
 	private JLayeredPane jlp;
 	private invisibility util = new invisibility();
+	private Sql_Methods edgeSql = new Sql_Methods();
 
 	/**
 	 * Launch the application.ㅁ
@@ -42,6 +45,28 @@ public class MakePizzaFrame extends JFrame {
 	public MakePizzaFrame() {
 		frameSetting();
 		sourceBtnSetting();
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(229,206,190));
+		panel.setBounds(88, 685, 170, 60);
+		jlp.add(panel, new Integer(2));
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("도우_M");
+		lblNewLabel.setBounds(50, 10, 80, 40);
+		panel.add(lblNewLabel);
+		
+		JButton btnNewButton_2 = new JButton("이전");
+		btnNewButton_2.setBounds(0, 15, 38, 31);
+		panel.add(btnNewButton_2, new Integer(2));
+		
+		JButton btnNewButton_2_1 = new JButton("다음");
+		btnNewButton_2_1.setBounds(120, 15, 38, 31);
+		panel.add(btnNewButton_2_1);
+		
+		HashMap<String, byte[]> edge = edgeSql.pizzamakeSetEdgeimg(lblNewLabel.getText());
+		System.out.println(edge.keySet());
+		
 		
 	}
 	private void frameSetting() {
@@ -94,16 +119,7 @@ public class MakePizzaFrame extends JFrame {
 		btnNewButton_1.setBounds(463, 810, 195, 65);
 		jlp.add(btnNewButton_1, new Integer(2));
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(229,206,190));
-		panel.setBounds(88, 685, 170, 60);
-		jlp.add(panel, new Integer(2));
-		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("엣지");
-		lblNewLabel.setText("라라");
-		lblNewLabel.setBounds(50, 10, 80, 40);
-		panel.add(lblNewLabel);
 		
 		JButton backBtn = new JButton(icon.getBack());
 		backBtn.setBounds(12, 10, 150, 70);
