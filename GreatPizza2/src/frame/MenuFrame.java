@@ -31,8 +31,9 @@ public class MenuFrame extends JFrame {
 	private JButton sideBtn;
 	private JButton drinkBtn;
 	private JButton makePizzaBtn;
-	private int mainOrderCount = 0; // order 누르면 ++ 되게
-	static int detailOrderCount = 0; // 피자 - 담기누를때 ++ 사이드,음료 - 담을때마다 ++
+	private static Sql_Methods sqm = new Sql_Methods();;
+	private int mainOrderCount = sqm.findMainOrderCount(); // order 누르면 ++ 되게
+	static int detailOrderCount = sqm.findDetailOrderCount(); // 피자 - 담기누를때 ++ 사이드,음료 - 담을때마다 ++
 	private JLayeredPane menuPnl;
 	private MainOrder mo;
 	private DetailOrder deo;
@@ -78,9 +79,11 @@ public class MenuFrame extends JFrame {
 	public MenuFrame() {
 
 		// 오더를 눌렀을때 mainorder 객체 생성
+//		mainOrderCount = sqm.findOrderCount("mainorder");
+//		detailOrderCount = sqm.findOrderCount("detailorder");
+
 		mainOrderCount++;
 		mo = new MainOrder(mainOrderCount);
-
 		FrameSetting();
 
 		menuPnl = new JLayeredPane();
@@ -214,6 +217,14 @@ public class MenuFrame extends JFrame {
 		JButton orderBtn = new JButton(icon.getOrderBtnKor());
 		orderBtn.setBounds(640, 851, 140, 45);
 		jlp.add(orderBtn, new Integer(3));
+		orderBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// 이때 mainOrder db에 기록하기
+				setVisible(false);
+				orderComplete newFrame = new orderComplete(mo);
+			}
+		});
 		util.invisible(orderBtn);
 
 	}
@@ -221,7 +232,6 @@ public class MenuFrame extends JFrame {
 	// 추가 메뉴가 있어서 다음 버튼 누르면 6,6 12,6 으로
 	private void pizzaTabBtn(int target) {
 
-		Sql_Methods sqm = new Sql_Methods();
 		List<Object> list = sqm.findImageAndMenuIdTarget("%M", target);
 
 		// 버튼 눌렀을시 동작하는 메소드
@@ -236,7 +246,12 @@ public class MenuFrame extends JFrame {
 		};
 
 		// image랑 이름 db에서 불러오게 만들기
-		JButton btn1 = new JButton(new ImageIcon((byte[]) list.get(1)));
+		ImageIcon img = new ImageIcon((byte[]) list.get(1));
+		JButton btn1 = new JButton(img);
+//		Image img2 = img.getImage();
+//		Image changedImg = img2.getScaledInstance(210, 160, java.awt.Image.SCALE_SMOOTH);
+//		ImageIcon changedImageIcon = new ImageIcon(changedImg);
+//		btn1.setRolloverIcon(changedImageIcon);
 		btn1.setText((String) list.get(0));
 		btn1.setBounds(60, 70, 175, 150);
 		btn1.addActionListener(al);
@@ -537,6 +552,14 @@ public class MenuFrame extends JFrame {
 		sideName6.setForeground(new Color(103, 51, 53));
 		sideName6.setFont(tftFont2);
 		menuPnl.add(sideName6, new Integer(3));
+	}
+
+	public int final_total_price(MainOrder mo) {
+		int full_price = 0;
+		for (DetailOrder deo : mo.getDeoList()) {
+			full_price += deo.getDetailOrderFullPrice();
+		}
+		return full_price;
 	}
 
 	private void exiteKey() {
