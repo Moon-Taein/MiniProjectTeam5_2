@@ -152,8 +152,35 @@ public class Sql_Methods {
 		return "";
 	}
 
-	
-	
+	public int findPriceIngredient(String string) {
+		String sql = "select price_retail from ingredient where ingredient_id = ?";
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		// 세팅해줘서 넣어주기
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, string);
+			rs = stmt.executeQuery();
+			int price = 0;
+
+			if (rs.next()) {
+				price = rs.getInt("price_retail");
+			}
+
+			return price;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(rs);
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
+		}
+
+		return 0;
+	}
 
 	public byte[] findPizzaImageMenuId(String string) {
 		Connection conn = null;
