@@ -11,14 +11,15 @@ public class DetailOrder {
 	private int detailOrderFullPrice;
 	private List<MenuItem> miList; // 피자 옵션 팝업화면에서 고른 옵션들 menuitem으로 만들어서 추가해주기
 
-	public DetailOrder(int detailOrderNumber, String menu, int menu_count, int mainOrderNumber) {
+	public DetailOrder(int detailOrderNumber, String menu, int menu_count, int mainOrderNumber,
+			int detailOrderFullPrice) {
 		super();
 		this.detailOrderNumber = detailOrderNumber;
 		this.menu = menu;
 		this.menu_count = menu_count;
 		this.mainOrderNumber = mainOrderNumber;
 		this.miList = new ArrayList<>();
-		this.detailOrderFullPrice = 0;
+		this.detailOrderFullPrice = detailOrderFullPrice;
 	}
 
 	public int getDetailOrderFullPrice() {

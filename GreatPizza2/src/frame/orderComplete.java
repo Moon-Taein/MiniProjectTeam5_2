@@ -1,123 +1,62 @@
 package frame;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.InputStream;
+import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import function.DetailOrder;
 import function.MainOrder;
 import img.imageIcon;
 import utilty.invisibility;
+
+class ImagePanel extends JPanel {
+	private Image img;
+
+	public ImagePanel(Image img) {
+		this.img = img;
+		setSize(new Dimension(img.getWidth(null), img.getHeight(null)));
+		setPreferredSize(new Dimension(img.getWidth(null), img.getHeight(null)));
+		setLayout(null);
+	}
+
+	public void paintComponent(Graphics g) {
+		g.drawImage(img, 3, 0, null);
+	}
+}
 
 public class orderComplete extends JFrame {
 	private imageIcon icon = new imageIcon();
 	private JLayeredPane jlp;
 	private invisibility util = new invisibility();
+	private JPanel buyListpanel;
+	private int frameChange = 0;
 
-	/**
-	 * Create the frame.
-	 */
-	public orderComplete(MainOrder mo) {
+	// 확인하면 메인프레임으로 보내게 바꿔줘야된다
+	public orderComplete(MainOrder mo, MenuFrame menu) {
 		frameSetting(mo);
-		buttonSetting();
+		buttonSetting(menu, mo);
+		orderList(mo, 0);
 
 	}
 
 	private void frameSetting(MainOrder mo) {
-		Font tftFont2 = getBMJUAFont(25f);
 
 		jlp = new JLayeredPane();
 		jlp.setPreferredSize(new Dimension(icon.getMainFrame().getIconWidth(), icon.getMainFrame().getIconHeight()));
 		jlp.setLayout(null);
-
-		JPanel panel4 = new JPanel();
-		panel4.setBounds(63, 655, 666, 111);
-		jlp.add(panel4, new Integer(2));
-		panel4.setLayout(null);
-
-		JLabel lblNewLabel_2_3 = new JLabel("New label");
-		lblNewLabel_2_3.setBounds(178, 33, 86, 45);
-		panel4.add(lblNewLabel_2_3);
-
-		JLabel lblNewLabel_1_3 = new JLabel("New label");
-		lblNewLabel_1_3.setBounds(25, 21, 111, 69);
-		panel4.add(lblNewLabel_1_3);
-
-		JLabel lblNewLabel_3_3 = new JLabel("New label");
-		lblNewLabel_3_3.setBounds(366, 42, 72, 27);
-		panel4.add(lblNewLabel_3_3);
-
-		JLabel lblNewLabel_6 = new JLabel("New label");
-		lblNewLabel_6.setBounds(544, 36, 86, 39);
-		panel4.add(lblNewLabel_6);
-
-		JPanel panel2 = new JPanel();
-		panel2.setBounds(63, 413, 666, 111);
-		jlp.add(panel2, new Integer(2));
-		panel2.setLayout(null);
-
-		JLabel lblNewLabel_2_1 = new JLabel("New label");
-		lblNewLabel_2_1.setBounds(178, 32, 86, 45);
-		panel2.add(lblNewLabel_2_1);
-
-		JLabel lblNewLabel_1_1 = new JLabel("New label");
-		lblNewLabel_1_1.setBounds(25, 20, 111, 69);
-		panel2.add(lblNewLabel_1_1);
-
-		JLabel lblNewLabel_3_1 = new JLabel("New label");
-		lblNewLabel_3_1.setBounds(366, 41, 72, 27);
-		panel2.add(lblNewLabel_3_1);
-
-		JLabel lblNewLabel_4 = new JLabel("New label");
-		lblNewLabel_4.setBounds(544, 35, 86, 39);
-		panel2.add(lblNewLabel_4);
-
-		JPanel panel3 = new JPanel();
-		panel3.setBounds(63, 534, 666, 111);
-		jlp.add(panel3, new Integer(2));
-		panel3.setLayout(null);
-
-		JLabel lblNewLabel_2_2 = new JLabel("New label");
-		lblNewLabel_2_2.setBounds(178, 32, 86, 45);
-		panel3.add(lblNewLabel_2_2);
-
-		JLabel lblNewLabel_1_2 = new JLabel("New label");
-		lblNewLabel_1_2.setBounds(25, 20, 111, 69);
-		panel3.add(lblNewLabel_1_2);
-
-		JLabel lblNewLabel_3_2 = new JLabel("New label");
-		lblNewLabel_3_2.setBounds(366, 41, 72, 27);
-		panel3.add(lblNewLabel_3_2);
-
-		JLabel lblNewLabel_5 = new JLabel("New label");
-		lblNewLabel_5.setBounds(544, 35, 86, 39);
-		panel3.add(lblNewLabel_5);
-
-		JPanel panel1 = new JPanel();
-		panel1.setLayout(null);
-		panel1.setBounds(63, 292, 666, 111);
-		jlp.add(panel1, new Integer(2));
-
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(550, 40, 86, 39);
-		panel1.add(lblNewLabel);
-
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setBounds(31, 25, 111, 69);
-		panel1.add(lblNewLabel_1);
-
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setBounds(184, 37, 86, 45);
-		panel1.add(lblNewLabel_2);
-
-		JLabel lblNewLabel_3 = new JLabel("New label");
-		lblNewLabel_3.setBounds(372, 46, 72, 27);
-		panel1.add(lblNewLabel_3);
 
 		JLabel lbl = new JLabel(icon.orderComplete());
 		lbl.setBounds(0, 0, 800, 900);
@@ -125,17 +64,284 @@ public class orderComplete extends JFrame {
 
 		setContentPane(jlp);
 
+		buyListpanel = new JPanel();
+		buyListpanel.setBounds(60, 305, 630, 480);
+		buyListpanel.setLayout(null);
+		jlp.add(buyListpanel, new Integer(3));
+
 		setUndecorated(true);
-		setVisible(true);
 		setSize(800, 900);
 		setLocationRelativeTo(null);
 	}
 
-	private void buttonSetting() {
+	// 0~5 6~11 12~17 ...
+	private void orderList(MainOrder mo, int target) {
+		System.out.println("타겟의 숫자" + target);
+
+		Font tftFont2 = getBMJUAFont(18f);
+		List<DetailOrder> list = mo.getDeoList();
+		System.out.println("order리스트 사이즈는 " + list.size());
+
+		if (list.size() > target) {
+			ImagePanel panel1 = new ImagePanel(
+					new ImageIcon(getClass().getClassLoader().getResource("order/orderListPanel.png")).getImage());
+			panel1.setLayout(null);
+			panel1.setBounds(2, 5, 620, 70);
+			buyListpanel.add(panel1, new Integer(3));
+
+			JLabel deoNo1 = new JLabel(String.valueOf(target + 1));
+			deoNo1.setBounds(65, 25, 60, 15);
+			deoNo1.setFont(tftFont2);
+			deoNo1.setForeground(new Color(103, 51, 53));
+			panel1.add(deoNo1);
+
+			JLabel deoMenuId1 = new JLabel(list.get(target).getMenu());
+			deoMenuId1.setBounds(165, 25, 140, 15);
+			deoMenuId1.setFont(tftFont2);
+			deoMenuId1.setForeground(new Color(103, 51, 53));
+			panel1.add(deoMenuId1);
+
+			JLabel deoCount1 = new JLabel(String.valueOf(list.get(target).getMenu_count()));
+			deoCount1.setBounds(385, 25, 100, 15);
+			deoCount1.setFont(tftFont2);
+			deoCount1.setForeground(new Color(103, 51, 53));
+			panel1.add(deoCount1);
+
+			JLabel deoPrice1 = new JLabel(String.valueOf(list.get(target).getDetailOrderFullPrice()));
+			deoPrice1.setBounds(530, 25, 100, 15);
+			deoPrice1.setFont(tftFont2);
+			deoPrice1.setForeground(new Color(103, 51, 53));
+			panel1.add(deoPrice1);
+		}
+
+		if (list.size() > target + 1) {
+			ImagePanel panel2 = new ImagePanel(
+					new ImageIcon(getClass().getClassLoader().getResource("order/orderListPanel.png")).getImage());
+			panel2.setLayout(null);
+			panel2.setBounds(2, 85, 620, 70);
+			buyListpanel.add(panel2, new Integer(3));
+
+			JLabel deoNo2 = new JLabel(String.valueOf(target + 2));
+			deoNo2.setBounds(65, 25, 60, 15);
+			deoNo2.setFont(tftFont2);
+			deoNo2.setForeground(new Color(103, 51, 53));
+			panel2.add(deoNo2);
+
+			JLabel deoMenuId2 = new JLabel(list.get(target + 1).getMenu());
+			deoMenuId2.setBounds(165, 25, 140, 15);
+			deoMenuId2.setFont(tftFont2);
+			deoMenuId2.setForeground(new Color(103, 51, 53));
+			panel2.add(deoMenuId2);
+
+			JLabel deoCount2 = new JLabel(String.valueOf(list.get(target + 1).getMenu_count()));
+			deoCount2.setBounds(385, 25, 100, 15);
+			deoCount2.setFont(tftFont2);
+			deoCount2.setForeground(new Color(103, 51, 53));
+			panel2.add(deoCount2);
+
+			JLabel deoPrice2 = new JLabel(String.valueOf(list.get(target + 1).getDetailOrderFullPrice()));
+			deoPrice2.setBounds(530, 25, 100, 15);
+			deoPrice2.setFont(tftFont2);
+			deoPrice2.setForeground(new Color(103, 51, 53));
+			panel2.add(deoPrice2);
+		}
+
+		if (list.size() > target + 2) {
+			ImagePanel panel3 = new ImagePanel(
+					new ImageIcon(getClass().getClassLoader().getResource("order/orderListPanel.png")).getImage());
+			panel3.setLayout(null);
+			panel3.setBounds(2, 165, 620, 70);
+			buyListpanel.add(panel3, new Integer(3));
+
+			JLabel deoNo3 = new JLabel(String.valueOf(target + 3));
+			deoNo3.setBounds(65, 25, 60, 15);
+			deoNo3.setFont(tftFont2);
+			deoNo3.setForeground(new Color(103, 51, 53));
+			panel3.add(deoNo3);
+
+			JLabel deoMenuId3 = new JLabel(list.get(target + 2).getMenu());
+			deoMenuId3.setBounds(165, 25, 140, 15);
+			deoMenuId3.setFont(tftFont2);
+			deoMenuId3.setForeground(new Color(103, 51, 53));
+			panel3.add(deoMenuId3);
+
+			JLabel deoCount3 = new JLabel(String.valueOf(list.get(target + 2).getMenu_count()));
+			deoCount3.setBounds(385, 25, 100, 15);
+			deoCount3.setFont(tftFont2);
+			deoCount3.setForeground(new Color(103, 51, 53));
+			panel3.add(deoCount3);
+
+			JLabel deoPrice3 = new JLabel(String.valueOf(list.get(target + 2).getDetailOrderFullPrice()));
+			deoPrice3.setBounds(530, 25, 100, 15);
+			deoPrice3.setFont(tftFont2);
+			deoPrice3.setForeground(new Color(103, 51, 53));
+			panel3.add(deoPrice3);
+		}
+
+		if (list.size() > target + 3) {
+			ImagePanel panel4 = new ImagePanel(
+					new ImageIcon(getClass().getClassLoader().getResource("order/orderListPanel.png")).getImage());
+			panel4.setLayout(null);
+			panel4.setBounds(2, 245, 620, 70);
+			buyListpanel.add(panel4, new Integer(3));
+
+			JLabel deoNo4 = new JLabel(String.valueOf(target + 4));
+			deoNo4.setBounds(65, 25, 60, 15);
+			deoNo4.setFont(tftFont2);
+			deoNo4.setForeground(new Color(103, 51, 53));
+			panel4.add(deoNo4);
+
+			JLabel deoMenuId4 = new JLabel(list.get(target + 3).getMenu());
+			deoMenuId4.setBounds(165, 25, 140, 15);
+			deoMenuId4.setFont(tftFont2);
+			deoMenuId4.setForeground(new Color(103, 51, 53));
+			panel4.add(deoMenuId4);
+
+			JLabel deoCount4 = new JLabel(String.valueOf(list.get(target + 3).getMenu_count()));
+			deoCount4.setBounds(385, 25, 100, 15);
+			deoCount4.setFont(tftFont2);
+			deoCount4.setForeground(new Color(103, 51, 53));
+			panel4.add(deoCount4);
+
+			JLabel deoPrice4 = new JLabel(String.valueOf(list.get(target + 3).getDetailOrderFullPrice()));
+			deoPrice4.setBounds(530, 25, 100, 15);
+			deoPrice4.setFont(tftFont2);
+			deoPrice4.setForeground(new Color(103, 51, 53));
+			panel4.add(deoPrice4);
+		}
+
+		if (list.size() > target + 4) {
+			ImagePanel panel5 = new ImagePanel(
+					new ImageIcon(getClass().getClassLoader().getResource("order/orderListPanel.png")).getImage());
+			panel5.setLayout(null);
+			panel5.setBounds(2, 325, 620, 70);
+			buyListpanel.add(panel5, new Integer(3));
+
+			JLabel deoNo5 = new JLabel(String.valueOf(target + 5));
+			deoNo5.setBounds(65, 25, 60, 15);
+			deoNo5.setFont(tftFont2);
+			deoNo5.setForeground(new Color(103, 51, 53));
+			panel5.add(deoNo5);
+
+			JLabel deoMenuId5 = new JLabel(list.get(target + 4).getMenu());
+			deoMenuId5.setBounds(165, 25, 140, 15);
+			deoMenuId5.setFont(tftFont2);
+			deoMenuId5.setForeground(new Color(103, 51, 53));
+			panel5.add(deoMenuId5);
+
+			JLabel deoCount5 = new JLabel(String.valueOf(list.get(target + 4).getMenu_count()));
+			deoCount5.setBounds(385, 25, 100, 15);
+			deoCount5.setFont(tftFont2);
+			deoCount5.setForeground(new Color(103, 51, 53));
+			panel5.add(deoCount5);
+
+			JLabel deoPrice5 = new JLabel(String.valueOf(list.get(target + 4).getDetailOrderFullPrice()));
+			deoPrice5.setBounds(530, 25, 100, 15);
+			deoPrice5.setFont(tftFont2);
+			deoPrice5.setForeground(new Color(103, 51, 53));
+			panel5.add(deoPrice5);
+		}
+
+		if (list.size() > target + 5) {
+			ImagePanel panel6 = new ImagePanel(
+					new ImageIcon(getClass().getClassLoader().getResource("order/orderListPanel.png")).getImage());
+			panel6.setLayout(null);
+			panel6.setBounds(2, 405, 620, 70);
+			buyListpanel.add(panel6, new Integer(3));
+
+			JLabel deoNo6 = new JLabel(String.valueOf(target + 6));
+			deoNo6.setBounds(65, 25, 60, 15);
+			deoNo6.setFont(tftFont2);
+			deoNo6.setForeground(new Color(103, 51, 53));
+			panel6.add(deoNo6);
+
+			JLabel deoMenuId6 = new JLabel(list.get(target + 5).getMenu());
+			deoMenuId6.setBounds(165, 25, 140, 15);
+			deoMenuId6.setFont(tftFont2);
+			deoMenuId6.setForeground(new Color(103, 51, 53));
+			panel6.add(deoMenuId6);
+
+			JLabel deoCount6 = new JLabel(String.valueOf(list.get(target + 5).getMenu_count()));
+			deoCount6.setBounds(385, 25, 100, 15);
+			deoCount6.setFont(tftFont2);
+			deoCount6.setForeground(new Color(103, 51, 53));
+			panel6.add(deoCount6);
+
+			JLabel deoPrice6 = new JLabel(String.valueOf(list.get(target + 5).getDetailOrderFullPrice()));
+			deoPrice6.setBounds(530, 25, 100, 15);
+			deoPrice6.setFont(tftFont2);
+			deoPrice6.setForeground(new Color(103, 51, 53));
+			panel6.add(deoPrice6);
+		}
+
+	}
+
+	private void buttonSetting(MenuFrame menu, MainOrder mo) {
+
+		JButton upButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("upRoll.png")));
+		upButton.setBounds(694, 310, 85, 70);
+		upButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("up.png")));
+		upButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (frameChange > 0) {
+					buyListpanel.removeAll();
+					buyListpanel.repaint();
+					frameChange -= 6;
+					orderList(mo, frameChange);
+				}
+			}
+		});
+		jlp.add(upButton, new Integer(3));
+		util.invisible(upButton);
+
+		JButton downButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("downRoll.png")));
+		downButton.setBounds(694, 710, 85, 70);
+		downButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("down.png")));
+		downButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (mo.getDeoList().size() > frameChange + 6) {
+					buyListpanel.removeAll();
+					buyListpanel.repaint();
+					frameChange += 6;
+					orderList(mo, frameChange);
+				}
+			}
+		});
+		jlp.add(downButton, new Integer(3));
+		util.invisible(downButton);
+
 		JButton completeBtn = new JButton(icon.bigOrderBtn());
 		completeBtn.setBounds(0, 800, 800, 100);
-		jlp.add(completeBtn, new Integer(2));
-		util.invisible(completeBtn);
+		jlp.add(completeBtn, new Integer(3));
+		completeBtn.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("주문완료버튼roll.png")));
+		completeBtn.setBorderPainted(false);
+
+		JLabel menuLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("order/order메뉴.png")));
+		menuLabel.setBounds(219, 250, 140, 45);
+		jlp.add(menuLabel, new Integer(3));
+
+		JLabel countLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("order/order수량.png")));
+		countLabel.setBounds(383, 250, 140, 45);
+		jlp.add(countLabel, new Integer(3));
+
+		JLabel priceLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("order/order가격.png")));
+		priceLabel.setBounds(540, 250, 140, 45);
+		jlp.add(priceLabel, new Integer(3));
+
+		JLabel detailImageLabel = new JLabel(
+				new ImageIcon(getClass().getClassLoader().getResource("order/order넘버.png")));
+		detailImageLabel.setBounds(60, 250, 140, 45);
+		jlp.add(detailImageLabel, new Integer(3));
+
+		completeBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				menu.setVisible(true);
+			}
+		});
 	}
 
 	private Font getBMJUAFont(float f) {

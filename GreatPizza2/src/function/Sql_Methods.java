@@ -114,6 +114,7 @@ public class Sql_Methods {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			DBUtil.close(rs);
 			DBUtil.close(stmt);
 			DBUtil.close(conn);
 		}
@@ -143,12 +144,14 @@ public class Sql_Methods {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			DBUtil.close(rs);
 			DBUtil.close(stmt);
 			DBUtil.close(conn);
 		}
 
 		return "";
 	}
+
 	
 	
 
@@ -322,11 +325,12 @@ public class Sql_Methods {
 			DBUtil.close(conn);
 		}
 		System.out.println(list.toString());
-		if (list.size() < 12) {
-			for (int i = list.size(); i < 12; i++) {
-				list.add(i, "");
-			}
-		}
+		System.out.println(list.size());
+//		if (list.size() < 12) {
+//			for (int i = list.size(); i < 12; i++) {
+//				list.add(i, "");
+//			}
+//		}
 		return list;
 	}
 

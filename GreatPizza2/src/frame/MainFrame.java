@@ -53,7 +53,7 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				
-				MenuFrame menu = new MenuFrame();
+				MenuFrame menu = new MenuFrame(MainFrame.this);
 
 			}
 		});
