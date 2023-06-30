@@ -2,11 +2,11 @@ package frame;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,11 +27,11 @@ public class MakePizzaFrame extends JFrame {
 	private int countEdge;
 	
 	private HashMap<String, byte[]> edgeMap = sql.pizzamakeSetEdgeimg("엣지");
+	private HashMap<String, byte[]> topingMap = sql.getTopingImgInBox("토핑");
 	
 	private JLabel edgeLbl;
 	private JLabel currentEdge;
 	private ImageIcon edgeIcon;
-	
 
 //	/**
 //	 * Launch the application.ㅁ
@@ -56,10 +56,7 @@ public class MakePizzaFrame extends JFrame {
 		frameSetting();
 		sourceBtnSetting(menu);
 		edgeSetting();
-		getToping();
-
-
-
+		showTopping();
 	}
 
 	private void frameSetting() {
@@ -153,7 +150,7 @@ public class MakePizzaFrame extends JFrame {
 		edgePnl.add(edgeLbl, new Integer(2));
 		
 		currentEdge = new JLabel(edgeIcon);
-		currentEdge.setBounds(-10, 200, 410, 529);
+		currentEdge.setBounds(-10, 182, 410, 529);
 		jlp.add(currentEdge, new Integer(3));
 		
 		
@@ -223,14 +220,74 @@ public class MakePizzaFrame extends JFrame {
 	}
 	
 	private void getToping() {
-		HashMap<String, byte[]> topingMap = sql.getTopingImgInBox("토핑");
-		byte[] cheese = topingMap.get("캐비어");
-		ImageIcon cheeseIcon = new ImageIcon(cheese);
-		JLabel cheeseLbl = new JLabel(cheeseIcon);
-		cheeseLbl.setBounds(60, 10, 100, 100);
-		jlp.add(cheeseLbl, new Integer(2));
+//		HashMap<String, byte[]> topingMap = sql.getTopingImgInBox("토핑");
+//		byte[] cheese = topingMap.get("치즈");
+//		ImageIcon cheeseIcon = new ImageIcon(cheese);
+//		JLabel cheeseLbl = new JLabel(cheeseIcon);
+//		cheeseLbl.setBounds(415, 88, 150, 130);
+//		jlp.add(cheeseLbl, new Integer(2));
+//		
+//		byte[] bullgogiArr = topingMap.get("불고기");
+//		ImageIcon bullgogiIcon = new ImageIcon(bullgogiArr);
+//		JLabel bullgogiLbl = new JLabel(bullgogiIcon);
+//		bullgogiLbl.setBounds(595, 88, 150, 130);
+//		jlp.add(bullgogiLbl, new Integer(2));
+//		
+//		byte[] friedArr = topingMap.get("뻥튀기");
+//		ImageIcon friedIcon = new ImageIcon(friedArr);
+//		JLabel friedLbl = new JLabel(friedIcon);
+//		friedLbl.setBounds(415, 200, 150, 130);
+//		jlp.add(friedLbl, new Integer(2));
+//		
+//		byte[] cheese = topingMap.get("아스파라거스");
+//		ImageIcon cheeseIcon = new ImageIcon(cheese);
+//		JLabel cheeseLbl = new JLabel(cheeseIcon);
+//		cheeseLbl.setBounds(55, 88, 150, 130);
+//		jlp.add(cheeseLbl, new Integer(2));
+//		
+//		byte[] cheese = topingMap.get("양파");
+//		ImageIcon cheeseIcon = new ImageIcon(cheese);
+//		JLabel cheeseLbl = new JLabel(cheeseIcon);
+//		cheeseLbl.setBounds(55, 88, 150, 130);
+//		jlp.add(cheeseLbl, new Integer(2));
+//		
+//		byte[] cheese = topingMap.get("초콜릿");
+//		ImageIcon cheeseIcon = new ImageIcon(cheese);
+//		JLabel cheeseLbl = new JLabel(cheeseIcon);
+//		cheeseLbl.setBounds(55, 88, 150, 130);
+//		jlp.add(cheeseLbl, new Integer(2));
 		
 		
 		
 	}
+//	private void addToppingLabel(HashMap<String, byte[]> topingMap, String toppingName, int x, int y, int width, int height, int layer) {
+//	    byte[] toppingImage = topingMap.get(toppingName);
+//	    ImageIcon toppingIcon = new ImageIcon(toppingImage);
+//	    JLabel toppingLbl = new JLabel(toppingIcon);
+//	    toppingLbl.setBounds(x, y, width, height);
+//	    jlp.add(toppingLbl, new Integer(layer));
+//	}
+//
+//	private void addTopping() {
+//		addToppingLabel(topingMap, "치즈", 415, 88, 150, 130, 2);
+//		addToppingLabel(topingMap, "불고기", 415, 263, 150, 130, 2);
+//		addToppingLabel(topingMap, "뻥튀기", 415, 445, 150, 130, 2);
+//		
+//	}
+	private void showTopping() {
+		List<String> topingNames = sql.pizzamakeSetToping("토핑");
+		HashMap<String, byte[]> topingArr = sql.getTopingImgInBox("토핑");
+		
+		for(String topingName : topingArr.keySet()) {
+			byte[] imageData = topingArr.get(topingName);
+			ImageIcon icon = new ImageIcon(imageData);
+			
+			JLabel lbl = new JLabel(topingName, icon, JLabel.CENTER);
+			lbl.setBounds(400, 450, 600, 700);
+			jlp.add(lbl, new Integer(3));
+			
+		}
+	}
+	
+
 }
