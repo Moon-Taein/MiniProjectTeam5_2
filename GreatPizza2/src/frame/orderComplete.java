@@ -36,7 +36,7 @@ public class orderComplete extends JFrame {
 	private void frameSetting(MainOrder mo) {
 		Font tftFont2 = getBMJUAFont(25f);
 		List<DetailOrder> list = mo.getDeoList();
-		
+
 		jlp = new JLayeredPane();
 		jlp.setPreferredSize(new Dimension(icon.getMainFrame().getIconWidth(), icon.getMainFrame().getIconHeight()));
 		jlp.setLayout(null);
@@ -132,32 +132,30 @@ public class orderComplete extends JFrame {
 		setContentPane(jlp);
 
 		setUndecorated(true);
-		setVisible(true);
 		setSize(800, 900);
 		setLocationRelativeTo(null);
 	}
 
 	private void buttonSetting(MenuFrame menu) {
-		
+
 		JButton upButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("upRoll.png")));
 		upButton.setBounds(694, 315, 85, 70);
 		upButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("up.png")));
 		jlp.add(upButton, new Integer(3));
 		util.invisible(upButton);
-		
+
 		JButton downButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("downRoll.png")));
 		downButton.setBounds(694, 655, 85, 70);
 		downButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("down.png")));
 		jlp.add(downButton, new Integer(3));
 		util.invisible(downButton);
-		
+
 		JButton completeBtn = new JButton(icon.bigOrderBtn());
 		completeBtn.setBounds(0, 800, 800, 100);
 		jlp.add(completeBtn, new Integer(3));
 		completeBtn.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("주문완료버튼roll.png")));
 		completeBtn.setBorderPainted(false);
-		
-		
+
 		completeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

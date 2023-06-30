@@ -2,7 +2,6 @@ package frame;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -209,7 +208,7 @@ public class MenuFrame extends JFrame {
 			}
 		});
 		util.invisible(orderBtn);
-		
+
 		JButton homeBtn = new JButton(new ImageIcon(getClass().getClassLoader().getResource("홈버튼.png")));
 		homeBtn.setBounds(650, 10, 100, 100);
 		jlp.add(homeBtn, new Integer(3));
@@ -223,16 +222,13 @@ public class MenuFrame extends JFrame {
 				main.setVisible(true);
 			}
 		});
-		
-		
-		
 
 	}
 
 	// 추가 메뉴가 있어서 다음 버튼 누르면 6,6 12,6 으로
 	private void pizzaTabBtn(int target) {
-		//target 기준으로 +6 after
-		//target 기준으로 -6 before
+		// target 기준으로 +6 after
+		// target 기준으로 -6 before
 
 		List<Object> list = sqm.findImageAndMenuIdTarget("%M", target);
 
@@ -246,14 +242,9 @@ public class MenuFrame extends JFrame {
 				ppf.setVisible(true);
 			}
 		};
-		
-		// image랑 이름 db에서 불러오게 만들기
+
 		ImageIcon img = new ImageIcon((byte[]) list.get(1));
 		JButton btn1 = new JButton(img);
-//		Image img2 = img.getImage();
-//		Image changedImg = img2.getScaledInstance(210, 160, java.awt.Image.SCALE_SMOOTH);
-//		ImageIcon changedImageIcon = new ImageIcon(changedImg);
-//		btn1.setRolloverIcon(changedImageIcon);
 		btn1.setText((String) list.get(0));
 		btn1.setBounds(70, 50, 175, 150);
 		btn1.addActionListener(al);
@@ -342,7 +333,7 @@ public class MenuFrame extends JFrame {
 		pizzaName6.setForeground(new Color(103, 51, 53));
 		pizzaName6.setFont(tftFont2);
 		menuPnl.add(pizzaName6, new Integer(3));
-		
+
 		JButton afterbtn = new JButton(new ImageIcon(getClass().getClassLoader().getResource("after.png")));
 		afterbtn.setBounds(720, 190, 70, 80);
 		afterbtn.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("afterRoll.png")));
@@ -351,22 +342,22 @@ public class MenuFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				menuPnl.removeAll();
 				menuPnl.repaint();
-				pizzaTabBtn(target+6);
+				pizzaTabBtn(target + 6);
 			}
 		});
 		menuPnl.add(afterbtn, new Integer(3));
 		util.invisible(afterbtn);
-		
+
 		JButton beforebtn = new JButton(new ImageIcon(getClass().getClassLoader().getResource("before.png")));
 		beforebtn.setBounds(5, 190, 70, 80);
 		beforebtn.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("beforeRoll.png")));
 		beforebtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(target > 0) {
+				if (target > 0) {
 					menuPnl.removeAll();
 					menuPnl.repaint();
-					pizzaTabBtn(target-6);
+					pizzaTabBtn(target - 6);
 				}
 			}
 		});
