@@ -374,7 +374,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 				// detailOrder 생성
 				MenuFrame.detailOrderCount++;
 				DetailOrder deo = new DetailOrder(MenuFrame.detailOrderCount, newTarget,
-						Integer.valueOf(currentCount.getText()), mo.getOrderNumber());
+						Integer.valueOf(currentCount.getText()), mo.getOrderNumber(), 0);
 
 				// checkbox 확인해서 menuitem 만들어줘서 detailorder에 add
 				for (int i = 0; i < 4; i++) {
