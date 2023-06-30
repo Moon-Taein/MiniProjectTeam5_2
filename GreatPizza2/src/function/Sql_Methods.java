@@ -149,35 +149,8 @@ public class Sql_Methods {
 
 		return "";
 	}
-
-	public int findPriceIngredient(String string) {
-		String sql = "select price_retail from ingredient where ingredient_id = ?";
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		// 세팅해줘서 넣어주기
-		try {
-			conn = DBUtil.getConnection();
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, string);
-			rs = stmt.executeQuery();
-			int price = 0;
-
-			if (rs.next()) {
-				price = rs.getInt("price_retail");
-			}
-
-			return price;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBUtil.close(stmt);
-			DBUtil.close(conn);
-		}
-
-		return 0;
-	}
+	
+	
 
 	public byte[] findPizzaImageMenuId(String string) {
 		Connection conn = null;
@@ -406,5 +379,74 @@ public class Sql_Methods {
 		}
 		return 0;
 	}
+	
+	public List<String> pizzamakeSetToping(String string) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<String> topingName = new ArrayList<String>();
+
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement("SELECT * FROM ingredient WHERE ingredient_id like ?");
+			stmt.setString(1, "%" + string + "%");
+
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				String a = rs.getString("ingredient_name");
+				topingName.add(a);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(rs);
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
+		}
+
+		return topingName;
+
+	}
+	
+	
+	public HashMap<String, byte[]> getTopingImgInBox(String string) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<String> topingName = pizzamakeSetToping("토핑");
+		byte[] bytes = null;
+		List<byte[]> topingImgBox = new ArrayList<byte[]>();
+		HashMap<String, byte[]> topingBox = new HashMap<>();
+
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement("SELECT * FROM ingredient WHERE ingredient_id like ?");
+			stmt.setString(1, "%" + string + "%");
+
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				bytes = rs.getBytes("image_box");
+				topingImgBox.add(bytes);
+			}
+
+			for (int i = 0; i < topingImgBox.size(); i++) {
+				topingBox.put(topingName.get(i), topingImgBox.get(i));
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(rs);
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
+		}
+
+		return topingBox;
+
+	}
+
 
 }

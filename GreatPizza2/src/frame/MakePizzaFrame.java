@@ -3,11 +3,10 @@ package frame;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,8 +26,12 @@ public class MakePizzaFrame extends JFrame {
 	private Sql_Methods sql = new Sql_Methods();
 	private int countEdge;
 	
-	private String edgeName;
-	private HashMap<String, byte[]> edgeMap;
+	private HashMap<String, byte[]> edgeMap = sql.pizzamakeSetEdgeimg("엣지");
+	
+	private JLabel edgeLbl;
+	private JLabel currentEdge;
+	private ImageIcon edgeIcon;
+	
 
 	/**
 	 * Launch the application.ㅁ
@@ -53,7 +56,7 @@ public class MakePizzaFrame extends JFrame {
 		frameSetting();
 		sourceBtnSetting();
 		edgeSetting();
-		jlp.requestFocusInWindow();
+		getToping();
 
 
 
@@ -125,10 +128,7 @@ public class MakePizzaFrame extends JFrame {
 		});
 	}
 	private void edgeSetting() {
-		getEdge();
 		
-		Map<String, byte[]> list = sql.pizzamakeSetEdgeimg("엣지");
-		byte[] basic = list.get("기본");
 
 		JPanel edgePnl = new JPanel();
 		edgePnl.setBackground(new Color(229, 206, 190));
@@ -136,15 +136,6 @@ public class MakePizzaFrame extends JFrame {
 		jlp.add(edgePnl, new Integer(2));
 		edgePnl.setLayout(null);
 
-		JLabel edgeLbl = new JLabel("기본");
-		edgeLbl.setBounds(55, 25, 139, 50);
-		
-		JLabel currentEdge = new JLabel();
-		currentEdge = new JLabel(new ImageIcon(basic));
-		currentEdge.setBounds(-10, 225, 410, 529);
-		jlp.add(currentEdge, new Integer(3));
-		
-		edgePnl.add(edgeLbl, new Integer(2));
 
 		JButton leftBtn = new JButton(icon.getLeft());
 		leftBtn.setBounds(0, 30, 45, 45);
@@ -156,41 +147,28 @@ public class MakePizzaFrame extends JFrame {
 		edgePnl.add(rightBtn, new Integer(3));
 		util.invisible(rightBtn);
 		
+		edgeLbl = new JLabel("기본");
+		edgeLbl.setBounds(108, 20, 178, 50);
+		edgeLbl.setFont(new Font("함초롬바탕", Font.BOLD, 20));
+		edgePnl.add(edgeLbl, new Integer(2));
+		
+		currentEdge = new JLabel(edgeIcon);
+		currentEdge.setBounds(-10, 200, 410, 529);
+		jlp.add(currentEdge, new Integer(3));
+		
 		
 		rightBtn.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				countEdge++;
+				
 				if(countEdge > 3) {
 					countEdge = 0;
 					
 				}
-				if(countEdge == 0) {
-					edgeLbl.setText("고구마 무스");
-					edgeName = "고구마무스";
-					edgeLbl.setBounds(42, 25, 178, 50);
-					
-					
-				} else if (countEdge == 1){
-					edgeLbl.setText("치즈 바이트");
-					edgeName = "치즈크러스트";
-					edgeLbl.setBounds(42, 25, 178, 50);
-					
-				} else if (countEdge == 2) {
-					edgeLbl.setText("치즈 바이트");
-					edgeName = "노엣지";
-					byte[] basic = list.get("기본");
-					edgeLbl.setBounds(55, 25, 139, 50);
-				}
-				else if (countEdge == 3) {
-					edgeLbl.setText("기본 도우");
-					edgeName = "기본";
-					byte[] basic = list.get("기본");
-					edgeLbl.setBounds(55, 25, 139, 50);
-					
-				}
-				
+				updateEdge();
+
 			}
 			
 			
@@ -206,48 +184,53 @@ public class MakePizzaFrame extends JFrame {
 				if(countEdge < 0) {
 					countEdge = 3;
 				}
+				updateEdge();
 				
-				if(countEdge == 0) {
-					
-					edgeMap.toString();
-					edgeName = "기본";
-					
-					edgeLbl.setText("기본 도우");
-					edgeLbl.setBounds(55, 25, 139, 50);
-					
-				
-									
-					
-				}else if(countEdge == 1) {
-					
-					edgeName = "고구마무스";
-					edgeLbl.setBounds(42, 25, 178, 50);
-					edgeLbl.setText("고구마 무스");
-					
-					
-				} else if (countEdge == 2){
-					edgeName = "치즈크러스트";
-					edgeLbl.setBounds(42, 25, 178, 50);
-					edgeLbl.setText("치즈 바이트");
-					
-					
-					
-				} else if (countEdge == 3) {
-					edgeName = "노엣지";
-					edgeLbl.setBounds(55, 25, 139, 50);
-					edgeLbl.setText("엣지 없음");
-					
-					
-				}
 			}
 		});
+		getEdge();
 		
 	}
 	private void getEdge() {
-		edgeMap = sql.pizzamakeSetEdgeimg(edgeName);
-		for(Entry<String, byte[]> entry : edgeMap.entrySet()) {
-			byte[] edgeBytes = entry.getValue();
-			System.out.println(edgeBytes.toString());
-		}
+			byte[] doughArr = edgeMap.get(edgeLbl.getText());
+			if(doughArr != null) {
+			edgeIcon = new ImageIcon(doughArr);
+			currentEdge.setIcon(edgeIcon);
+				
+			} else {
+				System.out.println("이미지가 null참조이다");
+			}			
+			
+
+	}
+	private void updateEdge() {
+		
+		if (countEdge == 0) {
+	        edgeLbl.setText("기본");
+	        edgeLbl.setBounds(108, 20, 178, 50);
+	    } else if (countEdge == 1) {
+	        edgeLbl.setText("노엣지");
+	        edgeLbl.setBounds(102, 20, 178, 50);
+	        currentEdge.setIcon(null);
+	    } else if (countEdge == 2) {
+	        edgeLbl.setText("고구마무스");
+	        edgeLbl.setBounds(83, 20, 139, 50);
+	    } else if (countEdge == 3) {
+	        edgeLbl.setText("치즈크러스트");
+	        edgeLbl.setBounds(78, 20, 139, 50);
+	    }
+		getEdge();
+	}
+	
+	private void getToping() {
+		HashMap<String, byte[]> topingMap = sql.getTopingImgInBox("토핑");
+		byte[] cheese = topingMap.get("캐비어");
+		ImageIcon cheeseIcon = new ImageIcon(cheese);
+		JLabel cheeseLbl = new JLabel(cheeseIcon);
+		cheeseLbl.setBounds(60, 10, 100, 100);
+		jlp.add(cheeseLbl, new Integer(2));
+		
+		
+		
 	}
 }
