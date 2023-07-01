@@ -22,10 +22,10 @@ import function.MainOrder;
 import img.imageIcon;
 import utilty.invisibility;
 
-class ImagePanel extends JPanel {
+class ImagePanel2 extends JPanel {
 	private Image img;
 
-	public ImagePanel(Image img) {
+	public ImagePanel2(Image img) {
 		this.img = img;
 		setSize(new Dimension(img.getWidth(null), img.getHeight(null)));
 		setPreferredSize(new Dimension(img.getWidth(null), img.getHeight(null)));
@@ -51,7 +51,7 @@ public class orderComplete extends JFrame {
 		System.out.println("총 주문 가격은 : " + mo.getTotal_Price());
 		System.out.println("메인오더넘버 : " + mo.getOrderNumber());
 		List<DetailOrder> list = mo.getDeoList();
-		for(DetailOrder deo : list) {
+		for (DetailOrder deo : list) {
 			System.out.println("디테일오더넘버 : " + deo.getDetailOrderNumber());
 		}
 		frameSetting(mo);
@@ -85,12 +85,12 @@ public class orderComplete extends JFrame {
 	// 0~5 6~11 12~17 ...
 	private void orderList(MainOrder mo, int target) {
 		System.out.println("타겟의 숫자" + target);
-		
+
 		List<DetailOrder> list = mo.getDeoList();
 		System.out.println("order리스트 사이즈는 " + list.size());
 
 		if (list.size() > target) {
-			ImagePanel panel1 = new ImagePanel(
+			ImagePanel2 panel1 = new ImagePanel2(
 					new ImageIcon(getClass().getClassLoader().getResource("order/orderListPanel.png")).getImage());
 			panel1.setLayout(null);
 			panel1.setBounds(2, 5, 620, 70);
@@ -122,7 +122,7 @@ public class orderComplete extends JFrame {
 		}
 
 		if (list.size() > target + 1) {
-			ImagePanel panel2 = new ImagePanel(
+			ImagePanel2 panel2 = new ImagePanel2(
 					new ImageIcon(getClass().getClassLoader().getResource("order/orderListPanel.png")).getImage());
 			panel2.setLayout(null);
 			panel2.setBounds(2, 85, 620, 70);
@@ -154,7 +154,7 @@ public class orderComplete extends JFrame {
 		}
 
 		if (list.size() > target + 2) {
-			ImagePanel panel3 = new ImagePanel(
+			ImagePanel2 panel3 = new ImagePanel2(
 					new ImageIcon(getClass().getClassLoader().getResource("order/orderListPanel.png")).getImage());
 			panel3.setLayout(null);
 			panel3.setBounds(2, 165, 620, 70);
@@ -186,7 +186,7 @@ public class orderComplete extends JFrame {
 		}
 
 		if (list.size() > target + 3) {
-			ImagePanel panel4 = new ImagePanel(
+			ImagePanel2 panel4 = new ImagePanel2(
 					new ImageIcon(getClass().getClassLoader().getResource("order/orderListPanel.png")).getImage());
 			panel4.setLayout(null);
 			panel4.setBounds(2, 245, 620, 70);
@@ -218,7 +218,7 @@ public class orderComplete extends JFrame {
 		}
 
 		if (list.size() > target + 4) {
-			ImagePanel panel5 = new ImagePanel(
+			ImagePanel2 panel5 = new ImagePanel2(
 					new ImageIcon(getClass().getClassLoader().getResource("order/orderListPanel.png")).getImage());
 			panel5.setLayout(null);
 			panel5.setBounds(2, 325, 620, 70);
@@ -250,7 +250,7 @@ public class orderComplete extends JFrame {
 		}
 
 		if (list.size() > target + 5) {
-			ImagePanel panel6 = new ImagePanel(
+			ImagePanel2 panel6 = new ImagePanel2(
 					new ImageIcon(getClass().getClassLoader().getResource("order/orderListPanel.png")).getImage());
 			panel6.setLayout(null);
 			panel6.setBounds(2, 405, 620, 70);
@@ -319,12 +319,13 @@ public class orderComplete extends JFrame {
 		jlp.add(downButton, new Integer(3));
 		util.invisible(downButton);
 
-		JButton completeBtn = new JButton(new ImageIcon(getClass().getClassLoader().getResource("order/order주문하기.png")));
+		JButton completeBtn = new JButton(
+				new ImageIcon(getClass().getClassLoader().getResource("order/order주문하기.png")));
 		completeBtn.setBounds(400, 800, 200, 100);
 		jlp.add(completeBtn, new Integer(3));
 		completeBtn.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("order/order주문하기Roll.png")));
 		completeBtn.setBorderPainted(false);
-		
+
 		completeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -332,17 +333,17 @@ public class orderComplete extends JFrame {
 //				main.setVisible(true);
 				// 그냥 메인은 새창 열어둬도 될듯?
 				MainFrame main = new MainFrame();
-				main.setVisible(true);			
+				main.setVisible(true);
 			}
 		});
-		
+
 		JButton cancelBtn = new JButton(new ImageIcon(getClass().getClassLoader().getResource("order/order취소.png")));
 		cancelBtn.setBounds(600, 800, 200, 100);
 		jlp.add(cancelBtn, new Integer(3));
 		cancelBtn.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("order/order취소Roll.png")));
 		cancelBtn.setBorderPainted(false);
-		
-		cancelBtn.addActionListener(new ActionListener() {			
+
+		cancelBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
@@ -366,13 +367,13 @@ public class orderComplete extends JFrame {
 				new ImageIcon(getClass().getClassLoader().getResource("order/order넘버.png")));
 		detailImageLabel.setBounds(60, 230, 130, 40);
 		jlp.add(detailImageLabel, new Integer(3));
-				
+
 		JLabel total_main_price = new JLabel(String.valueOf(mo.getTotal_Price()));
 		total_main_price.setBounds(160, 820, 210, 50);
 		total_main_price.setFont(tftFont3);
 		total_main_price.setForeground(Color.WHITE);
 		jlp.add(total_main_price, new Integer(4));
-		
+
 	}
 
 	private Font getBMJUAFont(float f) {
