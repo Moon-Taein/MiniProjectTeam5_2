@@ -32,7 +32,7 @@ public class MenuFrame extends JFrame {
 	private JButton makePizzaBtn;
 	private static Sql_Methods sqm = new Sql_Methods();;
 	private int mainOrderCount = sqm.findMainOrderCount(); // order 누르면 ++ 되게
-	static int detailOrderCount = sqm.findDetailOrderCount(); // 피자 - 담기누를때 ++ 사이드,음료 - 담을때마다 ++
+	public  int detailOrderCount = sqm.findDetailOrderCount(); // 피자 - 담기누를때 ++ 사이드,음료 - 담을때마다 ++
 	private JLayeredPane menuPnl;
 	private MainOrder mo;
 	private DetailOrder deo;
@@ -43,6 +43,15 @@ public class MenuFrame extends JFrame {
 	private JLabel menuIdLabel;
 	private JLabel countLabel;
 	private JLabel priceLabel;
+	private JLabel total_priceLabel;	
+
+	public int getDetailOrderCount() {
+		return detailOrderCount;
+	}
+
+	public void setDetailOrderCount(int detailOrderCount) {
+		this.detailOrderCount = detailOrderCount;
+	}
 
 	private Font getBMJUAFont(float f) {
 		// TFT 폰트 파일 로드
@@ -206,7 +215,8 @@ public class MenuFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// 이때 mainOrder db에 기록하기
-				orderComplete newFrame = new orderComplete(mo, MenuFrame.this);
+				final_total_price(mo);
+				orderComplete newFrame = new orderComplete(mo, MenuFrame.this, main);
 				newFrame.setVisible(true);
 				setVisible(false);
 			}
@@ -266,8 +276,10 @@ public class MenuFrame extends JFrame {
 		util.invisible(buyListDownButton);
 		jlp.add(buyListDownButton, new Integer(3));
 
-		JLabel total_priceLabel = new JLabel("원");
-		total_priceLabel.setBounds(266, 854, 236, 36);
+		total_priceLabel = new JLabel("원");
+		total_priceLabel.setBounds(200, 852, 236, 36);
+		total_priceLabel.setFont(tftFont2);
+		total_priceLabel.setForeground(Color.WHITE);
 		jlp.add(total_priceLabel, new Integer(3));
 
 	}
@@ -287,7 +299,7 @@ public class MenuFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton a = (JButton) e.getSource();
 				String target = a.getText();
-				Pizza_PopUp_Frame ppf = new Pizza_PopUp_Frame(target, mo, detailOrderCount);
+				Pizza_PopUp_Frame ppf = new Pizza_PopUp_Frame(target, mo, MenuFrame.this, detailOrderCount);
 				ppf.setVisible(true);
 			}
 		};
@@ -446,7 +458,7 @@ public class MenuFrame extends JFrame {
 
 		if (list.size() > 0) {
 			JButton btn1 = new JButton(new ImageIcon((byte[]) list.get(1)));
-			btn1.setBounds(70, 50, 180, 150);
+			btn1.setBounds(70, 50, 175, 150);
 			btn1.setText((String) list.get(0));
 			btn1.addActionListener(al);
 			menuPnl.add(btn1, new Integer(3));
@@ -462,7 +474,7 @@ public class MenuFrame extends JFrame {
 		}
 		if (list.size() > 3) {
 			JButton btn2 = new JButton(new ImageIcon((byte[]) list.get(3)));
-			btn2.setBounds(310, 50, 180, 150);
+			btn2.setBounds(310, 50, 175, 150);
 			btn2.setText((String) list.get(2));
 			btn2.addActionListener(al);
 			menuPnl.add(btn2, new Integer(3));
@@ -478,7 +490,7 @@ public class MenuFrame extends JFrame {
 		}
 		if (list.size() > 5) {
 			JButton btn3 = new JButton(new ImageIcon((byte[]) list.get(5)));
-			btn3.setBounds(560, 50, 180, 150);
+			btn3.setBounds(560, 50, 175, 150);
 			btn3.setText((String) list.get(4));
 			btn3.addActionListener(al);
 			menuPnl.add(btn3, new Integer(3));
@@ -494,7 +506,7 @@ public class MenuFrame extends JFrame {
 		}
 		if (list.size() > 7) {
 			JButton btn4 = new JButton(new ImageIcon((byte[]) list.get(7)));
-			btn4.setBounds(70, 240, 180, 150);
+			btn4.setBounds(70, 240, 175, 150);
 			btn4.setText((String) list.get(6));
 			btn4.addActionListener(al);
 			menuPnl.add(btn4, new Integer(3));
@@ -510,7 +522,7 @@ public class MenuFrame extends JFrame {
 		}
 		if (list.size() > 9) {
 			JButton btn5 = new JButton(new ImageIcon((byte[]) list.get(9)));
-			btn5.setBounds(310, 240, 180, 150);
+			btn5.setBounds(310, 240, 175, 150);
 			btn5.setText((String) list.get(8));
 			btn5.addActionListener(al);
 			menuPnl.add(btn5, new Integer(3));
@@ -527,7 +539,7 @@ public class MenuFrame extends JFrame {
 
 		if (list.size() > 11) {
 			JButton btn6 = new JButton(new ImageIcon((byte[]) list.get(11)));
-			btn6.setBounds(560, 240, 180, 150);
+			btn6.setBounds(560, 240, 175, 150);
 			btn6.setText((String) list.get(10));
 			btn6.addActionListener(al);
 			menuPnl.add(btn6, new Integer(3));
@@ -580,7 +592,7 @@ public class MenuFrame extends JFrame {
 
 		ActionListener al = new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {						
 				JButton target = (JButton) e.getSource();
 				detailOrderCount++;
 				// menu_id로 price 찾아서 detailorder 만들때 생성자에 넣어주기
@@ -588,12 +600,15 @@ public class MenuFrame extends JFrame {
 				System.out.println(price);
 				DetailOrder deo = new DetailOrder(detailOrderCount, target.getText(), 1, mo.getOrderNumber(), price);
 				mo.getDeoList().add(deo);
+				// menuFrame 총금액 갱신
+				int mo_total_price =final_total_price(mo);
+				total_priceLabel.setText(String.valueOf(mo_total_price) + "원");		
 			}
 		};
 
 		if (list.size() > 0) {
 			JButton btn1 = new JButton(new ImageIcon((byte[]) list.get(1)));
-			btn1.setBounds(75, 50, 180, 150);
+			btn1.setBounds(75, 50, 175, 150);
 			btn1.setText((String) list.get(0));
 			btn1.addActionListener(al);
 			menuPnl.add(btn1, new Integer(3));
@@ -610,7 +625,7 @@ public class MenuFrame extends JFrame {
 
 		if (list.size() > 3) {
 			JButton btn2 = new JButton(new ImageIcon((byte[]) list.get(3)));
-			btn2.setBounds(310, 50, 180, 150);
+			btn2.setBounds(310, 50, 175, 150);
 			btn2.setText((String) list.get(2));
 			btn2.addActionListener(al);
 			menuPnl.add(btn2, new Integer(3));
@@ -627,7 +642,7 @@ public class MenuFrame extends JFrame {
 
 		if (list.size() > 5) {
 			JButton btn3 = new JButton(new ImageIcon((byte[]) list.get(5)));
-			btn3.setBounds(560, 50, 180, 150);
+			btn3.setBounds(560, 50, 175, 150);
 			btn3.setText((String) list.get(4));
 			btn3.addActionListener(al);
 			menuPnl.add(btn3, new Integer(3));
@@ -644,7 +659,7 @@ public class MenuFrame extends JFrame {
 
 		if (list.size() > 7) {
 			JButton btn4 = new JButton(new ImageIcon((byte[]) list.get(7)));
-			btn4.setBounds(75, 240, 180, 150);
+			btn4.setBounds(75, 240, 175, 150);
 			btn4.setText((String) list.get(6));
 			btn4.addActionListener(al);
 			menuPnl.add(btn4, new Integer(3));
@@ -661,7 +676,7 @@ public class MenuFrame extends JFrame {
 
 		if (list.size() > 9) {
 			JButton btn5 = new JButton(new ImageIcon((byte[]) list.get(9)));
-			btn5.setBounds(310, 240, 180, 150);
+			btn5.setBounds(310, 240, 175, 150);
 			btn5.setText((String) list.get(8));
 			btn5.addActionListener(al);
 			menuPnl.add(btn5, new Integer(3));
@@ -678,7 +693,7 @@ public class MenuFrame extends JFrame {
 
 		if (list.size() > 11) {
 			JButton btn6 = new JButton(new ImageIcon((byte[]) list.get(11)));
-			btn6.setBounds(560, 240, 180, 150);
+			btn6.setBounds(560, 240, 175, 150);
 			btn6.setText((String) list.get(10));
 			btn6.addActionListener(al);
 			menuPnl.add(btn6, new Integer(3));
@@ -724,11 +739,15 @@ public class MenuFrame extends JFrame {
 		util.invisible(beforebtn);
 	}
 
+	// 현재 총 주문가격을 구하는 메소드 
 	public int final_total_price(MainOrder mo) {
 		int full_price = 0;
 		for (DetailOrder deo : mo.getDeoList()) {
 			full_price += deo.getDetailOrderFullPrice();
+			System.out.println("메뉴에서 deo 가격" + deo.getDetailOrderFullPrice());
 		}
+		System.out.println("메뉴에서 full_price 가격" +  full_price);
+		mo.setTotal_Price(full_price);
 		return full_price;
 	}
 

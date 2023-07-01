@@ -19,7 +19,6 @@ public class DBUtil {
 	static {
 		try {
 			PROPS.load(DBUtil.class.getClassLoader().getResourceAsStream("function/mysql2.properties"));
-			System.out.println(PROPS.toString());
 //			Class.forName(PROPS.getProperty("jdbc.DRIVER"));
 			BasicDataSource ds = new BasicDataSource();
 
@@ -28,7 +27,6 @@ public class DBUtil {
 			ds.setUsername(PROPS.getProperty("jdbc.USER"));
 			ds.setPassword(PROPS.getProperty("jdbc.PASSWORD"));
 			ds.setDriverClassName(PROPS.getProperty("jdbc.DRIVER"));
-			System.out.println(PROPS.toString());
 
 			// 처음 connection 갯수
 			ds.setInitialSize(0);

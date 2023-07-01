@@ -43,11 +43,19 @@ public class orderComplete extends JFrame {
 	private invisibility util = new invisibility();
 	private JPanel buyListpanel;
 	private int frameChange = 0;
+	private Font tftFont2 = getBMJUAFont(20f);
+	private Font tftFont3 = getBMJUAFont(50f);
 
 	// 확인하면 메인프레임으로 보내게 바꿔줘야된다
-	public orderComplete(MainOrder mo, MenuFrame menu) {
+	public orderComplete(MainOrder mo, MenuFrame menu, MainFrame main) {
+		System.out.println("총 주문 가격은 : " + mo.getTotal_Price());
+		System.out.println("메인오더넘버 : " + mo.getOrderNumber());
+		List<DetailOrder> list = mo.getDeoList();
+		for(DetailOrder deo : list) {
+			System.out.println("디테일오더넘버 : " + deo.getDetailOrderNumber());
+		}
 		frameSetting(mo);
-		buttonSetting(menu, mo);
+		buttonSetting(menu, mo, main);
 		orderList(mo, 0);
 
 	}
@@ -58,14 +66,14 @@ public class orderComplete extends JFrame {
 		jlp.setPreferredSize(new Dimension(icon.getMainFrame().getIconWidth(), icon.getMainFrame().getIconHeight()));
 		jlp.setLayout(null);
 
-		JLabel lbl = new JLabel(icon.orderComplete());
+		JLabel lbl = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("order/orderCompleteFrame.png")));
 		lbl.setBounds(0, 0, 800, 900);
 		jlp.add(lbl, new Integer(2));
 
 		setContentPane(jlp);
 
 		buyListpanel = new JPanel();
-		buyListpanel.setBounds(60, 305, 630, 480);
+		buyListpanel.setBounds(50, 290, 630, 480);
 		buyListpanel.setLayout(null);
 		jlp.add(buyListpanel, new Integer(3));
 
@@ -77,8 +85,7 @@ public class orderComplete extends JFrame {
 	// 0~5 6~11 12~17 ...
 	private void orderList(MainOrder mo, int target) {
 		System.out.println("타겟의 숫자" + target);
-
-		Font tftFont2 = getBMJUAFont(18f);
+		
 		List<DetailOrder> list = mo.getDeoList();
 		System.out.println("order리스트 사이즈는 " + list.size());
 
@@ -96,13 +103,13 @@ public class orderComplete extends JFrame {
 			panel1.add(deoNo1);
 
 			JLabel deoMenuId1 = new JLabel(list.get(target).getMenu());
-			deoMenuId1.setBounds(165, 25, 140, 15);
+			deoMenuId1.setBounds(165, 25, 180, 15);
 			deoMenuId1.setFont(tftFont2);
 			deoMenuId1.setForeground(new Color(103, 51, 53));
 			panel1.add(deoMenuId1);
 
 			JLabel deoCount1 = new JLabel(String.valueOf(list.get(target).getMenu_count()));
-			deoCount1.setBounds(385, 25, 100, 15);
+			deoCount1.setBounds(395, 25, 100, 15);
 			deoCount1.setFont(tftFont2);
 			deoCount1.setForeground(new Color(103, 51, 53));
 			panel1.add(deoCount1);
@@ -128,13 +135,13 @@ public class orderComplete extends JFrame {
 			panel2.add(deoNo2);
 
 			JLabel deoMenuId2 = new JLabel(list.get(target + 1).getMenu());
-			deoMenuId2.setBounds(165, 25, 140, 15);
+			deoMenuId2.setBounds(165, 25, 180, 15);
 			deoMenuId2.setFont(tftFont2);
 			deoMenuId2.setForeground(new Color(103, 51, 53));
 			panel2.add(deoMenuId2);
 
 			JLabel deoCount2 = new JLabel(String.valueOf(list.get(target + 1).getMenu_count()));
-			deoCount2.setBounds(385, 25, 100, 15);
+			deoCount2.setBounds(395, 25, 100, 15);
 			deoCount2.setFont(tftFont2);
 			deoCount2.setForeground(new Color(103, 51, 53));
 			panel2.add(deoCount2);
@@ -160,13 +167,13 @@ public class orderComplete extends JFrame {
 			panel3.add(deoNo3);
 
 			JLabel deoMenuId3 = new JLabel(list.get(target + 2).getMenu());
-			deoMenuId3.setBounds(165, 25, 140, 15);
+			deoMenuId3.setBounds(165, 25, 180, 15);
 			deoMenuId3.setFont(tftFont2);
 			deoMenuId3.setForeground(new Color(103, 51, 53));
 			panel3.add(deoMenuId3);
 
 			JLabel deoCount3 = new JLabel(String.valueOf(list.get(target + 2).getMenu_count()));
-			deoCount3.setBounds(385, 25, 100, 15);
+			deoCount3.setBounds(395, 25, 100, 15);
 			deoCount3.setFont(tftFont2);
 			deoCount3.setForeground(new Color(103, 51, 53));
 			panel3.add(deoCount3);
@@ -192,13 +199,13 @@ public class orderComplete extends JFrame {
 			panel4.add(deoNo4);
 
 			JLabel deoMenuId4 = new JLabel(list.get(target + 3).getMenu());
-			deoMenuId4.setBounds(165, 25, 140, 15);
+			deoMenuId4.setBounds(165, 25, 180, 15);
 			deoMenuId4.setFont(tftFont2);
 			deoMenuId4.setForeground(new Color(103, 51, 53));
 			panel4.add(deoMenuId4);
 
 			JLabel deoCount4 = new JLabel(String.valueOf(list.get(target + 3).getMenu_count()));
-			deoCount4.setBounds(385, 25, 100, 15);
+			deoCount4.setBounds(395, 25, 100, 15);
 			deoCount4.setFont(tftFont2);
 			deoCount4.setForeground(new Color(103, 51, 53));
 			panel4.add(deoCount4);
@@ -224,13 +231,13 @@ public class orderComplete extends JFrame {
 			panel5.add(deoNo5);
 
 			JLabel deoMenuId5 = new JLabel(list.get(target + 4).getMenu());
-			deoMenuId5.setBounds(165, 25, 140, 15);
+			deoMenuId5.setBounds(165, 25, 180, 15);
 			deoMenuId5.setFont(tftFont2);
 			deoMenuId5.setForeground(new Color(103, 51, 53));
 			panel5.add(deoMenuId5);
 
 			JLabel deoCount5 = new JLabel(String.valueOf(list.get(target + 4).getMenu_count()));
-			deoCount5.setBounds(385, 25, 100, 15);
+			deoCount5.setBounds(395, 25, 100, 15);
 			deoCount5.setFont(tftFont2);
 			deoCount5.setForeground(new Color(103, 51, 53));
 			panel5.add(deoCount5);
@@ -256,13 +263,13 @@ public class orderComplete extends JFrame {
 			panel6.add(deoNo6);
 
 			JLabel deoMenuId6 = new JLabel(list.get(target + 5).getMenu());
-			deoMenuId6.setBounds(165, 25, 140, 15);
+			deoMenuId6.setBounds(165, 25, 180, 15);
 			deoMenuId6.setFont(tftFont2);
 			deoMenuId6.setForeground(new Color(103, 51, 53));
 			panel6.add(deoMenuId6);
 
 			JLabel deoCount6 = new JLabel(String.valueOf(list.get(target + 5).getMenu_count()));
-			deoCount6.setBounds(385, 25, 100, 15);
+			deoCount6.setBounds(395, 25, 100, 15);
 			deoCount6.setFont(tftFont2);
 			deoCount6.setForeground(new Color(103, 51, 53));
 			panel6.add(deoCount6);
@@ -276,11 +283,11 @@ public class orderComplete extends JFrame {
 
 	}
 
-	private void buttonSetting(MenuFrame menu, MainOrder mo) {
+	private void buttonSetting(MenuFrame menu, MainOrder mo, MainFrame main) {
 
-		JButton upButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("upRoll.png")));
-		upButton.setBounds(694, 310, 85, 70);
-		upButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("up.png")));
+		JButton upButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("up.png")));
+		upButton.setBounds(700, 310, 70, 90);
+		upButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("upRoll.png")));
 		upButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -295,9 +302,9 @@ public class orderComplete extends JFrame {
 		jlp.add(upButton, new Integer(3));
 		util.invisible(upButton);
 
-		JButton downButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("downRoll.png")));
-		downButton.setBounds(694, 710, 85, 70);
-		downButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("down.png")));
+		JButton downButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("down.png")));
+		downButton.setBounds(700, 670, 70, 90);
+		downButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("downRoll.png")));
 		downButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -312,36 +319,60 @@ public class orderComplete extends JFrame {
 		jlp.add(downButton, new Integer(3));
 		util.invisible(downButton);
 
-		JButton completeBtn = new JButton(icon.bigOrderBtn());
-		completeBtn.setBounds(0, 800, 800, 100);
+		JButton completeBtn = new JButton(new ImageIcon(getClass().getClassLoader().getResource("order/order확인.png")));
+		completeBtn.setBounds(400, 800, 200, 100);
 		jlp.add(completeBtn, new Integer(3));
-		completeBtn.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("주문완료버튼roll.png")));
+		completeBtn.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("order/order확인Roll.png")));
 		completeBtn.setBorderPainted(false);
-
-		JLabel menuLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("order/order메뉴.png")));
-		menuLabel.setBounds(219, 250, 140, 45);
-		jlp.add(menuLabel, new Integer(3));
-
-		JLabel countLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("order/order수량.png")));
-		countLabel.setBounds(383, 250, 140, 45);
-		jlp.add(countLabel, new Integer(3));
-
-		JLabel priceLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("order/order가격.png")));
-		priceLabel.setBounds(540, 250, 140, 45);
-		jlp.add(priceLabel, new Integer(3));
-
-		JLabel detailImageLabel = new JLabel(
-				new ImageIcon(getClass().getClassLoader().getResource("order/order넘버.png")));
-		detailImageLabel.setBounds(60, 250, 140, 45);
-		jlp.add(detailImageLabel, new Integer(3));
-
+		
 		completeBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+//				main.setVisible(true);
+				// 그냥 메인은 새창 열어둬도 될듯?
+				MainFrame main = new MainFrame();
+				main.setVisible(true);			
+			}
+		});
+		
+		JButton cancelBtn = new JButton(new ImageIcon(getClass().getClassLoader().getResource("order/order취소.png")));
+		cancelBtn.setBounds(600, 800, 200, 100);
+		jlp.add(cancelBtn, new Integer(3));
+		cancelBtn.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("order/order취소Roll.png")));
+		cancelBtn.setBorderPainted(false);
+		
+		cancelBtn.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				menu.setVisible(true);
 			}
 		});
+
+		JLabel menuLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("order/order메뉴.png")));
+		menuLabel.setBounds(219, 230, 130, 40);
+		jlp.add(menuLabel, new Integer(3));
+
+		JLabel countLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("order/order수량.png")));
+		countLabel.setBounds(383, 230, 130, 40);
+		jlp.add(countLabel, new Integer(3));
+
+		JLabel priceLabel = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("order/order가격.png")));
+		priceLabel.setBounds(540, 230, 130, 40);
+		jlp.add(priceLabel, new Integer(3));
+
+		JLabel detailImageLabel = new JLabel(
+				new ImageIcon(getClass().getClassLoader().getResource("order/order넘버.png")));
+		detailImageLabel.setBounds(60, 230, 130, 40);
+		jlp.add(detailImageLabel, new Integer(3));
+				
+		JLabel total_main_price = new JLabel(String.valueOf(mo.getTotal_Price()));
+		total_main_price.setBounds(160, 820, 210, 50);
+		total_main_price.setFont(tftFont3);
+		total_main_price.setForeground(Color.WHITE);
+		jlp.add(total_main_price, new Integer(4));
+		
 	}
 
 	private Font getBMJUAFont(float f) {
