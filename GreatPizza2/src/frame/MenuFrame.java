@@ -32,7 +32,7 @@ public class MenuFrame extends JFrame {
 	private JButton makePizzaBtn;
 	private static Sql_Methods sqm = new Sql_Methods();;
 	private int mainOrderCount = sqm.findMainOrderCount(); // order 누르면 ++ 되게
-	public  int detailOrderCount = sqm.findDetailOrderCount(); // 피자 - 담기누를때 ++ 사이드,음료 - 담을때마다 ++
+	public int detailOrderCount = sqm.findDetailOrderCount(); // 피자 - 담기누를때 ++ 사이드,음료 - 담을때마다 ++
 	private JLayeredPane menuPnl;
 	private MainOrder mo;
 	private DetailOrder deo;
@@ -43,7 +43,7 @@ public class MenuFrame extends JFrame {
 	private JLabel menuIdLabel;
 	private JLabel countLabel;
 	private JLabel priceLabel;
-	private JLabel total_priceLabel;	
+	static JLabel total_priceLabel;
 
 	public int getDetailOrderCount() {
 		return detailOrderCount;
@@ -251,27 +251,30 @@ public class MenuFrame extends JFrame {
 
 		JButton cancel1 = new JButton(new ImageIcon(getClass().getClassLoader().getResource("취소.png")));
 		cancel1.setBounds(620, 685, 100, 30);
+		cancel1.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("취소Roll.png")));
 		util.invisible(cancel1);
 		jlp.add(cancel1, new Integer(3));
 
 		JButton cancel2 = new JButton(new ImageIcon(getClass().getClassLoader().getResource("취소.png")));
 		cancel2.setBounds(620, 745, 100, 30);
+		cancel2.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("취소Roll.png")));
 		util.invisible(cancel2);
 		jlp.add(cancel2, new Integer(3));
 
 		JButton cancel3 = new JButton(new ImageIcon(getClass().getClassLoader().getResource("취소.png")));
 		cancel3.setBounds(620, 805, 100, 30);
+		cancel3.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("취소Roll.png")));
 		util.invisible(cancel3);
 		jlp.add(cancel3, new Integer(3));
 
 		JButton buyListUpButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("miniUp.png")));
-		buyListUpButton.setBounds(735, 690, 50, 50);
+		buyListUpButton.setBounds(735, 685, 50, 60);
 		buyListUpButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("miniUpRoll.png")));
 		util.invisible(buyListUpButton);
 		jlp.add(buyListUpButton, new Integer(3));
 
 		JButton buyListDownButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("miniDown.png")));
-		buyListDownButton.setBounds(735, 780, 50, 50);
+		buyListDownButton.setBounds(735, 780, 50, 60);
 		buyListDownButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("miniDownRoll.png")));
 		util.invisible(buyListDownButton);
 		jlp.add(buyListDownButton, new Integer(3));
@@ -453,6 +456,8 @@ public class MenuFrame extends JFrame {
 				int price = Integer.parseInt(sqm.findPriceMenuId(target.getText()));
 				DetailOrder deo = new DetailOrder(detailOrderCount, target.getText(), 1, mo.getOrderNumber(), price);
 				mo.getDeoList().add(deo);
+				int mo_total_price = final_total_price(mo);
+				total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 			}
 		};
 
@@ -592,7 +597,7 @@ public class MenuFrame extends JFrame {
 
 		ActionListener al = new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {						
+			public void actionPerformed(ActionEvent e) {
 				JButton target = (JButton) e.getSource();
 				detailOrderCount++;
 				// menu_id로 price 찾아서 detailorder 만들때 생성자에 넣어주기
@@ -601,8 +606,8 @@ public class MenuFrame extends JFrame {
 				DetailOrder deo = new DetailOrder(detailOrderCount, target.getText(), 1, mo.getOrderNumber(), price);
 				mo.getDeoList().add(deo);
 				// menuFrame 총금액 갱신
-				int mo_total_price =final_total_price(mo);
-				total_priceLabel.setText(String.valueOf(mo_total_price) + "원");		
+				int mo_total_price = final_total_price(mo);
+				total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 			}
 		};
 
@@ -739,14 +744,14 @@ public class MenuFrame extends JFrame {
 		util.invisible(beforebtn);
 	}
 
-	// 현재 총 주문가격을 구하는 메소드 
-	public int final_total_price(MainOrder mo) {
+	// 현재 총 주문가격을 구하는 메소드
+	public static int final_total_price(MainOrder mo) {
 		int full_price = 0;
 		for (DetailOrder deo : mo.getDeoList()) {
 			full_price += deo.getDetailOrderFullPrice();
 			System.out.println("메뉴에서 deo 가격" + deo.getDetailOrderFullPrice());
 		}
-		System.out.println("메뉴에서 full_price 가격" +  full_price);
+		System.out.println("메뉴에서 full_price 가격" + full_price);
 		mo.setTotal_Price(full_price);
 		return full_price;
 	}

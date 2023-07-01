@@ -406,6 +406,8 @@ public class Pizza_PopUp_Frame extends JDialog {
 				System.out.println("모든옵션이 합쳐진 총금액은" + total_price);
 				deo.setDetailOrderFullPrice(total_price);
 				mo.getDeoList().add(deo);
+				int mo_total_price = MenuFrame.final_total_price(mo);
+				MenuFrame.total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 				System.out.println(mo.toString());
 				dispose();
 			}

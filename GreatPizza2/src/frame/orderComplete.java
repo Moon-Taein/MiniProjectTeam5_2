@@ -319,10 +319,10 @@ public class orderComplete extends JFrame {
 		jlp.add(downButton, new Integer(3));
 		util.invisible(downButton);
 
-		JButton completeBtn = new JButton(new ImageIcon(getClass().getClassLoader().getResource("order/order확인.png")));
+		JButton completeBtn = new JButton(new ImageIcon(getClass().getClassLoader().getResource("order/order주문하기.png")));
 		completeBtn.setBounds(400, 800, 200, 100);
 		jlp.add(completeBtn, new Integer(3));
-		completeBtn.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("order/order확인Roll.png")));
+		completeBtn.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("order/order주문하기Roll.png")));
 		completeBtn.setBorderPainted(false);
 		
 		completeBtn.addActionListener(new ActionListener() {
