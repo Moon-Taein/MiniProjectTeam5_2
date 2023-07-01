@@ -3,6 +3,7 @@ package frame;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -10,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.io.InputStream;
 import java.util.List;
 
+import javax.swing.GrayFilter;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -287,6 +289,14 @@ public class MenuFrame extends JFrame {
 
 	}
 
+	// imageIcon 을 gray로 바꿔줘서 반환
+	private ImageIcon grayImageIcon(ImageIcon img) {
+		Image normalImage = img.getImage();
+		Image grayImage = GrayFilter.createDisabledImage(normalImage);
+		ImageIcon grayImg = new ImageIcon(grayImage);
+		return grayImg;
+	}
+
 	// 추가 메뉴가 있어서 다음 버튼 누르면 6,6 12,6 으로
 	private void pizzaTabBtn(int target) {
 		// target 기준으로 +6 after
@@ -312,6 +322,7 @@ public class MenuFrame extends JFrame {
 			JButton btn1 = new JButton(img);
 			btn1.setText((String) list.get(0));
 			btn1.setBounds(70, 50, 175, 150);
+			btn1.setRolloverIcon(grayImageIcon(img));
 			btn1.addActionListener(al);
 			menuPnl.add(btn1, new Integer(3));
 			util.invisible(btn1);
@@ -323,12 +334,15 @@ public class MenuFrame extends JFrame {
 			pizzaName1.setForeground(new Color(103, 51, 53));
 			pizzaName1.setFont(tftFont2);
 			menuPnl.add(pizzaName1, new Integer(3));
+
 		}
 
 		if (list.size() > 3) {
-			JButton btn2 = new JButton(new ImageIcon((byte[]) list.get(3)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(3));
+			JButton btn2 = new JButton(img);
 			btn2.setText((String) list.get(2));
 			btn2.setBounds(310, 50, 175, 150);
+			btn2.setRolloverIcon(grayImageIcon(img));
 			btn2.addActionListener(al);
 			menuPnl.add(btn2, new Integer(3));
 			util.invisible(btn2);
@@ -343,9 +357,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 5) {
-			JButton btn3 = new JButton(new ImageIcon((byte[]) list.get(5)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(5));
+			JButton btn3 = new JButton(img);
 			btn3.setText((String) list.get(4));
 			btn3.setBounds(560, 50, 175, 150);
+			btn3.setRolloverIcon(grayImageIcon(img));
 			btn3.addActionListener(al);
 			menuPnl.add(btn3, new Integer(3));
 			util.invisible(btn3);
@@ -360,9 +376,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 7) {
-			JButton btn4 = new JButton(new ImageIcon((byte[]) list.get(7)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(7));
+			JButton btn4 = new JButton(img);
 			btn4.setText((String) list.get(6));
 			btn4.setBounds(70, 240, 175, 150);
+			btn4.setRolloverIcon(grayImageIcon(img));
 			btn4.addActionListener(al);
 			menuPnl.add(btn4, new Integer(3));
 			util.invisible(btn4);
@@ -377,9 +395,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 9) {
-			JButton btn5 = new JButton(new ImageIcon((byte[]) list.get(9)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(9));
+			JButton btn5 = new JButton(img);
 			btn5.setText((String) list.get(8));
 			btn5.setBounds(310, 240, 175, 150);
+			btn5.setRolloverIcon(grayImageIcon(img));
 			btn5.addActionListener(al);
 			menuPnl.add(btn5, new Integer(3));
 			util.invisible(btn5);
@@ -394,9 +414,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 11) {
-			JButton btn6 = new JButton(new ImageIcon((byte[]) list.get(11)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(11));
+			JButton btn6 = new JButton(img);
 			btn6.setText((String) list.get(10));
 			btn6.setBounds(560, 240, 175, 150);
+			btn6.setRolloverIcon(grayImageIcon(img));
 			btn6.addActionListener(al);
 			menuPnl.add(btn6, new Integer(3));
 			util.invisible(btn6);
@@ -462,9 +484,11 @@ public class MenuFrame extends JFrame {
 		};
 
 		if (list.size() > 0) {
-			JButton btn1 = new JButton(new ImageIcon((byte[]) list.get(1)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(1));
+			JButton btn1 = new JButton(img);
 			btn1.setBounds(70, 50, 175, 150);
 			btn1.setText((String) list.get(0));
+			btn1.setRolloverIcon(grayImageIcon(img));
 			btn1.addActionListener(al);
 			menuPnl.add(btn1, new Integer(3));
 			util.invisible(btn1);
@@ -478,9 +502,11 @@ public class MenuFrame extends JFrame {
 			menuPnl.add(sideName1, new Integer(3));
 		}
 		if (list.size() > 3) {
-			JButton btn2 = new JButton(new ImageIcon((byte[]) list.get(3)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(3));
+			JButton btn2 = new JButton(img);
 			btn2.setBounds(310, 50, 175, 150);
 			btn2.setText((String) list.get(2));
+			btn2.setRolloverIcon(grayImageIcon(img));
 			btn2.addActionListener(al);
 			menuPnl.add(btn2, new Integer(3));
 			util.invisible(btn2);
@@ -494,9 +520,11 @@ public class MenuFrame extends JFrame {
 			menuPnl.add(sideName2, new Integer(3));
 		}
 		if (list.size() > 5) {
-			JButton btn3 = new JButton(new ImageIcon((byte[]) list.get(5)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(5));
+			JButton btn3 = new JButton(img);
 			btn3.setBounds(560, 50, 175, 150);
 			btn3.setText((String) list.get(4));
+			btn3.setRolloverIcon(grayImageIcon(img));
 			btn3.addActionListener(al);
 			menuPnl.add(btn3, new Integer(3));
 			util.invisible(btn3);
@@ -510,9 +538,11 @@ public class MenuFrame extends JFrame {
 			menuPnl.add(sideName3, new Integer(3));
 		}
 		if (list.size() > 7) {
-			JButton btn4 = new JButton(new ImageIcon((byte[]) list.get(7)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(7));
+			JButton btn4 = new JButton(img);
 			btn4.setBounds(70, 240, 175, 150);
 			btn4.setText((String) list.get(6));
+			btn4.setRolloverIcon(grayImageIcon(img));
 			btn4.addActionListener(al);
 			menuPnl.add(btn4, new Integer(3));
 			util.invisible(btn4);
@@ -526,9 +556,11 @@ public class MenuFrame extends JFrame {
 			menuPnl.add(sideName4, new Integer(3));
 		}
 		if (list.size() > 9) {
-			JButton btn5 = new JButton(new ImageIcon((byte[]) list.get(9)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(9));
+			JButton btn5 = new JButton(img);
 			btn5.setBounds(310, 240, 175, 150);
 			btn5.setText((String) list.get(8));
+			btn5.setRolloverIcon(grayImageIcon(img));
 			btn5.addActionListener(al);
 			menuPnl.add(btn5, new Integer(3));
 			util.invisible(btn5);
@@ -543,9 +575,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 11) {
-			JButton btn6 = new JButton(new ImageIcon((byte[]) list.get(11)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(11));
+			JButton btn6 = new JButton(img);
 			btn6.setBounds(560, 240, 175, 150);
 			btn6.setText((String) list.get(10));
+			btn6.setRolloverIcon(grayImageIcon(img));
 			btn6.addActionListener(al);
 			menuPnl.add(btn6, new Integer(3));
 			util.invisible(btn6);
@@ -612,9 +646,11 @@ public class MenuFrame extends JFrame {
 		};
 
 		if (list.size() > 0) {
-			JButton btn1 = new JButton(new ImageIcon((byte[]) list.get(1)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(1));
+			JButton btn1 = new JButton(img);
 			btn1.setBounds(75, 50, 175, 150);
 			btn1.setText((String) list.get(0));
+			btn1.setRolloverIcon(grayImageIcon(img));
 			btn1.addActionListener(al);
 			menuPnl.add(btn1, new Integer(3));
 			util.invisible(btn1);
@@ -629,9 +665,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 3) {
-			JButton btn2 = new JButton(new ImageIcon((byte[]) list.get(3)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(3));
+			JButton btn2 = new JButton(img);
 			btn2.setBounds(310, 50, 175, 150);
 			btn2.setText((String) list.get(2));
+			btn2.setRolloverIcon(grayImageIcon(img));
 			btn2.addActionListener(al);
 			menuPnl.add(btn2, new Integer(3));
 			util.invisible(btn2);
@@ -646,9 +684,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 5) {
-			JButton btn3 = new JButton(new ImageIcon((byte[]) list.get(5)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(5));
+			JButton btn3 = new JButton(img);
 			btn3.setBounds(560, 50, 175, 150);
 			btn3.setText((String) list.get(4));
+			btn3.setRolloverIcon(grayImageIcon(img));
 			btn3.addActionListener(al);
 			menuPnl.add(btn3, new Integer(3));
 			util.invisible(btn3);
@@ -663,9 +703,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 7) {
-			JButton btn4 = new JButton(new ImageIcon((byte[]) list.get(7)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(7));
+			JButton btn4 = new JButton(img);
 			btn4.setBounds(75, 240, 175, 150);
 			btn4.setText((String) list.get(6));
+			btn4.setRolloverIcon(grayImageIcon(img));
 			btn4.addActionListener(al);
 			menuPnl.add(btn4, new Integer(3));
 			util.invisible(btn4);
@@ -680,9 +722,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 9) {
-			JButton btn5 = new JButton(new ImageIcon((byte[]) list.get(9)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(9));
+			JButton btn5 = new JButton(img);
 			btn5.setBounds(310, 240, 175, 150);
 			btn5.setText((String) list.get(8));
+			btn5.setRolloverIcon(grayImageIcon(img));
 			btn5.addActionListener(al);
 			menuPnl.add(btn5, new Integer(3));
 			util.invisible(btn5);
@@ -697,9 +741,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 11) {
-			JButton btn6 = new JButton(new ImageIcon((byte[]) list.get(11)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(11));
+			JButton btn6 = new JButton(img);
 			btn6.setBounds(560, 240, 175, 150);
 			btn6.setText((String) list.get(10));
+			btn6.setRolloverIcon(grayImageIcon(img));
 			btn6.addActionListener(al);
 			menuPnl.add(btn6, new Integer(3));
 			util.invisible(btn6);

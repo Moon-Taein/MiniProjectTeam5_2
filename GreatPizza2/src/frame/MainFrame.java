@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,9 +21,6 @@ public class MainFrame extends JFrame {
 	private invisibility util = new invisibility();
 	private JButton orderBtn;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -37,27 +35,23 @@ public class MainFrame extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.a
-	 */
 	public MainFrame() {
 
 		frameSetting();
-		
 
 		BtnSetting();
-		
+
 		orderBtn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				
+
 				MenuFrame menu = new MenuFrame(MainFrame.this);
 
 			}
 		});
-		
+
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800, 900);
@@ -67,30 +61,24 @@ public class MainFrame extends JFrame {
 
 	private void frameSetting() {
 
-		lbl = new JLabel(icon.getMainFrame());
-
 		jlp = new JLayeredPane();
 		jlp.setPreferredSize(new Dimension(800, 900));
+		setContentPane(jlp);
 
+		lbl = new JLabel(icon.getMainFrame());
 		lbl.setBounds(0, 0, 800, 900);
-
 		jlp.add(lbl, new Integer(1));
 
-		setContentPane(jlp);
-		
 		setUndecorated(true);
 
-		
 	}
 
 	private void BtnSetting() {
 		orderBtn = new JButton(icon.getOrderBtn());
-		orderBtn.setBounds(250, 648, 300, 120);
-		
+		orderBtn.setBounds(250, 760, 300, 120);
+		orderBtn.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("orderBtnRoll.png")));
 		util.invisible(orderBtn);
-
 		jlp.add(orderBtn, new Integer(2));
 
 	}
-
 }
