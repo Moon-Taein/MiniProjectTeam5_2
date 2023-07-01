@@ -52,10 +52,10 @@ public class imageIcon {
 		return new ImageIcon(getClass().getClassLoader().getResource("불닭소스.png"));
 	}
 	public ImageIcon getHotSoy() {
-		return new ImageIcon(getClass().getClassLoader().getResource("핫간장.png"));
+		return new ImageIcon(getClass().getClassLoader().getResource("매운간장소스.png"));
 	}
 	public ImageIcon getSoy() {
-		return new ImageIcon(getClass().getClassLoader().getResource("간장.png"));
+		return new ImageIcon(getClass().getClassLoader().getResource("간장소스.png"));
 	}
 	public ImageIcon getCream() {
 		return new ImageIcon(getClass().getClassLoader().getResource("크림소스.png"));
@@ -83,6 +83,24 @@ public class imageIcon {
 	}
 	public ImageIcon getNoEdge() {
 		return new ImageIcon(getClass().getClassLoader().getResource("엣지없음.png"));
+	}
+	public ImageIcon getLeftBright() {
+		return new ImageIcon(getClass().getClassLoader().getResource("밝은왼쪽.png"));
+	}
+	public ImageIcon getRightBright() {
+		return new ImageIcon(getClass().getClassLoader().getResource("밝은오른쪽.png"));
+	}
+	public ImageIcon getCancle() {
+		return new ImageIcon(getClass().getClassLoader().getResource("cancle.png"));
+	}
+	public ImageIcon getCancleBright() {
+		return new ImageIcon(getClass().getClassLoader().getResource("밝은cancle.png"));
+	}
+	public ImageIcon getAdd() {
+		return new ImageIcon(getClass().getClassLoader().getResource("담기.png"));
+	}
+	public ImageIcon getAddBright() {
+		return new ImageIcon(getClass().getClassLoader().getResource("밝은담기.png"));
 	}
 
 

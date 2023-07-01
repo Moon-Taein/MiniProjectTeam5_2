@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainFrame frame = new MainFrame();
+					MainFrame frame = new MainFrame();	
 					frame.setVisible(true);
 					frame.requestFocus();
 				} catch (Exception e) {
