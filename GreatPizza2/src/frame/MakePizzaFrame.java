@@ -246,10 +246,13 @@ public class MakePizzaFrame extends JFrame {
 		getEdge();
 	}
 
+	// 토핑리스트 좌우이동 버튼
 	private void afterBeforeBtnSetting() {
 
-		JButton afterButton = new JButton("after");
-		afterButton.setBounds(628, 561, 97, 23);
+		JButton afterButton = new JButton(icon.getMiniAfter());
+		afterButton.setBounds(650, 550, 50, 50);
+		afterButton.setRolloverIcon(icon.getMiniAfterRoll());
+		util.invisible(afterButton);
 		afterButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -261,8 +264,10 @@ public class MakePizzaFrame extends JFrame {
 		});
 		jlp.add(afterButton, new Integer(3));
 
-		JButton beforeBtn = new JButton("before");
-		beforeBtn.setBounds(472, 561, 97, 23);
+		JButton beforeBtn = new JButton(icon.getMiniBefore());
+		beforeBtn.setBounds(500, 550, 50, 50);
+		beforeBtn.setRolloverIcon(icon.getMiniBeforeRoll());
+		util.invisible(beforeBtn);
 		beforeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

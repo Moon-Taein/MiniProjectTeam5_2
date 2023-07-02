@@ -139,4 +139,20 @@ public class imageIcon {
 		return new ImageIcon(getClass().getClassLoader().getResource("makePizzaTopping.png"));
 	}
 
+	public ImageIcon getMiniAfter() {
+		return new ImageIcon(getClass().getClassLoader().getResource("miniAfter.png"));
+	}
+
+	public ImageIcon getMiniBefore() {
+		return new ImageIcon(getClass().getClassLoader().getResource("miniBefore.png"));
+	}
+
+	public ImageIcon getMiniAfterRoll() {
+		return new ImageIcon(getClass().getClassLoader().getResource("miniAfterRoll.png"));
+	}
+
+	public ImageIcon getMiniBeforeRoll() {
+		return new ImageIcon(getClass().getClassLoader().getResource("miniBeforeRoll.png"));
+	}
+
 }
