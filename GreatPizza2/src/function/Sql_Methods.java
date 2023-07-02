@@ -332,7 +332,8 @@ public class Sql_Methods {
 		byte[] bytes = null;
 		try {
 			conn = DBUtil.getConnection();
-			stmt = conn.prepareStatement("select menu_id, image from menu where menu_id like ? order by no limit ?,6");
+			stmt = conn.prepareStatement(
+					"select menu_id, image from menu where menu_id like ? order by no limit 6 offset ?");
 			stmt.setString(1, name);
 			stmt.setInt(2, target);
 			rs = stmt.executeQuery();
@@ -410,7 +411,7 @@ public class Sql_Methods {
 		}
 		return 0;
 	}
-	
+
 	public List<String> pizzamakeSetToping(String string) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -440,8 +441,7 @@ public class Sql_Methods {
 		return topingName;
 
 	}
-	
-	
+
 	public HashMap<String, byte[]> getTopingImgInBox(String string) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -478,6 +478,5 @@ public class Sql_Methods {
 		return topingBox;
 
 	}
-
 
 }

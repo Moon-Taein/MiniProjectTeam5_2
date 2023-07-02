@@ -3,6 +3,7 @@ package frame;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -10,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.io.InputStream;
 import java.util.List;
 
+import javax.swing.GrayFilter;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,7 +34,7 @@ public class MenuFrame extends JFrame {
 	private JButton makePizzaBtn;
 	private static Sql_Methods sqm = new Sql_Methods();;
 	private int mainOrderCount = sqm.findMainOrderCount(); // order 누르면 ++ 되게
-	public  int detailOrderCount = sqm.findDetailOrderCount(); // 피자 - 담기누를때 ++ 사이드,음료 - 담을때마다 ++
+	public int detailOrderCount = sqm.findDetailOrderCount(); // 피자 - 담기누를때 ++ 사이드,음료 - 담을때마다 ++
 	private JLayeredPane menuPnl;
 	private MainOrder mo;
 	private DetailOrder deo;
@@ -43,7 +45,7 @@ public class MenuFrame extends JFrame {
 	private JLabel menuIdLabel;
 	private JLabel countLabel;
 	private JLabel priceLabel;
-	private JLabel total_priceLabel;	
+	static JLabel total_priceLabel;
 
 	public int getDetailOrderCount() {
 		return detailOrderCount;
@@ -251,27 +253,30 @@ public class MenuFrame extends JFrame {
 
 		JButton cancel1 = new JButton(new ImageIcon(getClass().getClassLoader().getResource("취소.png")));
 		cancel1.setBounds(620, 685, 100, 30);
+		cancel1.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("취소Roll.png")));
 		util.invisible(cancel1);
 		jlp.add(cancel1, new Integer(3));
 
 		JButton cancel2 = new JButton(new ImageIcon(getClass().getClassLoader().getResource("취소.png")));
 		cancel2.setBounds(620, 745, 100, 30);
+		cancel2.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("취소Roll.png")));
 		util.invisible(cancel2);
 		jlp.add(cancel2, new Integer(3));
 
 		JButton cancel3 = new JButton(new ImageIcon(getClass().getClassLoader().getResource("취소.png")));
 		cancel3.setBounds(620, 805, 100, 30);
+		cancel3.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("취소Roll.png")));
 		util.invisible(cancel3);
 		jlp.add(cancel3, new Integer(3));
 
 		JButton buyListUpButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("miniUp.png")));
-		buyListUpButton.setBounds(735, 690, 50, 50);
+		buyListUpButton.setBounds(735, 685, 50, 60);
 		buyListUpButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("miniUpRoll.png")));
 		util.invisible(buyListUpButton);
 		jlp.add(buyListUpButton, new Integer(3));
 
 		JButton buyListDownButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("miniDown.png")));
-		buyListDownButton.setBounds(735, 780, 50, 50);
+		buyListDownButton.setBounds(735, 780, 50, 60);
 		buyListDownButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("miniDownRoll.png")));
 		util.invisible(buyListDownButton);
 		jlp.add(buyListDownButton, new Integer(3));
@@ -282,6 +287,14 @@ public class MenuFrame extends JFrame {
 		total_priceLabel.setForeground(Color.WHITE);
 		jlp.add(total_priceLabel, new Integer(3));
 
+	}
+
+	// imageIcon 을 gray로 바꿔줘서 반환
+	private ImageIcon grayImageIcon(ImageIcon img) {
+		Image normalImage = img.getImage();
+		Image grayImage = GrayFilter.createDisabledImage(normalImage);
+		ImageIcon grayImg = new ImageIcon(grayImage);
+		return grayImg;
 	}
 
 	// 추가 메뉴가 있어서 다음 버튼 누르면 6,6 12,6 으로
@@ -309,6 +322,7 @@ public class MenuFrame extends JFrame {
 			JButton btn1 = new JButton(img);
 			btn1.setText((String) list.get(0));
 			btn1.setBounds(70, 50, 175, 150);
+			btn1.setRolloverIcon(grayImageIcon(img));
 			btn1.addActionListener(al);
 			menuPnl.add(btn1, new Integer(3));
 			util.invisible(btn1);
@@ -320,12 +334,15 @@ public class MenuFrame extends JFrame {
 			pizzaName1.setForeground(new Color(103, 51, 53));
 			pizzaName1.setFont(tftFont2);
 			menuPnl.add(pizzaName1, new Integer(3));
+
 		}
 
 		if (list.size() > 3) {
-			JButton btn2 = new JButton(new ImageIcon((byte[]) list.get(3)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(3));
+			JButton btn2 = new JButton(img);
 			btn2.setText((String) list.get(2));
 			btn2.setBounds(310, 50, 175, 150);
+			btn2.setRolloverIcon(grayImageIcon(img));
 			btn2.addActionListener(al);
 			menuPnl.add(btn2, new Integer(3));
 			util.invisible(btn2);
@@ -340,9 +357,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 5) {
-			JButton btn3 = new JButton(new ImageIcon((byte[]) list.get(5)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(5));
+			JButton btn3 = new JButton(img);
 			btn3.setText((String) list.get(4));
 			btn3.setBounds(560, 50, 175, 150);
+			btn3.setRolloverIcon(grayImageIcon(img));
 			btn3.addActionListener(al);
 			menuPnl.add(btn3, new Integer(3));
 			util.invisible(btn3);
@@ -357,9 +376,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 7) {
-			JButton btn4 = new JButton(new ImageIcon((byte[]) list.get(7)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(7));
+			JButton btn4 = new JButton(img);
 			btn4.setText((String) list.get(6));
 			btn4.setBounds(70, 240, 175, 150);
+			btn4.setRolloverIcon(grayImageIcon(img));
 			btn4.addActionListener(al);
 			menuPnl.add(btn4, new Integer(3));
 			util.invisible(btn4);
@@ -374,9 +395,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 9) {
-			JButton btn5 = new JButton(new ImageIcon((byte[]) list.get(9)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(9));
+			JButton btn5 = new JButton(img);
 			btn5.setText((String) list.get(8));
 			btn5.setBounds(310, 240, 175, 150);
+			btn5.setRolloverIcon(grayImageIcon(img));
 			btn5.addActionListener(al);
 			menuPnl.add(btn5, new Integer(3));
 			util.invisible(btn5);
@@ -391,9 +414,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 11) {
-			JButton btn6 = new JButton(new ImageIcon((byte[]) list.get(11)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(11));
+			JButton btn6 = new JButton(img);
 			btn6.setText((String) list.get(10));
 			btn6.setBounds(560, 240, 175, 150);
+			btn6.setRolloverIcon(grayImageIcon(img));
 			btn6.addActionListener(al);
 			menuPnl.add(btn6, new Integer(3));
 			util.invisible(btn6);
@@ -453,13 +478,17 @@ public class MenuFrame extends JFrame {
 				int price = Integer.parseInt(sqm.findPriceMenuId(target.getText()));
 				DetailOrder deo = new DetailOrder(detailOrderCount, target.getText(), 1, mo.getOrderNumber(), price);
 				mo.getDeoList().add(deo);
+				int mo_total_price = final_total_price(mo);
+				total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 			}
 		};
 
 		if (list.size() > 0) {
-			JButton btn1 = new JButton(new ImageIcon((byte[]) list.get(1)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(1));
+			JButton btn1 = new JButton(img);
 			btn1.setBounds(70, 50, 175, 150);
 			btn1.setText((String) list.get(0));
+			btn1.setRolloverIcon(grayImageIcon(img));
 			btn1.addActionListener(al);
 			menuPnl.add(btn1, new Integer(3));
 			util.invisible(btn1);
@@ -473,9 +502,11 @@ public class MenuFrame extends JFrame {
 			menuPnl.add(sideName1, new Integer(3));
 		}
 		if (list.size() > 3) {
-			JButton btn2 = new JButton(new ImageIcon((byte[]) list.get(3)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(3));
+			JButton btn2 = new JButton(img);
 			btn2.setBounds(310, 50, 175, 150);
 			btn2.setText((String) list.get(2));
+			btn2.setRolloverIcon(grayImageIcon(img));
 			btn2.addActionListener(al);
 			menuPnl.add(btn2, new Integer(3));
 			util.invisible(btn2);
@@ -489,9 +520,11 @@ public class MenuFrame extends JFrame {
 			menuPnl.add(sideName2, new Integer(3));
 		}
 		if (list.size() > 5) {
-			JButton btn3 = new JButton(new ImageIcon((byte[]) list.get(5)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(5));
+			JButton btn3 = new JButton(img);
 			btn3.setBounds(560, 50, 175, 150);
 			btn3.setText((String) list.get(4));
+			btn3.setRolloverIcon(grayImageIcon(img));
 			btn3.addActionListener(al);
 			menuPnl.add(btn3, new Integer(3));
 			util.invisible(btn3);
@@ -505,9 +538,11 @@ public class MenuFrame extends JFrame {
 			menuPnl.add(sideName3, new Integer(3));
 		}
 		if (list.size() > 7) {
-			JButton btn4 = new JButton(new ImageIcon((byte[]) list.get(7)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(7));
+			JButton btn4 = new JButton(img);
 			btn4.setBounds(70, 240, 175, 150);
 			btn4.setText((String) list.get(6));
+			btn4.setRolloverIcon(grayImageIcon(img));
 			btn4.addActionListener(al);
 			menuPnl.add(btn4, new Integer(3));
 			util.invisible(btn4);
@@ -521,9 +556,11 @@ public class MenuFrame extends JFrame {
 			menuPnl.add(sideName4, new Integer(3));
 		}
 		if (list.size() > 9) {
-			JButton btn5 = new JButton(new ImageIcon((byte[]) list.get(9)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(9));
+			JButton btn5 = new JButton(img);
 			btn5.setBounds(310, 240, 175, 150);
 			btn5.setText((String) list.get(8));
+			btn5.setRolloverIcon(grayImageIcon(img));
 			btn5.addActionListener(al);
 			menuPnl.add(btn5, new Integer(3));
 			util.invisible(btn5);
@@ -538,9 +575,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 11) {
-			JButton btn6 = new JButton(new ImageIcon((byte[]) list.get(11)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(11));
+			JButton btn6 = new JButton(img);
 			btn6.setBounds(560, 240, 175, 150);
 			btn6.setText((String) list.get(10));
+			btn6.setRolloverIcon(grayImageIcon(img));
 			btn6.addActionListener(al);
 			menuPnl.add(btn6, new Integer(3));
 			util.invisible(btn6);
@@ -592,7 +631,7 @@ public class MenuFrame extends JFrame {
 
 		ActionListener al = new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {						
+			public void actionPerformed(ActionEvent e) {
 				JButton target = (JButton) e.getSource();
 				detailOrderCount++;
 				// menu_id로 price 찾아서 detailorder 만들때 생성자에 넣어주기
@@ -601,15 +640,17 @@ public class MenuFrame extends JFrame {
 				DetailOrder deo = new DetailOrder(detailOrderCount, target.getText(), 1, mo.getOrderNumber(), price);
 				mo.getDeoList().add(deo);
 				// menuFrame 총금액 갱신
-				int mo_total_price =final_total_price(mo);
-				total_priceLabel.setText(String.valueOf(mo_total_price) + "원");		
+				int mo_total_price = final_total_price(mo);
+				total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 			}
 		};
 
 		if (list.size() > 0) {
-			JButton btn1 = new JButton(new ImageIcon((byte[]) list.get(1)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(1));
+			JButton btn1 = new JButton(img);
 			btn1.setBounds(75, 50, 175, 150);
 			btn1.setText((String) list.get(0));
+			btn1.setRolloverIcon(grayImageIcon(img));
 			btn1.addActionListener(al);
 			menuPnl.add(btn1, new Integer(3));
 			util.invisible(btn1);
@@ -624,9 +665,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 3) {
-			JButton btn2 = new JButton(new ImageIcon((byte[]) list.get(3)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(3));
+			JButton btn2 = new JButton(img);
 			btn2.setBounds(310, 50, 175, 150);
 			btn2.setText((String) list.get(2));
+			btn2.setRolloverIcon(grayImageIcon(img));
 			btn2.addActionListener(al);
 			menuPnl.add(btn2, new Integer(3));
 			util.invisible(btn2);
@@ -641,9 +684,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 5) {
-			JButton btn3 = new JButton(new ImageIcon((byte[]) list.get(5)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(5));
+			JButton btn3 = new JButton(img);
 			btn3.setBounds(560, 50, 175, 150);
 			btn3.setText((String) list.get(4));
+			btn3.setRolloverIcon(grayImageIcon(img));
 			btn3.addActionListener(al);
 			menuPnl.add(btn3, new Integer(3));
 			util.invisible(btn3);
@@ -658,9 +703,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 7) {
-			JButton btn4 = new JButton(new ImageIcon((byte[]) list.get(7)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(7));
+			JButton btn4 = new JButton(img);
 			btn4.setBounds(75, 240, 175, 150);
 			btn4.setText((String) list.get(6));
+			btn4.setRolloverIcon(grayImageIcon(img));
 			btn4.addActionListener(al);
 			menuPnl.add(btn4, new Integer(3));
 			util.invisible(btn4);
@@ -675,9 +722,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 9) {
-			JButton btn5 = new JButton(new ImageIcon((byte[]) list.get(9)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(9));
+			JButton btn5 = new JButton(img);
 			btn5.setBounds(310, 240, 175, 150);
 			btn5.setText((String) list.get(8));
+			btn5.setRolloverIcon(grayImageIcon(img));
 			btn5.addActionListener(al);
 			menuPnl.add(btn5, new Integer(3));
 			util.invisible(btn5);
@@ -692,9 +741,11 @@ public class MenuFrame extends JFrame {
 		}
 
 		if (list.size() > 11) {
-			JButton btn6 = new JButton(new ImageIcon((byte[]) list.get(11)));
+			ImageIcon img = new ImageIcon((byte[]) list.get(11));
+			JButton btn6 = new JButton(img);
 			btn6.setBounds(560, 240, 175, 150);
 			btn6.setText((String) list.get(10));
+			btn6.setRolloverIcon(grayImageIcon(img));
 			btn6.addActionListener(al);
 			menuPnl.add(btn6, new Integer(3));
 			util.invisible(btn6);
@@ -739,14 +790,14 @@ public class MenuFrame extends JFrame {
 		util.invisible(beforebtn);
 	}
 
-	// 현재 총 주문가격을 구하는 메소드 
-	public int final_total_price(MainOrder mo) {
+	// 현재 총 주문가격을 구하는 메소드
+	public static int final_total_price(MainOrder mo) {
 		int full_price = 0;
 		for (DetailOrder deo : mo.getDeoList()) {
 			full_price += deo.getDetailOrderFullPrice();
 			System.out.println("메뉴에서 deo 가격" + deo.getDetailOrderFullPrice());
 		}
-		System.out.println("메뉴에서 full_price 가격" +  full_price);
+		System.out.println("메뉴에서 full_price 가격" + full_price);
 		mo.setTotal_Price(full_price);
 		return full_price;
 	}
