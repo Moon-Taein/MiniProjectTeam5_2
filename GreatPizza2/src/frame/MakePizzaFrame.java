@@ -1,9 +1,10 @@
 package frame;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -36,7 +37,9 @@ public class MakePizzaFrame extends JFrame {
 	private JLabel currentEdge;
 	private ImageIcon edgeIcon;
 	private int edgePage;
-	private JLayeredPane topingPnl;
+	private ImagePanel2 topingPnl;
+
+	int toppingTarget = 0;
 
 	int currentPage;
 	int startIndex;
@@ -68,7 +71,8 @@ public class MakePizzaFrame extends JFrame {
 		frameSetting();
 		sourceBtnSetting(menu);
 		edgeSetting();
-		showTopping();
+		showTopping(toppingTarget);
+		afterBeforeBtnSetting();
 	}
 
 	private void frameSetting() {
@@ -76,7 +80,7 @@ public class MakePizzaFrame extends JFrame {
 		JLabel lbl = new JLabel(icon.makePizzaFrame());
 		lbl.setBounds(0, 0, 800, 900);
 
-		topingPnl = new JLayeredPane();
+		topingPnl = new ImagePanel2(icon.getMakePizzaToppingFrame().getImage());
 		topingPnl.setBounds(415, 65, 360, 480);
 		topingPnl.setOpaque(true);
 
@@ -119,6 +123,7 @@ public class MakePizzaFrame extends JFrame {
 		jlp.add(btn5, new Integer(1));
 
 		// 취소,담기 버튼
+		// 취소있으니까 뒤로가기 없어도될듯
 		JButton cancle = new JButton(icon.getCancle());
 		cancle.setBounds(90, 775, 280, 70);
 		jlp.add(cancle, new Integer(2));
@@ -241,6 +246,39 @@ public class MakePizzaFrame extends JFrame {
 		getEdge();
 	}
 
+	private void afterBeforeBtnSetting() {
+
+		JButton afterButton = new JButton("after");
+		afterButton.setBounds(628, 561, 97, 23);
+		afterButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				topingPnl.removeAll();
+				topingPnl.repaint();
+				setToppingTarget(getToppingTarget() + 6);
+				showTopping(getToppingTarget());
+			}
+		});
+		jlp.add(afterButton, new Integer(3));
+
+		JButton beforeBtn = new JButton("before");
+		beforeBtn.setBounds(472, 561, 97, 23);
+		beforeBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (getToppingTarget() > 0) {
+					topingPnl.removeAll();
+					topingPnl.repaint();
+					setToppingTarget(getToppingTarget() - 6);
+					showTopping(getToppingTarget());
+				}
+
+			}
+		});
+		jlp.add(beforeBtn, new Integer(3));
+
+	}
+
 	private void getToping() {
 //		HashMap<String, byte[]> topingMap = sql.getTopingImgInBox("토핑");
 //		byte[] cheese = topingMap.get("치즈");
@@ -294,7 +332,7 @@ public class MakePizzaFrame extends JFrame {
 //		addToppingLabel(topingMap, "뻥튀기", 415, 445, 150, 130, 2);
 
 //	}
-	private void showTopping() {
+	private void showTopping(int toppingTarget) {
 		List<String> topingNames = sql.pizzamakeSetToping("토핑");
 		HashMap<String, byte[]> topingArr = sql.getTopingImgInBox("토핑");
 
@@ -305,31 +343,38 @@ public class MakePizzaFrame extends JFrame {
 		startIndex = (currentPage - 1) * itemsPerPage; // 시작 인덱스
 		endIndex = Math.min(startIndex + itemsPerPage, topingArr.size()); // 종료 인덱스
 
-		x = 0;
-		y = 0;
-		int width = 150;
-		int height = 120;
-		int horizontalGap = 70;
-		int verticalGap = 75;
+		x = 23;
+		y = 17;
+		int width = 130;
+		int height = 100;
+		int horizontalGap = 60;
+		int verticalGap = 66;
 
 		count = 0;
 
 		List<String> list = new ArrayList<>(topingArr.keySet());
 
+		// 조건문 수정해서 size 까지만 나올수 있도록
 		for (int i = 0; i < 6; i++) {
-			String topingName = topingNames.get(i);
+			String topingName = topingNames.get(toppingTarget);
+			toppingTarget++;
 			byte[] imageData = topingArr.get(topingName);
 			ImageIcon icon = new ImageIcon(imageData);
 
-			JLabel lbl = new JLabel(icon);
-			lbl.setBounds(x, y, width, height);
-			topingPnl.add(lbl, new Integer(2));
+			// 눌러서 상호작용 있으니 버튼으로 바꾸기
+			// 누를때마다 만들고있는 피자에 이미지 겹쳐주고
+			// menuitem 생성해서
+			// 나만의피자 detailorder에 넣어주기
+			JButton toppingBtn = new JButton(icon);
+			toppingBtn.setBounds(x, y, width, height);
+			topingPnl.add(toppingBtn, new Integer(2));
+			util.invisible(toppingBtn);
 
 			x += width + horizontalGap;
 			count++;
 
 			if (count % 2 == 0) {
-				x = 0;
+				x = 23;
 				y += height + verticalGap;
 			}
 
@@ -337,7 +382,8 @@ public class MakePizzaFrame extends JFrame {
 				break;
 			}
 		}
-		//target? 전역변수 int i for문아래
+
+		// target? 전역변수 int i for문아래
 
 //		JButton backBtn = new JButton();
 //		backBtn.setBounds(520, 555, 50, 50);
@@ -421,4 +467,26 @@ public class MakePizzaFrame extends JFrame {
 //		}
 	}
 
+	public int getToppingTarget() {
+		return toppingTarget;
+	}
+
+	public void setToppingTarget(int toppingTarget) {
+		this.toppingTarget = toppingTarget;
+	}
+
+	class ImagePanel2 extends JPanel {
+		private Image img;
+
+		public ImagePanel2(Image img) {
+			this.img = img;
+			setSize(new Dimension(img.getWidth(null), img.getHeight(null)));
+			setPreferredSize(new Dimension(img.getWidth(null), img.getHeight(null)));
+			setLayout(null);
+		}
+
+		public void paintComponent(Graphics g) {
+			g.drawImage(img, 3, 0, null);
+		}
+	}
 }
