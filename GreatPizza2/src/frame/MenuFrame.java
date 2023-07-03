@@ -743,6 +743,7 @@ public class MenuFrame extends JFrame {
 
 	}
 
+	// detailOrder List에 이미 있는지 확인하는 메소드
 	private boolean findNameInDeoList(List<DetailOrder> deoList, String target) {
 		for (DetailOrder deo : deoList) {
 			if (deo.getMenu().equals(target)) {
@@ -750,6 +751,16 @@ public class MenuFrame extends JFrame {
 			}
 		}
 		return false;
+	}
+
+	// detailOrder List에 있는거 번호 가져오는 메소드
+	private int findNumberInDeoList(List<DetailOrder> deoList, String target) {
+		for (DetailOrder deo : deoList) {
+			if (deo.getMenu().equals(target)) {
+				return deo.getDetailOrderNumber();
+			}
+		}
+		return 0;
 	}
 
 	private void sideTabBtn(int target) {
@@ -788,6 +799,7 @@ public class MenuFrame extends JFrame {
 
 					// 똑같은거 두번 눌렀을때
 					// 그 항목으로 이동해주는거?
+					// e.getsource의
 				} else {
 					for (int i = 0; i < deoList1.size(); i++) {
 						System.out.println("asdniaowjdio0" + deoList1.get(i).getMenu());
@@ -797,7 +809,11 @@ public class MenuFrame extends JFrame {
 							System.out.println("여기에 들어오긴하니");
 							deoList1.get(i).setMenu_count(deoList1.get(i).getMenu_count() + 1);
 							deoList1.get(i).setDetailOrderFullPrice(deoList1.get(i).getDetailOrderFullPrice() + price);
+
+							int targetNumber = findNumberInDeoList(deoList1, target.getText());
+							underListTarget = ((targetNumber - detailOrderCount + mo.getDeoList().size() - 1) / 3) * 3;
 							underOrderList(mo, underListTarget);
+
 							underListPanel.repaint();
 						}
 					}
@@ -1004,6 +1020,8 @@ public class MenuFrame extends JFrame {
 							System.out.println("여기에 들어오긴하니");
 							deoList1.get(i).setMenu_count(deoList1.get(i).getMenu_count() + 1);
 							deoList1.get(i).setDetailOrderFullPrice(deoList1.get(i).getDetailOrderFullPrice() + price);
+							int targetNumber = findNumberInDeoList(deoList1, target.getText());
+							underListTarget = ((targetNumber - detailOrderCount + mo.getDeoList().size() - 1) / 3) * 3;
 							underOrderList(mo, underListTarget);
 							underListPanel.repaint();
 						}
