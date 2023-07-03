@@ -369,7 +369,7 @@ public class orderComplete extends JFrame {
 		jlp.add(detailImageLabel, new Integer(3));
 
 		JLabel total_main_price = new JLabel(String.valueOf(mo.getTotal_Price()));
-		total_main_price.setBounds(160, 820, 210, 50);
+		total_main_price.setBounds(140, 820, 210, 50);
 		total_main_price.setFont(tftFont3);
 		total_main_price.setForeground(Color.WHITE);
 		jlp.add(total_main_price, new Integer(4));
