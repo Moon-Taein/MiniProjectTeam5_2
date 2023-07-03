@@ -20,6 +20,7 @@ import javax.swing.JLayeredPane;
 
 import function.DetailOrder;
 import function.MainOrder;
+import function.MenuItem;
 import function.Sql_Methods;
 import img.imageIcon;
 import utilty.invisibility;
@@ -49,6 +50,9 @@ public class MenuFrame extends JFrame {
 	static JLabel total_priceLabel;
 	private int underListTarget = 0;
 	private JLayeredPane underListPanel;
+	private int deo1Price;
+	private int deo2Price;
+	private int deo3Price;
 
 	public int getDetailOrderCount() {
 		return detailOrderCount;
@@ -225,18 +229,23 @@ public class MenuFrame extends JFrame {
 			underCount1.setForeground(Color.WHITE);
 			underListPanel.add(underCount1, new Integer(2));
 
-			// 하나당 가격
-			int deo1Price = Integer.valueOf(sqlm.findPriceMenuId(deo1.getMenu()));
+			deo1Price = Integer.valueOf(sqlm.findPriceMenuId(deo1.getMenu()));
+			if (deo1.getMiList() != null) {
+				for (MenuItem menu : deo1.getMiList()) {
+					deo1Price = deo1Price + menu.getMenuItemPrice();
+				}
+			}
 			System.out.println("하나당 가격" + deo1Price);
+
 			JLabel underPrice1 = new JLabel(String.valueOf(deo1.getDetailOrderFullPrice()));
-			underPrice1.setBounds(465, 25, 130, 25);
+			underPrice1.setBounds(455, 25, 130, 25);
 			underPrice1.setFont(tftFont4);
 			underPrice1.setForeground(Color.WHITE);
 			underListPanel.add(underPrice1, new Integer(2));
 
 			JButton underPlus1 = new JButton(
 					new ImageIcon(getClass().getClassLoader().getResource("underOrderListPlus.png")));
-			underPlus1.setBounds(305, 23, 30, 30);
+			underPlus1.setBounds(315, 23, 30, 30);
 			underPlus1.setRolloverIcon(
 					new ImageIcon(getClass().getClassLoader().getResource("underOrderListPlusRoll.png")));
 			underPlus1.addActionListener(new ActionListener() {
@@ -249,6 +258,8 @@ public class MenuFrame extends JFrame {
 					underCount1.repaint();
 					underPrice1.repaint();
 					System.out.println(deo1.toString());
+					int mo_total_price = final_total_price(mo);
+					total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 				}
 			});
 			util.invisible(underPlus1);
@@ -270,6 +281,8 @@ public class MenuFrame extends JFrame {
 						underCount1.repaint();
 						underPrice1.repaint();
 						System.out.println(deo1.toString());
+						int mo_total_price = final_total_price(mo);
+						total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 					}
 				}
 			});
@@ -292,18 +305,22 @@ public class MenuFrame extends JFrame {
 			underCount2.setForeground(Color.WHITE);
 			underListPanel.add(underCount2, new Integer(2));
 
-			// sql 이용해서 menu_Id 로 가격 찾아줘야되겠다.
-			int deo2Price = Integer.valueOf(sqlm.findPriceMenuId(deo2.getMenu()));
+			deo2Price = Integer.valueOf(sqlm.findPriceMenuId(deo2.getMenu()));
+			if (deo2.getMiList() != null) {
+				for (MenuItem menu : deo2.getMiList()) {
+					deo2Price = deo2Price + menu.getMenuItemPrice();
+				}
+			}
 			System.out.println("하나당 가격" + deo2Price);
 			JLabel underPrice2 = new JLabel(String.valueOf(deo2.getDetailOrderFullPrice()));
-			underPrice2.setBounds(465, 85, 130, 25);
+			underPrice2.setBounds(455, 85, 130, 25);
 			underPrice2.setFont(tftFont4);
 			underPrice2.setForeground(Color.WHITE);
 			underListPanel.add(underPrice2, new Integer(2));
 
 			JButton underPlus2 = new JButton(
 					new ImageIcon(getClass().getClassLoader().getResource("underOrderListPlus.png")));
-			underPlus2.setBounds(305, 83, 30, 30);
+			underPlus2.setBounds(315, 83, 30, 30);
 			underPlus2.setRolloverIcon(
 					new ImageIcon(getClass().getClassLoader().getResource("underOrderListPlusRoll.png")));
 			underPlus2.addActionListener(new ActionListener() {
@@ -316,6 +333,8 @@ public class MenuFrame extends JFrame {
 					underCount2.repaint();
 					underPrice2.repaint();
 					System.out.println(deo2.toString());
+					int mo_total_price = final_total_price(mo);
+					total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 				}
 			});
 			util.invisible(underPlus2);
@@ -337,6 +356,8 @@ public class MenuFrame extends JFrame {
 						underCount2.repaint();
 						underPrice2.repaint();
 						System.out.println(deo2.toString());
+						int mo_total_price = final_total_price(mo);
+						total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 					}
 				}
 			});
@@ -360,18 +381,22 @@ public class MenuFrame extends JFrame {
 			underCount3.setForeground(Color.WHITE);
 			underListPanel.add(underCount3, new Integer(2));
 
-			// sql 이용해서 menu_Id 로 가격 찾아줘야되겠다.
-			int deo3Price = Integer.valueOf(sqlm.findPriceMenuId(deo3.getMenu()));
+			deo3Price = Integer.valueOf(sqlm.findPriceMenuId(deo3.getMenu()));
+			if (deo3.getMiList() != null) {
+				for (MenuItem menu : deo3.getMiList()) {
+					deo3Price = deo3Price + menu.getMenuItemPrice();
+				}
+			}
 			System.out.println("하나당 가격" + deo3Price);
 			JLabel underPrice3 = new JLabel(String.valueOf(deo3.getDetailOrderFullPrice()));
-			underPrice3.setBounds(465, 140, 130, 25);
+			underPrice3.setBounds(455, 140, 130, 25);
 			underPrice3.setFont(tftFont4);
 			underPrice3.setForeground(Color.WHITE);
 			underListPanel.add(underPrice3, new Integer(2));
 
 			JButton underPlus3 = new JButton(
 					new ImageIcon(getClass().getClassLoader().getResource("underOrderListPlus.png")));
-			underPlus3.setBounds(305, 138, 30, 30);
+			underPlus3.setBounds(315, 138, 30, 30);
 			underPlus3.setRolloverIcon(
 					new ImageIcon(getClass().getClassLoader().getResource("underOrderListPlusRoll.png")));
 			underPlus3.addActionListener(new ActionListener() {
@@ -384,6 +409,8 @@ public class MenuFrame extends JFrame {
 					underCount3.repaint();
 					underPrice3.repaint();
 					System.out.println(deo3.toString());
+					int mo_total_price = final_total_price(mo);
+					total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 				}
 			});
 			util.invisible(underPlus3);
@@ -405,6 +432,8 @@ public class MenuFrame extends JFrame {
 						underCount3.repaint();
 						underPrice3.repaint();
 						System.out.println(deo3.toString());
+						int mo_total_price = final_total_price(mo);
+						total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 					}
 				}
 			});
@@ -564,11 +593,6 @@ public class MenuFrame extends JFrame {
 				Pizza_PopUp_Frame ppf = new Pizza_PopUp_Frame(target, mo, MenuFrame.this, detailOrderCount,
 						underListPanel, underListTarget);
 				ppf.setVisible(true);
-
-				underListPanel.removeAll();
-				underListPanel.invalidate();
-				underOrderList(mo, underListTarget);
-				underListPanel.repaint();
 			}
 		};
 
@@ -719,6 +743,15 @@ public class MenuFrame extends JFrame {
 
 	}
 
+	private boolean findNameInDeoList(List<DetailOrder> deoList, String target) {
+		for (DetailOrder deo : deoList) {
+			if (deo.getMenu().equals(target)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void sideTabBtn(int target) {
 		Sql_Methods sqm = new Sql_Methods();
 		List<Object> list = sqm.findImageAndMenuIdTarget("사이드%", target);
@@ -729,10 +762,28 @@ public class MenuFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JButton target = (JButton) e.getSource();
-				detailOrderCount++;
+//				detailOrderCount++;
 				int price = Integer.parseInt(sqm.findPriceMenuId(target.getText()));
-				DetailOrder deo = new DetailOrder(detailOrderCount, target.getText(), 1, mo.getOrderNumber(), price);
-				mo.getDeoList().add(deo);
+				List<DetailOrder> deoList1 = mo.getDeoList();
+				if (!findNameInDeoList(deoList1, target.getText())) {
+					DetailOrder deo2 = new DetailOrder(++detailOrderCount, target.getText(), 1, mo.getOrderNumber(),
+							price);
+					mo.getDeoList().add(deo2);
+				} else {
+					for (int i = 0; i < deoList1.size(); i++) {
+						System.out.println("asdniaowjdio0" + deoList1.get(i).getMenu());
+						System.out.println("asdniaowjdio0" + target.getText());
+						System.out.println("두번 눌렀을때 리스트 사이즈는" + deoList1.size());
+//						System.out.println("+1" + deoList1.get(i).getMenu());
+//						System.out.println("+2" + target.getText());
+						if (deoList1.get(i).getMenu().equals(target.getText())) {
+							System.out.println("여기에 들어오긴하니");
+							deoList1.get(i).setMenu_count(deoList1.get(i).getMenu_count() + 1);
+							deoList1.get(i).setDetailOrderFullPrice(deoList1.get(i).getDetailOrderFullPrice() + price);
+						}
+					}
+				}
+
 				int mo_total_price = final_total_price(mo);
 				total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 				underListPanel.removeAll();
@@ -898,9 +949,19 @@ public class MenuFrame extends JFrame {
 				System.out.println(price);
 
 				// 여기서 만약 이미 같은 이름을 가진 애가 존재하면 if문을 써서 수량이랑 가격만 플러스 해주기
-
-				DetailOrder deo = new DetailOrder(detailOrderCount, target.getText(), 1, mo.getOrderNumber(), price);
-				mo.getDeoList().add(deo);
+				List<DetailOrder> deoList1 = mo.getDeoList();
+				if (deoList1.size() > 0) {
+					for (DetailOrder deo : deoList1) {
+						if (deo.getMenu().equals(target.getText())) {
+							deo.setMenu_count(deo.getMenu_count() + 1);
+							deo.setDetailOrderFullPrice(deo.getDetailOrderFullPrice() + price);
+						}
+					}
+				} else {
+					DetailOrder deo2 = new DetailOrder(detailOrderCount, target.getText(), 1, mo.getOrderNumber(),
+							price);
+					mo.getDeoList().add(deo2);
+				}
 
 				// menuFrame 총금액 갱신
 				int mo_total_price = final_total_price(mo);
