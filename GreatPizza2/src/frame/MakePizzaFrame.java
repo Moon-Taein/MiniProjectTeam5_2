@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -113,28 +115,38 @@ public class MakePizzaFrame extends JFrame {
 			byte[] imageData = entry.getValue();// 정렬한 key(소스이름)과 같은 이미지 저장
 			ImageIcon icon = new ImageIcon(imageData);
 
-			JButton sourceBtn = new JButton(icon);
+			JLabel sourceBtn = new JLabel(icon);
 			// 왼쪽에서 오른쪽으로 버튼나열
-			sourceBtn.setBounds(x, y, 52, 98);
-			// sourceBtn.setText(sourceName);
-			jlp.add(sourceBtn, new Integer(4));
+			sourceBtn.setBounds(x, y, 52, 100);
+			sourceBtn.setText(sourceName);
+			sourceBtn.setFont(new Font("굴림", Font.PLAIN, 1));
+
+			sourceBtn.setVerticalTextPosition(SwingConstants.BOTTOM); // 텍스트를 가운데에 정렬
+			sourceBtn.setHorizontalTextPosition(SwingConstants.CENTER);
+
+			jlp.add(sourceBtn, new Integer(3));
 			util.invisible(sourceBtn);
 
 			x += horizontalGap;
 
-			sourceBtn.addActionListener(new ActionListener() {
+			sourceBtn.addMouseListener(new MouseAdapter() {
 
 				@Override
-				public void actionPerformed(ActionEvent e) {
-					JButton selectedSourceBtn = (JButton) e.getSource();
-					HashMap<String, byte[]> onSourceMap = sql.getOnSourceImg("소스");
+				public void mouseClicked(MouseEvent e) {
+
+					JLabel selectedSourceBtn = (JLabel) e.getSource();
 
 					String str = selectedSourceBtn.getText();
-					System.out.println(str);
-//					HashMap<String, byte[]> onSource = sql.getOnSource(str);
-//					for(Entry<String, byte[]> map : onSource.entrySet()) {
-//						byte[] onSourceImg = map.getValue();
-//					}
+
+					HashMap<String, byte[]> onSourceMap = sql.getOnSourceImg("소스");
+					System.out.println(onSourceMap.toString());
+					byte[] imgArr = onSourceMap.get(str);
+					ImageIcon onSourceIcon = new ImageIcon(imgArr);
+
+					JLabel sourceLbl = new JLabel(onSourceIcon);
+					sourceLbl.setBounds(100, 100, 100, 100);
+					jlp.add(sourceLbl, new Integer(1));
+
 				}
 			});
 		}
@@ -159,7 +171,7 @@ public class MakePizzaFrame extends JFrame {
 //
 //			}
 //		};
-
+//
 //		util.invisible(btn1);
 //		util.invisible(btn2);
 //		util.invisible(btn3);
@@ -374,6 +386,7 @@ public class MakePizzaFrame extends JFrame {
 			JButton toppingBtn = new JButton(icon);
 			toppingBtn.setBounds(x, y, width, height);
 			toppingBtn.setText(topingName);
+
 			topingPnl.add(toppingBtn, new Integer(2));
 			util.invisible(toppingBtn);
 
