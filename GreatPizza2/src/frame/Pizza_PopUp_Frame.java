@@ -39,7 +39,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 	private List<JRadioButton> radioButtonList;
 
 	// 피자_불고기피자M -> 불고기피자 라는 이름을 받아서 구현해보자
-	public Pizza_PopUp_Frame(String target, MainOrder mo, int detailOrderCount) {
+	public Pizza_PopUp_Frame(String target, MainOrder mo, MenuFrame menu, int detailOrderCount) {
 
 		// parameter로 크기값 받고 return으로 해당크기의 tftfont 해주는
 		Font tftFont = getBMJUAFont(18f);
@@ -372,15 +372,16 @@ public class Pizza_PopUp_Frame extends JDialog {
 				}
 
 				// detailOrder 생성
-				MenuFrame.detailOrderCount++;
-				DetailOrder deo = new DetailOrder(MenuFrame.detailOrderCount, newTarget,
+				menu.setDetailOrderCount((menu.getDetailOrderCount()) + 1);
+//				MenuFrame.detailOrderCount++;
+				DetailOrder deo = new DetailOrder(menu.getDetailOrderCount(), newTarget,
 						Integer.valueOf(currentCount.getText()), mo.getOrderNumber(), 0);
 
 				// checkbox 확인해서 menuitem 만들어줘서 detailorder에 add
 				for (int i = 0; i < 4; i++) {
 					if (checkList.get(i).isSelected()) {
 						// menuitem 만들어서 deatilorder에 넣기
-						MenuItem mi = new MenuItem(MenuFrame.detailOrderCount, checkList.get(i).getText(),
+						MenuItem mi = new MenuItem(menu.getDetailOrderCount(), checkList.get(i).getText(),
 								toppingPriceList.get(i));
 						total_price += toppingPriceList.get(i);
 						deo.getMiList().add(mi);
@@ -393,7 +394,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 					if (jrb.isSelected()) {
 						int price = sqm.findPriceIngredient(jrb.getText());
 						System.out.println("이그는 왜 또 0원임" + price);
-						MenuItem mi = new MenuItem(MenuFrame.detailOrderCount, jrb.getText(), price);
+						MenuItem mi = new MenuItem(menu.getDetailOrderCount(), jrb.getText(), price);
 						total_price += price;
 						deo.getMiList().add(mi);
 					}
@@ -405,6 +406,8 @@ public class Pizza_PopUp_Frame extends JDialog {
 				System.out.println("모든옵션이 합쳐진 총금액은" + total_price);
 				deo.setDetailOrderFullPrice(total_price);
 				mo.getDeoList().add(deo);
+				int mo_total_price = MenuFrame.final_total_price(mo);
+				MenuFrame.total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 				System.out.println(mo.toString());
 				dispose();
 			}
