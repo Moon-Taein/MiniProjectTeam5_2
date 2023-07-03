@@ -42,10 +42,13 @@ public class MenuFrame extends JFrame {
 	private Font tftFont = getBMJUAFont(18f);
 	private Font tftFont2 = getBMJUAFont(25f);
 	private Font tftFont3 = getBMJUAFont(35f);
+	private Font tftFont4 = getBMJUAFont(20f);
 	private JLabel menuIdLabel;
 	private JLabel countLabel;
 	private JLabel priceLabel;
 	static JLabel total_priceLabel;
+	private int underListTarget = 0;
+	private JLayeredPane underListPanel;
 
 	public int getDetailOrderCount() {
 		return detailOrderCount;
@@ -90,6 +93,9 @@ public class MenuFrame extends JFrame {
 		pizzaTabBtn(0);
 
 		buttonSetting(main);// 버튼 생성 메소드
+
+		// 하단 주문목록 띄우는 메소드
+		underOrderList(mo, 0);
 
 		pizzaBtn.addActionListener(new ActionListener() {
 
@@ -166,6 +172,12 @@ public class MenuFrame extends JFrame {
 		util.invisible(drinkBtn);
 		util.invisible(makePizzaBtn);
 
+		underListPanel = new JLayeredPane();
+		underListPanel.setBounds(0, 670, 575, 180);
+		underListPanel.setLayout(null);
+		underListPanel.setOpaque(false);
+		jlp.add(underListPanel, new Integer(3));
+
 		exiteKey();
 		jlp.requestFocusInWindow();
 
@@ -188,6 +200,273 @@ public class MenuFrame extends JFrame {
 		setSize(800, 900);
 		setLocationRelativeTo(null);
 
+	}
+
+	// 담기할때랑, 사이드,음료 눌렀을때 갱신해주기
+	// target 기준으로 mo의 deolist 띄워주기
+	public void underOrderList(MainOrder mo, int target) {
+		Sql_Methods sqlm = new Sql_Methods();
+		List<DetailOrder> list = mo.getDeoList();
+		System.out.println("현재 deolist의 사이즈는" + list.size());
+
+		if (list.size() > target) {
+//			DetailOrder deo1 = null;
+			DetailOrder deo1 = list.get(target);
+			System.out.println("실행은 되고 잇는거지?");
+			JLabel underMenu1 = new JLabel(deo1.getMenu());
+			underMenu1.setBounds(30, 25, 160, 25);
+			underMenu1.setFont(tftFont4);
+			underMenu1.setForeground(Color.WHITE);
+			underListPanel.add(underMenu1, new Integer(2));
+
+			JLabel underCount1 = new JLabel(String.valueOf(deo1.getMenu_count()));
+			underCount1.setBounds(285, 25, 50, 25);
+			underCount1.setFont(tftFont4);
+			underCount1.setForeground(Color.WHITE);
+			underListPanel.add(underCount1, new Integer(2));
+
+			// 하나당 가격
+			int deo1Price = Integer.valueOf(sqlm.findPriceMenuId(deo1.getMenu()));
+			System.out.println("하나당 가격" + deo1Price);
+			JLabel underPrice1 = new JLabel(String.valueOf(deo1.getDetailOrderFullPrice()));
+			underPrice1.setBounds(465, 25, 130, 25);
+			underPrice1.setFont(tftFont4);
+			underPrice1.setForeground(Color.WHITE);
+			underListPanel.add(underPrice1, new Integer(2));
+
+			JButton underPlus1 = new JButton(
+					new ImageIcon(getClass().getClassLoader().getResource("underOrderListPlus.png")));
+			underPlus1.setBounds(305, 23, 30, 30);
+			underPlus1.setRolloverIcon(
+					new ImageIcon(getClass().getClassLoader().getResource("underOrderListPlusRoll.png")));
+			underPlus1.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					deo1.setMenu_count(deo1.getMenu_count() + 1);
+					deo1.setDetailOrderFullPrice(deo1.getDetailOrderFullPrice() + deo1Price);
+					underCount1.setText(String.valueOf(deo1.getMenu_count()));
+					underPrice1.setText(String.valueOf(deo1.getDetailOrderFullPrice()));
+					underCount1.repaint();
+					underPrice1.repaint();
+					System.out.println(deo1.toString());
+				}
+			});
+			util.invisible(underPlus1);
+			underListPanel.add(underPlus1, new Integer(2));
+
+			JButton underMinus1 = new JButton(
+					new ImageIcon(getClass().getClassLoader().getResource("underOrderListMinus.png")));
+			underMinus1.setBounds(245, 23, 30, 30);
+			underMinus1.setRolloverIcon(
+					new ImageIcon(getClass().getClassLoader().getResource("underOrderListMinusRoll.png")));
+			underMinus1.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (deo1.getMenu_count() > 1) {
+						deo1.setMenu_count(deo1.getMenu_count() - 1);
+						deo1.setDetailOrderFullPrice(deo1.getDetailOrderFullPrice() - deo1Price);
+						underCount1.setText(String.valueOf(deo1.getMenu_count()));
+						underPrice1.setText(String.valueOf(deo1.getDetailOrderFullPrice()));
+						underCount1.repaint();
+						underPrice1.repaint();
+						System.out.println(deo1.toString());
+					}
+				}
+			});
+			util.invisible(underMinus1);
+			underListPanel.add(underMinus1, new Integer(2));
+		}
+
+		if (list.size() > target + 1) {
+//			DetailOrder deo2 = null;
+			DetailOrder deo2 = list.get(target + 1);
+			JLabel underMenu2 = new JLabel(deo2.getMenu());
+			underMenu2.setBounds(30, 85, 160, 25);
+			underMenu2.setFont(tftFont4);
+			underMenu2.setForeground(Color.WHITE);
+			underListPanel.add(underMenu2, new Integer(2));
+
+			JLabel underCount2 = new JLabel(String.valueOf(deo2.getMenu_count()));
+			underCount2.setBounds(285, 85, 50, 25);
+			underCount2.setFont(tftFont4);
+			underCount2.setForeground(Color.WHITE);
+			underListPanel.add(underCount2, new Integer(2));
+
+			// sql 이용해서 menu_Id 로 가격 찾아줘야되겠다.
+			int deo2Price = Integer.valueOf(sqlm.findPriceMenuId(deo2.getMenu()));
+			System.out.println("하나당 가격" + deo2Price);
+			JLabel underPrice2 = new JLabel(String.valueOf(deo2.getDetailOrderFullPrice()));
+			underPrice2.setBounds(465, 85, 130, 25);
+			underPrice2.setFont(tftFont4);
+			underPrice2.setForeground(Color.WHITE);
+			underListPanel.add(underPrice2, new Integer(2));
+
+			JButton underPlus2 = new JButton(
+					new ImageIcon(getClass().getClassLoader().getResource("underOrderListPlus.png")));
+			underPlus2.setBounds(305, 83, 30, 30);
+			underPlus2.setRolloverIcon(
+					new ImageIcon(getClass().getClassLoader().getResource("underOrderListPlusRoll.png")));
+			underPlus2.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					deo2.setMenu_count(deo2.getMenu_count() + 1);
+					deo2.setDetailOrderFullPrice(deo2.getDetailOrderFullPrice() + deo2Price);
+					underCount2.setText(String.valueOf(deo2.getMenu_count()));
+					underPrice2.setText(String.valueOf(deo2.getDetailOrderFullPrice()));
+					underCount2.repaint();
+					underPrice2.repaint();
+					System.out.println(deo2.toString());
+				}
+			});
+			util.invisible(underPlus2);
+			underListPanel.add(underPlus2, new Integer(2));
+
+			JButton underMinus2 = new JButton(
+					new ImageIcon(getClass().getClassLoader().getResource("underOrderListMinus.png")));
+			underMinus2.setBounds(245, 83, 30, 30);
+			underMinus2.setRolloverIcon(
+					new ImageIcon(getClass().getClassLoader().getResource("underOrderListMinusRoll.png")));
+			underMinus2.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (deo2.getMenu_count() > 1) {
+						deo2.setMenu_count(deo2.getMenu_count() - 1);
+						deo2.setDetailOrderFullPrice(deo2.getDetailOrderFullPrice() - deo2Price);
+						underCount2.setText(String.valueOf(deo2.getMenu_count()));
+						underPrice2.setText(String.valueOf(deo2.getDetailOrderFullPrice()));
+						underCount2.repaint();
+						underPrice2.repaint();
+						System.out.println(deo2.toString());
+					}
+				}
+			});
+			util.invisible(underMinus2);
+			underListPanel.add(underMinus2, new Integer(2));
+
+		}
+
+		if (list.size() > target + 2) {
+//			DetailOrder deo3 = null;
+			DetailOrder deo3 = list.get(target + 2);
+			JLabel underMenu3 = new JLabel(deo3.getMenu());
+			underMenu3.setBounds(30, 140, 160, 25);
+			underMenu3.setFont(tftFont4);
+			underMenu3.setForeground(Color.WHITE);
+			underListPanel.add(underMenu3, new Integer(2));
+
+			JLabel underCount3 = new JLabel(String.valueOf(deo3.getMenu_count()));
+			underCount3.setBounds(285, 140, 50, 25);
+			underCount3.setFont(tftFont4);
+			underCount3.setForeground(Color.WHITE);
+			underListPanel.add(underCount3, new Integer(2));
+
+			// sql 이용해서 menu_Id 로 가격 찾아줘야되겠다.
+			int deo3Price = Integer.valueOf(sqlm.findPriceMenuId(deo3.getMenu()));
+			System.out.println("하나당 가격" + deo3Price);
+			JLabel underPrice3 = new JLabel(String.valueOf(deo3.getDetailOrderFullPrice()));
+			underPrice3.setBounds(465, 140, 130, 25);
+			underPrice3.setFont(tftFont4);
+			underPrice3.setForeground(Color.WHITE);
+			underListPanel.add(underPrice3, new Integer(2));
+
+			JButton underPlus3 = new JButton(
+					new ImageIcon(getClass().getClassLoader().getResource("underOrderListPlus.png")));
+			underPlus3.setBounds(305, 138, 30, 30);
+			underPlus3.setRolloverIcon(
+					new ImageIcon(getClass().getClassLoader().getResource("underOrderListPlusRoll.png")));
+			underPlus3.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					deo3.setMenu_count(deo3.getMenu_count() + 1);
+					deo3.setDetailOrderFullPrice(deo3.getDetailOrderFullPrice() + deo3Price);
+					underCount3.setText(String.valueOf(deo3.getMenu_count()));
+					underPrice3.setText(String.valueOf(deo3.getDetailOrderFullPrice()));
+					underCount3.repaint();
+					underPrice3.repaint();
+					System.out.println(deo3.toString());
+				}
+			});
+			util.invisible(underPlus3);
+			underListPanel.add(underPlus3, new Integer(2));
+
+			JButton underMinus3 = new JButton(
+					new ImageIcon(getClass().getClassLoader().getResource("underOrderListMinus.png")));
+			underMinus3.setBounds(245, 138, 30, 30);
+			underMinus3.setRolloverIcon(
+					new ImageIcon(getClass().getClassLoader().getResource("underOrderListMinusRoll.png")));
+			underMinus3.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (deo3.getMenu_count() > 1) {
+						deo3.setMenu_count(deo3.getMenu_count() - 1);
+						deo3.setDetailOrderFullPrice(deo3.getDetailOrderFullPrice() - deo3Price);
+						underCount3.setText(String.valueOf(deo3.getMenu_count()));
+						underPrice3.setText(String.valueOf(deo3.getDetailOrderFullPrice()));
+						underCount3.repaint();
+						underPrice3.repaint();
+						System.out.println(deo3.toString());
+					}
+				}
+			});
+			util.invisible(underMinus3);
+			underListPanel.add(underMinus3, new Integer(2));
+		}
+
+		JButton cancel1 = new JButton(new ImageIcon(getClass().getClassLoader().getResource("취소.png")));
+		cancel1.setBounds(580, 690, 100, 30);
+		cancel1.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("취소Roll.png")));
+		util.invisible(cancel1);
+		jlp.add(cancel1, new Integer(3));
+
+		JButton cancel2 = new JButton(new ImageIcon(getClass().getClassLoader().getResource("취소.png")));
+		cancel2.setBounds(580, 750, 100, 30);
+		cancel2.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("취소Roll.png")));
+		util.invisible(cancel2);
+		jlp.add(cancel2, new Integer(3));
+
+		JButton cancel3 = new JButton(new ImageIcon(getClass().getClassLoader().getResource("취소.png")));
+		cancel3.setBounds(580, 810, 100, 30);
+		cancel3.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("취소Roll.png")));
+		util.invisible(cancel3);
+		jlp.add(cancel3, new Integer(3));
+
+		JButton buyListUpButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("miniUp.png")));
+		buyListUpButton.setBounds(735, 685, 50, 60);
+		buyListUpButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("miniUpRoll.png")));
+		util.invisible(buyListUpButton);
+		buyListUpButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (underListTarget > 0) {
+					underListTarget = underListTarget - 3;
+					underListPanel.removeAll();
+					underListPanel.invalidate();
+					underOrderList(mo, underListTarget);
+					underListPanel.repaint();
+					System.out.println("업버튼에서 : " + underListTarget);
+				}
+			}
+		});
+		jlp.add(buyListUpButton, new Integer(3));
+
+		JButton buyListDownButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("miniDown.png")));
+		buyListDownButton.setBounds(735, 780, 50, 60);
+		buyListDownButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("miniDownRoll.png")));
+		util.invisible(buyListDownButton);
+		buyListDownButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (list.size() > underListTarget + 3) {
+					underListTarget = underListTarget + 3;
+					underListPanel.removeAll();
+					underListPanel.invalidate();
+					underOrderList(mo, underListTarget);
+					underListPanel.repaint();
+					System.out.println("다운버튼에서 : " + underListTarget);
+				}
+			}
+		});
+		jlp.add(buyListDownButton, new Integer(3));
 	}
 
 	private void buttonSetting(MainFrame main) {
@@ -251,36 +530,6 @@ public class MenuFrame extends JFrame {
 		priceLabel.setBounds(440, 655, 100, 30);
 		jlp.add(priceLabel, new Integer(3));
 
-		JButton cancel1 = new JButton(new ImageIcon(getClass().getClassLoader().getResource("취소.png")));
-		cancel1.setBounds(620, 685, 100, 30);
-		cancel1.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("취소Roll.png")));
-		util.invisible(cancel1);
-		jlp.add(cancel1, new Integer(3));
-
-		JButton cancel2 = new JButton(new ImageIcon(getClass().getClassLoader().getResource("취소.png")));
-		cancel2.setBounds(620, 745, 100, 30);
-		cancel2.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("취소Roll.png")));
-		util.invisible(cancel2);
-		jlp.add(cancel2, new Integer(3));
-
-		JButton cancel3 = new JButton(new ImageIcon(getClass().getClassLoader().getResource("취소.png")));
-		cancel3.setBounds(620, 805, 100, 30);
-		cancel3.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("취소Roll.png")));
-		util.invisible(cancel3);
-		jlp.add(cancel3, new Integer(3));
-
-		JButton buyListUpButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("miniUp.png")));
-		buyListUpButton.setBounds(735, 685, 50, 60);
-		buyListUpButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("miniUpRoll.png")));
-		util.invisible(buyListUpButton);
-		jlp.add(buyListUpButton, new Integer(3));
-
-		JButton buyListDownButton = new JButton(new ImageIcon(getClass().getClassLoader().getResource("miniDown.png")));
-		buyListDownButton.setBounds(735, 780, 50, 60);
-		buyListDownButton.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("miniDownRoll.png")));
-		util.invisible(buyListDownButton);
-		jlp.add(buyListDownButton, new Integer(3));
-
 		total_priceLabel = new JLabel("원");
 		total_priceLabel.setBounds(200, 852, 236, 36);
 		total_priceLabel.setFont(tftFont2);
@@ -312,8 +561,14 @@ public class MenuFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton a = (JButton) e.getSource();
 				String target = a.getText();
-				Pizza_PopUp_Frame ppf = new Pizza_PopUp_Frame(target, mo, MenuFrame.this, detailOrderCount);
+				Pizza_PopUp_Frame ppf = new Pizza_PopUp_Frame(target, mo, MenuFrame.this, detailOrderCount,
+						underListPanel, underListTarget);
 				ppf.setVisible(true);
+
+				underListPanel.removeAll();
+				underListPanel.invalidate();
+				underOrderList(mo, underListTarget);
+				underListPanel.repaint();
 			}
 		};
 
@@ -480,6 +735,10 @@ public class MenuFrame extends JFrame {
 				mo.getDeoList().add(deo);
 				int mo_total_price = final_total_price(mo);
 				total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
+				underListPanel.removeAll();
+				underListPanel.invalidate();
+				underOrderList(mo, underListTarget);
+				underListPanel.repaint();
 			}
 		};
 
@@ -637,11 +896,21 @@ public class MenuFrame extends JFrame {
 				// menu_id로 price 찾아서 detailorder 만들때 생성자에 넣어주기
 				int price = Integer.parseInt(sqm.findPriceMenuId(target.getText()));
 				System.out.println(price);
+
+				// 여기서 만약 이미 같은 이름을 가진 애가 존재하면 if문을 써서 수량이랑 가격만 플러스 해주기
+
 				DetailOrder deo = new DetailOrder(detailOrderCount, target.getText(), 1, mo.getOrderNumber(), price);
 				mo.getDeoList().add(deo);
+
 				// menuFrame 총금액 갱신
 				int mo_total_price = final_total_price(mo);
 				total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
+
+				// 하단 리스트 리페인팅
+				underListPanel.removeAll();
+				underListPanel.invalidate();
+				underOrderList(mo, underListTarget);
+				underListPanel.repaint();
 			}
 		};
 
@@ -815,4 +1084,20 @@ public class MenuFrame extends JFrame {
 			}
 		});
 	}
+
 }
+
+//class ImagePanel2 extends JPanel {
+//	private Image img;
+//
+//	public ImagePanel2(Image img) {
+//		this.img = img;
+//		setSize(new Dimension(img.getWidth(null), img.getHeight(null)));
+//		setPreferredSize(new Dimension(img.getWidth(null), img.getHeight(null)));
+//		setLayout(null);
+//	}
+//
+//	public void paintComponent(Graphics g) {
+//		g.drawImage(img, 3, 0, null);
+//	}
+//}

@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
@@ -39,7 +40,8 @@ public class Pizza_PopUp_Frame extends JDialog {
 	private List<JRadioButton> radioButtonList;
 
 	// 피자_불고기피자M -> 불고기피자 라는 이름을 받아서 구현해보자
-	public Pizza_PopUp_Frame(String target, MainOrder mo, MenuFrame menu, int detailOrderCount) {
+	public Pizza_PopUp_Frame(String target, MainOrder mo, MenuFrame menu, int detailOrderCount,
+			JLayeredPane underListPanel, int underListTarget) {
 
 		// parameter로 크기값 받고 return으로 해당크기의 tftfont 해주는
 		Font tftFont = getBMJUAFont(18f);
@@ -409,6 +411,10 @@ public class Pizza_PopUp_Frame extends JDialog {
 				int mo_total_price = MenuFrame.final_total_price(mo);
 				MenuFrame.total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 				System.out.println(mo.toString());
+				underListPanel.removeAll();
+				underListPanel.invalidate();
+				menu.underOrderList(mo, underListTarget);
+				underListPanel.repaint();
 				dispose();
 			}
 		});
