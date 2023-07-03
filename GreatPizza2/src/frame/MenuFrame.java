@@ -445,7 +445,9 @@ public class MenuFrame extends JFrame {
 					System.out.println("현재 undermenu1은 " + underMenu1.getText());
 					int underMenu1Index = findListIndexDetailOrderList(list, underMenu1.getText());
 					System.out.println(underMenu1Index);
-					removeTargetInList(list, underMenu1Index);
+					if (underMenu1Index != -1) {
+						removeTargetInList(list, underMenu1Index);
+					}
 
 					underListPanel.removeAll();
 					underListPanel.invalidate();
@@ -468,8 +470,9 @@ public class MenuFrame extends JFrame {
 					System.out.println("현재 undermenu2은 " + underMenu2.getText());
 					int underMenu2Index = findListIndexDetailOrderList(list, underMenu2.getText());
 					System.out.println(underMenu2Index);
-					removeTargetInList(list, underMenu2Index);
-
+					if (underMenu2Index != -1) {
+						removeTargetInList(list, underMenu2Index);
+					}
 					underListPanel.removeAll();
 					underListPanel.invalidate();
 					underOrderList(mo, 0);
@@ -491,8 +494,9 @@ public class MenuFrame extends JFrame {
 					System.out.println("현재 undermenu3은 " + underMenu3.getText());
 					int underMenu3Index = findListIndexDetailOrderList(list, underMenu3.getText());
 					System.out.println(underMenu3Index);
-					removeTargetInList(list, underMenu3Index);
-
+					if (underMenu3Index != -1) {
+						removeTargetInList(list, underMenu3Index);
+					}
 					underListPanel.removeAll();
 					underListPanel.invalidate();
 					underOrderList(mo, 0);
@@ -544,15 +548,22 @@ public class MenuFrame extends JFrame {
 
 	// 하단바 삭제 메소드
 	public void removeTargetInList(List<DetailOrder> list, int underMenuIndex) {
+		System.out.println("underMenuIndex : " + underMenuIndex);
 		System.out.println("삭제하기전 리스트의 사이즈는: " + list.size());
-		list.remove(underMenuIndex);
 		detailOrderCount--;
+		int removeTarget = list.get(underMenuIndex).getDetailOrderNumber();
 		for (int i = underMenuIndex; i < list.size() - 1; i++) {
 			if (list.get(i + 1) != null) {
+				System.out.println("removeTarget : " + removeTarget);
+				System.out.println("i : " + i);
+				System.out.println("removeTarget + i :" + (removeTarget + i));
 				int targetNumber = list.get(i).getDetailOrderNumber();
-				list.get(i + 1).setDetailOrderNumber(targetNumber);
+				System.out.println("삭제시의 tagetNumber" + targetNumber);
+				list.get(i + 1).setDetailOrderNumber(removeTarget++);
 			}
 		}
+		list.remove(underMenuIndex);
+		System.out.println("삭제후 리스트의 사이즈는: " + list.size());
 	}
 
 	// 텍스트 기준으로 해당 타겟이 리스트의 인덱스 몇번째인지 알려주는거

@@ -110,9 +110,10 @@ public class DetailOrder {
 
 	@Override
 	public String toString() {
-		return "DetailOrder [detailOrderNumber=" + detailOrderNumber + ", menu=" + menu + ", menu_count=" + menu_count
-				+ ", mainOrderNumber=" + mainOrderNumber + ", detailOrderFullPrice=" + detailOrderFullPrice
-				+ ", miList=" + miList + "]";
+//		return "DetailOrder [detailOrderNumber=" + detailOrderNumber + ", menu=" + menu + ", menu_count=" + menu_count
+//				+ ", mainOrderNumber=" + mainOrderNumber + ", detailOrderFullPrice=" + detailOrderFullPrice
+//				+ ", miList=" + miList + "]";
+		return "DetailOrder" + detailOrderNumber + " " + "menu" + menu + " ";
 	}
 
 }
