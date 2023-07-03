@@ -267,7 +267,7 @@ public class MakePizzaFrame extends JFrame {
 //	    toppingLbl.setBounds(x, y, width, height);
 //	    jlp.add(toppingLbl, new Integer(layer));
 //	}
-//
+//a
 //	private void addTopping() {
 //		addToppingLabel(topingMap, "치즈", 415, 88, 150, 130, 2);
 //		addToppingLabel(topingMap, "불고기", 415, 263, 150, 130, 2);
