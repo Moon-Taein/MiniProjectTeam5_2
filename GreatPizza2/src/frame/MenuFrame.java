@@ -53,6 +53,9 @@ public class MenuFrame extends JFrame {
 	private int deo1Price;
 	private int deo2Price;
 	private int deo3Price;
+	private JLabel underMenu1;
+	private JLabel underMenu2;
+	private JLabel underMenu3;
 
 	public int getDetailOrderCount() {
 		return detailOrderCount;
@@ -211,13 +214,11 @@ public class MenuFrame extends JFrame {
 	public void underOrderList(MainOrder mo, int target) {
 		Sql_Methods sqlm = new Sql_Methods();
 		List<DetailOrder> list = mo.getDeoList();
-		System.out.println("현재 deolist의 사이즈는" + list.size());
 
 		if (list.size() > target) {
 //			DetailOrder deo1 = null;
 			DetailOrder deo1 = list.get(target);
-			System.out.println("실행은 되고 잇는거지?");
-			JLabel underMenu1 = new JLabel(deo1.getMenu());
+			underMenu1 = new JLabel(deo1.getMenu());
 			underMenu1.setBounds(30, 25, 160, 25);
 			underMenu1.setFont(tftFont4);
 			underMenu1.setForeground(Color.WHITE);
@@ -235,7 +236,6 @@ public class MenuFrame extends JFrame {
 					deo1Price = deo1Price + menu.getMenuItemPrice();
 				}
 			}
-			System.out.println("하나당 가격" + deo1Price);
 
 			JLabel underPrice1 = new JLabel(String.valueOf(deo1.getDetailOrderFullPrice()));
 			underPrice1.setBounds(455, 25, 130, 25);
@@ -257,7 +257,6 @@ public class MenuFrame extends JFrame {
 					underPrice1.setText(String.valueOf(deo1.getDetailOrderFullPrice()));
 					underCount1.repaint();
 					underPrice1.repaint();
-					System.out.println(deo1.toString());
 					int mo_total_price = final_total_price(mo);
 					total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 				}
@@ -280,7 +279,6 @@ public class MenuFrame extends JFrame {
 						underPrice1.setText(String.valueOf(deo1.getDetailOrderFullPrice()));
 						underCount1.repaint();
 						underPrice1.repaint();
-						System.out.println(deo1.toString());
 						int mo_total_price = final_total_price(mo);
 						total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 					}
@@ -293,7 +291,7 @@ public class MenuFrame extends JFrame {
 		if (list.size() > target + 1) {
 //			DetailOrder deo2 = null;
 			DetailOrder deo2 = list.get(target + 1);
-			JLabel underMenu2 = new JLabel(deo2.getMenu());
+			underMenu2 = new JLabel(deo2.getMenu());
 			underMenu2.setBounds(30, 85, 160, 25);
 			underMenu2.setFont(tftFont4);
 			underMenu2.setForeground(Color.WHITE);
@@ -311,7 +309,6 @@ public class MenuFrame extends JFrame {
 					deo2Price = deo2Price + menu.getMenuItemPrice();
 				}
 			}
-			System.out.println("하나당 가격" + deo2Price);
 			JLabel underPrice2 = new JLabel(String.valueOf(deo2.getDetailOrderFullPrice()));
 			underPrice2.setBounds(455, 85, 130, 25);
 			underPrice2.setFont(tftFont4);
@@ -332,7 +329,6 @@ public class MenuFrame extends JFrame {
 					underPrice2.setText(String.valueOf(deo2.getDetailOrderFullPrice()));
 					underCount2.repaint();
 					underPrice2.repaint();
-					System.out.println(deo2.toString());
 					int mo_total_price = final_total_price(mo);
 					total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 				}
@@ -355,7 +351,6 @@ public class MenuFrame extends JFrame {
 						underPrice2.setText(String.valueOf(deo2.getDetailOrderFullPrice()));
 						underCount2.repaint();
 						underPrice2.repaint();
-						System.out.println(deo2.toString());
 						int mo_total_price = final_total_price(mo);
 						total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 					}
@@ -369,7 +364,7 @@ public class MenuFrame extends JFrame {
 		if (list.size() > target + 2) {
 //			DetailOrder deo3 = null;
 			DetailOrder deo3 = list.get(target + 2);
-			JLabel underMenu3 = new JLabel(deo3.getMenu());
+			underMenu3 = new JLabel(deo3.getMenu());
 			underMenu3.setBounds(30, 140, 160, 25);
 			underMenu3.setFont(tftFont4);
 			underMenu3.setForeground(Color.WHITE);
@@ -387,7 +382,6 @@ public class MenuFrame extends JFrame {
 					deo3Price = deo3Price + menu.getMenuItemPrice();
 				}
 			}
-			System.out.println("하나당 가격" + deo3Price);
 			JLabel underPrice3 = new JLabel(String.valueOf(deo3.getDetailOrderFullPrice()));
 			underPrice3.setBounds(455, 140, 130, 25);
 			underPrice3.setFont(tftFont4);
@@ -408,7 +402,6 @@ public class MenuFrame extends JFrame {
 					underPrice3.setText(String.valueOf(deo3.getDetailOrderFullPrice()));
 					underCount3.repaint();
 					underPrice3.repaint();
-					System.out.println(deo3.toString());
 					int mo_total_price = final_total_price(mo);
 					total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 				}
@@ -431,7 +424,6 @@ public class MenuFrame extends JFrame {
 						underPrice3.setText(String.valueOf(deo3.getDetailOrderFullPrice()));
 						underCount3.repaint();
 						underPrice3.repaint();
-						System.out.println(deo3.toString());
 						int mo_total_price = final_total_price(mo);
 						total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 					}
@@ -444,18 +436,72 @@ public class MenuFrame extends JFrame {
 		JButton cancel1 = new JButton(new ImageIcon(getClass().getClassLoader().getResource("취소.png")));
 		cancel1.setBounds(580, 690, 100, 30);
 		cancel1.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("취소Roll.png")));
+		cancel1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// 취소하면 그냥 처음리스트로 보여줄까?
+				// 아니면 해당 구역에서 사라지는걸 보여줘야 되나;
+				if (underMenu1 != null) {
+					System.out.println("현재 undermenu1은 " + underMenu1.getText());
+					int underMenu1Index = findListIndexDetailOrderList(list, underMenu1.getText());
+					System.out.println(underMenu1Index);
+					removeTargetInList(list, underMenu1Index);
+
+					underListPanel.removeAll();
+					underListPanel.invalidate();
+					underOrderList(mo, 0);
+					underListPanel.repaint();
+					System.out.println("1번째 삭제지점" + mo.getDeoList().toString());
+				}
+			}
+		});
 		util.invisible(cancel1);
 		jlp.add(cancel1, new Integer(3));
 
 		JButton cancel2 = new JButton(new ImageIcon(getClass().getClassLoader().getResource("취소.png")));
 		cancel2.setBounds(580, 750, 100, 30);
 		cancel2.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("취소Roll.png")));
+		cancel2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (underMenu2 != null) {
+					System.out.println("현재 undermenu2은 " + underMenu2.getText());
+					int underMenu2Index = findListIndexDetailOrderList(list, underMenu2.getText());
+					System.out.println(underMenu2Index);
+					removeTargetInList(list, underMenu2Index);
+
+					underListPanel.removeAll();
+					underListPanel.invalidate();
+					underOrderList(mo, 0);
+					underListPanel.repaint();
+					System.out.println("2번째 삭제지점" + mo.getDeoList().toString());
+				}
+			}
+		});
 		util.invisible(cancel2);
 		jlp.add(cancel2, new Integer(3));
 
 		JButton cancel3 = new JButton(new ImageIcon(getClass().getClassLoader().getResource("취소.png")));
 		cancel3.setBounds(580, 810, 100, 30);
 		cancel3.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("취소Roll.png")));
+		cancel3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (underMenu3 != null) {
+					System.out.println("현재 undermenu3은 " + underMenu3.getText());
+					int underMenu3Index = findListIndexDetailOrderList(list, underMenu3.getText());
+					System.out.println(underMenu3Index);
+					removeTargetInList(list, underMenu3Index);
+
+					underListPanel.removeAll();
+					underListPanel.invalidate();
+					underOrderList(mo, 0);
+					underListPanel.repaint();
+
+					System.out.println("3번째 삭제지점" + mo.getDeoList().toString());
+				}
+			}
+		});
 		util.invisible(cancel3);
 		jlp.add(cancel3, new Integer(3));
 
@@ -472,7 +518,6 @@ public class MenuFrame extends JFrame {
 					underListPanel.invalidate();
 					underOrderList(mo, underListTarget);
 					underListPanel.repaint();
-					System.out.println("업버튼에서 : " + underListTarget);
 				}
 			}
 		});
@@ -491,11 +536,33 @@ public class MenuFrame extends JFrame {
 					underListPanel.invalidate();
 					underOrderList(mo, underListTarget);
 					underListPanel.repaint();
-					System.out.println("다운버튼에서 : " + underListTarget);
 				}
 			}
 		});
 		jlp.add(buyListDownButton, new Integer(3));
+	}
+
+	// 하단바 삭제 메소드
+	public void removeTargetInList(List<DetailOrder> list, int underMenuIndex) {
+		System.out.println("삭제하기전 리스트의 사이즈는: " + list.size());
+		list.remove(underMenuIndex);
+		detailOrderCount--;
+		for (int i = underMenuIndex; i < list.size() - 1; i++) {
+			if (list.get(i + 1) != null) {
+				int targetNumber = list.get(i).getDetailOrderNumber();
+				list.get(i + 1).setDetailOrderNumber(targetNumber);
+			}
+		}
+	}
+
+	// 텍스트 기준으로 해당 타겟이 리스트의 인덱스 몇번째인지 알려주는거
+	public int findListIndexDetailOrderList(List<DetailOrder> list, String target) {
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getMenu().equals(target)) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	private void buttonSetting(MainFrame main) {
@@ -581,8 +648,6 @@ public class MenuFrame extends JFrame {
 		// target 기준으로 -6 before
 
 		List<Object> list = sqm.findImageAndMenuIdTarget("%M", target);
-		System.out.println("리스트 사이즈는" + list.size());
-		System.out.println(mo.getDeoList().toString());
 
 		// 버튼 눌렀을시 동작하는 메소드
 		ActionListener al = new ActionListener() {
@@ -591,7 +656,8 @@ public class MenuFrame extends JFrame {
 				JButton a = (JButton) e.getSource();
 				String target = a.getText();
 				Pizza_PopUp_Frame ppf = new Pizza_PopUp_Frame(target, mo, MenuFrame.this, detailOrderCount,
-						underListPanel, underListTarget);
+						underListPanel);
+				setVisible(false);
 				ppf.setVisible(true);
 			}
 		};
@@ -743,6 +809,7 @@ public class MenuFrame extends JFrame {
 
 	}
 
+	// detailOrder List에 이미 있는지 확인하는 메소드
 	private boolean findNameInDeoList(List<DetailOrder> deoList, String target) {
 		for (DetailOrder deo : deoList) {
 			if (deo.getMenu().equals(target)) {
@@ -752,44 +819,70 @@ public class MenuFrame extends JFrame {
 		return false;
 	}
 
+	// detailOrder List에 있는거 번호 가져오는 메소드
+	private int findNumberInDeoList(List<DetailOrder> deoList, String target) {
+		for (DetailOrder deo : deoList) {
+			if (deo.getMenu().equals(target)) {
+				return deo.getDetailOrderNumber();
+			}
+		}
+		return 0;
+	}
+
 	private void sideTabBtn(int target) {
 		Sql_Methods sqm = new Sql_Methods();
 		List<Object> list = sqm.findImageAndMenuIdTarget("사이드%", target);
-		System.out.println("리스트 사이즈는" + list.size());
 
 		// detailOrder에 넣어주는 동작 추가하기
 		ActionListener al = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JButton target = (JButton) e.getSource();
-//				detailOrderCount++;
 				int price = Integer.parseInt(sqm.findPriceMenuId(target.getText()));
 				List<DetailOrder> deoList1 = mo.getDeoList();
+
+				underListPanel.removeAll();
+				underListPanel.invalidate();
+				// 리스트에 없을때
 				if (!findNameInDeoList(deoList1, target.getText())) {
 					DetailOrder deo2 = new DetailOrder(++detailOrderCount, target.getText(), 1, mo.getOrderNumber(),
 							price);
 					mo.getDeoList().add(deo2);
+					if (deoList1.size() > 3) {
+						if ((deoList1.size() - underListTarget + 3) % 3 == 1) {
+							underListTarget += 3;
+							underOrderList(mo, underListTarget);
+							underListPanel.repaint();
+						} else {
+							underOrderList(mo, underListTarget);
+						}
+					} else {
+						underOrderList(mo, 0);
+					}
+					underListPanel.repaint();
+
+					// 똑같은거 두번 눌렀을때
+					// 그 항목으로 이동해주는거?
+					// e.getsource의
 				} else {
 					for (int i = 0; i < deoList1.size(); i++) {
-						System.out.println("asdniaowjdio0" + deoList1.get(i).getMenu());
-						System.out.println("asdniaowjdio0" + target.getText());
-						System.out.println("두번 눌렀을때 리스트 사이즈는" + deoList1.size());
-//						System.out.println("+1" + deoList1.get(i).getMenu());
-//						System.out.println("+2" + target.getText());
 						if (deoList1.get(i).getMenu().equals(target.getText())) {
-							System.out.println("여기에 들어오긴하니");
 							deoList1.get(i).setMenu_count(deoList1.get(i).getMenu_count() + 1);
 							deoList1.get(i).setDetailOrderFullPrice(deoList1.get(i).getDetailOrderFullPrice() + price);
+
+							int targetNumber = findNumberInDeoList(deoList1, target.getText());
+							underListTarget = ((targetNumber - detailOrderCount + mo.getDeoList().size() - 1) / 3) * 3;
+							underOrderList(mo, underListTarget);
+
+							underListPanel.repaint();
 						}
 					}
 				}
 
 				int mo_total_price = final_total_price(mo);
 				total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
-				underListPanel.removeAll();
-				underListPanel.invalidate();
-				underOrderList(mo, underListTarget);
-				underListPanel.repaint();
+
+				System.out.println("사이드 버튼들 누를때" + mo.getDeoList().toString());
 			}
 		};
 
@@ -934,33 +1027,60 @@ public class MenuFrame extends JFrame {
 		util.invisible(beforebtn);
 	}
 
+	public int getUnderListTarget() {
+		return underListTarget;
+	}
+
+	public void setUnderListTarget(int underListTarget) {
+		this.underListTarget = underListTarget;
+	}
+
 	private void drinkTabBtn(int target) {
 		Sql_Methods sqm = new Sql_Methods();
 		List<Object> list = sqm.findImageAndMenuIdTarget("음료%", target);
-		System.out.println("리스트 사이즈는" + list.size());
 
 		ActionListener al = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JButton target = (JButton) e.getSource();
-				detailOrderCount++;
 				// menu_id로 price 찾아서 detailorder 만들때 생성자에 넣어주기
 				int price = Integer.parseInt(sqm.findPriceMenuId(target.getText()));
-				System.out.println(price);
 
 				// 여기서 만약 이미 같은 이름을 가진 애가 존재하면 if문을 써서 수량이랑 가격만 플러스 해주기
 				List<DetailOrder> deoList1 = mo.getDeoList();
-				if (deoList1.size() > 0) {
-					for (DetailOrder deo : deoList1) {
-						if (deo.getMenu().equals(target.getText())) {
-							deo.setMenu_count(deo.getMenu_count() + 1);
-							deo.setDetailOrderFullPrice(deo.getDetailOrderFullPrice() + price);
-						}
-					}
-				} else {
-					DetailOrder deo2 = new DetailOrder(detailOrderCount, target.getText(), 1, mo.getOrderNumber(),
+				underListPanel.removeAll();
+				underListPanel.invalidate();
+				// 리스트에 없을때
+				if (!findNameInDeoList(deoList1, target.getText())) {
+					DetailOrder deo2 = new DetailOrder(++detailOrderCount, target.getText(), 1, mo.getOrderNumber(),
 							price);
 					mo.getDeoList().add(deo2);
+					if (deoList1.size() > 3) {
+						if ((deoList1.size() - underListTarget + 3) % 3 == 1) {
+							underListTarget += 3;
+							underOrderList(mo, underListTarget);
+							underListPanel.repaint();
+						} else {
+							underOrderList(mo, underListTarget);
+						}
+					} else {
+						underOrderList(mo, 0);
+					}
+					underListPanel.repaint();
+
+					// 똑같은거 두번 눌렀을때
+					// 그 항목으로 이동해주는거?
+				} else {
+					for (int i = 0; i < deoList1.size(); i++) {
+						if (deoList1.get(i).getMenu().equals(target.getText())) {
+							deoList1.get(i).setMenu_count(deoList1.get(i).getMenu_count() + 1);
+							deoList1.get(i).setDetailOrderFullPrice(deoList1.get(i).getDetailOrderFullPrice() + price);
+							int targetNumber = findNumberInDeoList(deoList1, target.getText());
+							underListTarget = ((targetNumber - detailOrderCount + mo.getDeoList().size() - 1) / 3) * 3;
+							underOrderList(mo, underListTarget);
+							underListPanel.repaint();
+						}
+					}
 				}
 
 				// menuFrame 총금액 갱신
@@ -1125,9 +1245,7 @@ public class MenuFrame extends JFrame {
 		int full_price = 0;
 		for (DetailOrder deo : mo.getDeoList()) {
 			full_price += deo.getDetailOrderFullPrice();
-			System.out.println("메뉴에서 deo 가격" + deo.getDetailOrderFullPrice());
 		}
-		System.out.println("메뉴에서 full_price 가격" + full_price);
 		mo.setTotal_Price(full_price);
 		return full_price;
 	}
@@ -1147,18 +1265,3 @@ public class MenuFrame extends JFrame {
 	}
 
 }
-
-//class ImagePanel2 extends JPanel {
-//	private Image img;
-//
-//	public ImagePanel2(Image img) {
-//		this.img = img;
-//		setSize(new Dimension(img.getWidth(null), img.getHeight(null)));
-//		setPreferredSize(new Dimension(img.getWidth(null), img.getHeight(null)));
-//		setLayout(null);
-//	}
-//
-//	public void paintComponent(Graphics g) {
-//		g.drawImage(img, 3, 0, null);
-//	}
-//}
