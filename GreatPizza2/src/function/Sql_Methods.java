@@ -479,4 +479,41 @@ public class Sql_Methods {
 
 	}
 
+	public HashMap<String, byte[]> getOnTopping(String string) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<String> topingName = pizzamakeSetToping("토핑");
+		byte[] bytes = null;
+		List<byte[]> topingImgBox = new ArrayList<byte[]>();
+		HashMap<String, byte[]> topingBox = new HashMap<>();
+
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement("SELECT * FROM ingredient WHERE ingredient_name like ?");
+			stmt.setString(1, string);
+
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				bytes = rs.getBytes("image");
+				topingImgBox.add(bytes);
+			}
+
+			for (int i = 0; i < topingImgBox.size(); i++) {
+				topingBox.put(topingName.get(i), topingImgBox.get(i));
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(rs);
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
+		}
+
+		return topingBox;
+
+	}
+
 }
