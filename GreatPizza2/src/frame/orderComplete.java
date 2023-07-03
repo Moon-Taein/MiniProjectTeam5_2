@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 
 import function.DetailOrder;
 import function.MainOrder;
+import function.Sql_Methods;
 import img.imageIcon;
 import utilty.invisibility;
 
@@ -330,8 +331,11 @@ public class orderComplete extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-//				main.setVisible(true);
-				// 그냥 메인은 새창 열어둬도 될듯?
+				Sql_Methods sqlm = new Sql_Methods();
+				// mainOrder insert
+				// detailOrder insert
+				// detailOrder milist.size() > 0 -> milist 전부 insert
+
 				MainFrame main = new MainFrame();
 				main.setVisible(true);
 			}

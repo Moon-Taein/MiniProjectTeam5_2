@@ -19,7 +19,7 @@ public class MainOrder {
 		this.orderNumber = orderNumber;
 		this.total_Price = 0;
 		this.date = LocalDate.now().toString();
-		String pattern = "HH:mm:ss";
+		String pattern = "HH:mm";
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
 		this.time = LocalTime.now().format(formatter).toString();
 		this.state = "미확인";

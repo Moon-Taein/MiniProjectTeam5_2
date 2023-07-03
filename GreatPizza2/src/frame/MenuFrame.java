@@ -904,7 +904,8 @@ public class MenuFrame extends JFrame {
 				int mo_total_price = final_total_price(mo);
 				total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 
-				System.out.println("사이드 버튼들 누를때" + mo.getDeoList().toString());
+				System.out.println("사이드 버튼들 누를때 deo: " + mo.getDeoList().toString());
+				System.out.println("사이드 버튼들 누를때 mo: " + mo.toString());
 			}
 		};
 
