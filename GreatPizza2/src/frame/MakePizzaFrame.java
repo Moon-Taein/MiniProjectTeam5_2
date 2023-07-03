@@ -7,9 +7,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -47,6 +47,10 @@ public class MakePizzaFrame extends JFrame {
 	int count;
 	int x;
 	int y;
+
+	private int toppingOnAndOn;
+	private int toppingCount;
+	private HashMap<Integer, JLabel> toppingLabels = new HashMap<>(); // 토핑 이미지를 저장할 맵
 
 //	/**
 //	 * Launch the application.ㅁ
@@ -284,59 +288,6 @@ public class MakePizzaFrame extends JFrame {
 
 	}
 
-	private void getToping() {
-//		HashMap<String, byte[]> topingMap = sql.getTopingImgInBox("토핑");
-//		byte[] cheese = topingMap.get("치즈");
-//		ImageIcon cheeseIcon = new ImageIcon(cheese);
-//		JLabel cheeseLbl = new JLabel(cheeseIcon);
-//		cheeseLbl.setBounds(415, 88, 150, 130);
-//		jlp.add(cheeseLbl, new Integer(2));
-//		
-//		byte[] bullgogiArr = topingMap.get("불고기");
-//		ImageIcon bullgogiIcon = new ImageIcon(bullgogiArr);
-//		JLabel bullgogiLbl = new JLabel(bullgogiIcon);
-//		bullgogiLbl.setBounds(595, 88, 150, 130);
-//		jlp.add(bullgogiLbl, new Integer(2));
-//		
-//		byte[] friedArr = topingMap.get("뻥튀기");
-//		ImageIcon friedIcon = new ImageIcon(friedArr);
-//		JLabel friedLbl = new JLabel(friedIcon);
-//		friedLbl.setBounds(415, 200, 150, 130);
-//		jlp.add(friedLbl, new Integer(2));
-//		
-//		byte[] cheese = topingMap.get("아스파라거스");
-//		ImageIcon cheeseIcon = new ImageIcon(cheese);
-//		JLabel cheeseLbl = new JLabel(cheeseIcon);
-//		cheeseLbl.setBounds(55, 88, 150, 130);
-//		jlp.add(cheeseLbl, new Integer(2));
-//		
-//		byte[] cheese = topingMap.get("양파");
-//		ImageIcon cheeseIcon = new ImageIcon(cheese);
-//		JLabel cheeseLbl = new JLabel(cheeseIcon);
-//		cheeseLbl.setBounds(55, 88, 150, 130);
-//		jlp.add(cheeseLbl, new Integer(2));
-//		
-//		byte[] cheese = topingMap.get("초콜릿");
-//		ImageIcon cheeseIcon = new ImageIcon(cheese);
-//		JLabel cheeseLbl = new JLabel(cheeseIcon);
-//		cheeseLbl.setBounds(55, 88, 150, 130);
-//		jlp.add(cheeseLbl, new Integer(2));
-
-	}
-//	private void addToppingLabel(HashMap<String, byte[]> topingMap, String toppingName, int x, int y, int width, int height, int layer) {
-//	    byte[] toppingImage = topingMap.get(toppingName);
-//	    ImageIcon toppingIcon = new ImageIcon(toppingImage);
-//	    JLabel toppingLbl = new JLabel(toppingIcon);
-//	    toppingLbl.setBounds(x, y, width, height);
-//	    jlp.add(toppingLbl, new Integer(layer));
-//	}
-//
-//	private void addTopping() {
-//		addToppingLabel(topingMap, "치즈", 415, 88, 150, 130, 2);
-//		addToppingLabel(topingMap, "불고기", 415, 263, 150, 130, 2);
-//		addToppingLabel(topingMap, "뻥튀기", 415, 445, 150, 130, 2);
-
-//	}
 	private void showTopping(int toppingTarget) {
 		List<String> topingNames = sql.pizzamakeSetToping("토핑");
 		HashMap<String, byte[]> topingArr = sql.getTopingImgInBox("토핑");
@@ -357,8 +308,6 @@ public class MakePizzaFrame extends JFrame {
 
 		count = 0;
 
-		List<String> list = new ArrayList<>(topingArr.keySet());
-
 		// 조건문 수정해서 size 까지만 나올수 있도록
 		for (int i = 0; i < 6; i++) {
 			String topingName = topingNames.get(toppingTarget);
@@ -370,10 +319,12 @@ public class MakePizzaFrame extends JFrame {
 			// 누를때마다 만들고있는 피자에 이미지 겹쳐주고
 			// menuitem 생성해서
 			// 나만의피자 detailorder에 넣어주기
+
 			JButton toppingBtn = new JButton(icon);
 			toppingBtn.setBounds(x, y, width, height);
+			toppingBtn.setText(topingName);
 			topingPnl.add(toppingBtn, new Integer(2));
-			util.invisible(toppingBtn);
+			// util.invisible(toppingBtn);
 
 			x += width + horizontalGap;
 			count++;
@@ -382,94 +333,46 @@ public class MakePizzaFrame extends JFrame {
 				x = 23;
 				y += height + verticalGap;
 			}
-
 			if (count == 6) {
 				break;
 			}
+
+			toppingBtn.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JButton btn1 = (JButton) e.getSource();
+					String str = btn1.getText();
+					System.out.println(str);
+					HashMap<String, byte[]> onTopping = sql.getOnTopping(str);
+					if (onTopping != null) {
+
+						for (Entry<String, byte[]> map : onTopping.entrySet()) {
+							if (toppingOnAndOn >= 5) {
+								break;
+							}
+							String toppingName = map.getKey().concat(str);
+							byte[] imageData = map.getValue();
+
+							ImageIcon imgOnTopping = new ImageIcon(imageData);
+							System.out.println(onTopping);
+
+							JLabel Jlbl = new JLabel(imgOnTopping);
+							Jlbl.setBounds(41, 172, 310, 400);
+							System.out.println(toppingOnAndOn);
+
+							toppingOnAndOn++;
+							jlp.add(Jlbl, new Integer(toppingOnAndOn));
+
+						}
+						jlp.revalidate();
+						jlp.repaint();
+					}
+				}
+			});
+
 		}
 
-		// target? 전역변수 int i for문아래
-
-//		JButton backBtn = new JButton();
-//		backBtn.setBounds(520, 555, 50, 50);
-//		jlp.add(backBtn, new Integer(2));
-//
-//		JButton nextBtn = new JButton();
-//		nextBtn.setBounds(620, 555, 50, 50);
-//		jlp.add(nextBtn, new Integer(2));
-//
-//		Integer backPage = currentPage - 1;
-//		if (backPage >= 1) {
-//			backBtn.addActionListener(new ActionListener() {
-//				@Override
-//				public void actionPerformed(ActionEvent e) {
-//
-//					currentPage--;
-//					startIndex = (currentPage - 1) * itemsPerPage;
-//					endIndex = Math.min(startIndex + itemsPerPage, topingArr.size());
-//					topingPnl.removeAll();
-//					for (int i = startIndex; i < endIndex; i++) {
-//						String topingName = topingNames.get(i);
-//						byte[] imageData = topingArr.get(topingName);
-//						ImageIcon icon = new ImageIcon(imageData);
-//
-//						JLabel lbl = new JLabel(icon);
-//						lbl.setBounds(x, y, width, height);
-//						topingPnl.add(lbl, new Integer(2));
-//
-//						x += width + horizontalGap;
-//						count++;
-//
-//						if (count % 2 == 0) {
-//							x = 0;
-//							y += height + verticalGap;
-//						}
-//
-//						if (count == 6) {
-//							break;
-//						}
-//					}
-//					topingPnl.revalidate();
-//					topingPnl.repaint();
-//				}
-//			});
-//		}
-//
-//		Integer nextPage = currentPage + 1;
-//		if (nextPage <= totalPages) {
-//			nextBtn.addActionListener(new ActionListener() {
-//				@Override
-//				public void actionPerformed(ActionEvent e) {
-//					currentPage++;
-//					startIndex = (currentPage - 1) * itemsPerPage;
-//					endIndex = Math.min(startIndex + itemsPerPage, topingArr.size());
-//					topingPnl.removeAll();
-//					for (int i = startIndex; i < endIndex; i++) {
-//						String topingName = topingNames.get(i);
-//						byte[] imageData = topingArr.get(topingName);
-//						ImageIcon icon = new ImageIcon(imageData);
-//
-//						JLabel lbl = new JLabel(icon);
-//						lbl.setBounds(x, y, width, height);
-//						topingPnl.add(lbl, new Integer(2));
-//
-//						x += width + horizontalGap;
-//						count++;
-//
-//						if (count % 2 == 0) {
-//							x = 0;
-//							y += height + verticalGap;
-//						}
-//
-//						if (count == 6) {
-//							break;
-//						}
-//					}
-//					topingPnl.revalidate();
-//					topingPnl.repaint();
-//				}
-//			});
-//		}
 	}
 
 	public int getToppingTarget() {
