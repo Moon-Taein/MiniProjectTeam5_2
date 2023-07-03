@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 
 import function.DetailOrder;
 import function.MainOrder;
+import function.Sql_Methods;
 import img.imageIcon;
 import utilty.invisibility;
 
@@ -103,7 +104,7 @@ public class orderComplete extends JFrame {
 			panel1.add(deoNo1);
 
 			JLabel deoMenuId1 = new JLabel(list.get(target).getMenu());
-			deoMenuId1.setBounds(165, 25, 180, 15);
+			deoMenuId1.setBounds(165, 25, 180, 20);
 			deoMenuId1.setFont(tftFont2);
 			deoMenuId1.setForeground(new Color(103, 51, 53));
 			panel1.add(deoMenuId1);
@@ -135,7 +136,7 @@ public class orderComplete extends JFrame {
 			panel2.add(deoNo2);
 
 			JLabel deoMenuId2 = new JLabel(list.get(target + 1).getMenu());
-			deoMenuId2.setBounds(165, 25, 180, 15);
+			deoMenuId2.setBounds(165, 25, 180, 20);
 			deoMenuId2.setFont(tftFont2);
 			deoMenuId2.setForeground(new Color(103, 51, 53));
 			panel2.add(deoMenuId2);
@@ -167,7 +168,7 @@ public class orderComplete extends JFrame {
 			panel3.add(deoNo3);
 
 			JLabel deoMenuId3 = new JLabel(list.get(target + 2).getMenu());
-			deoMenuId3.setBounds(165, 25, 180, 15);
+			deoMenuId3.setBounds(165, 25, 180, 20);
 			deoMenuId3.setFont(tftFont2);
 			deoMenuId3.setForeground(new Color(103, 51, 53));
 			panel3.add(deoMenuId3);
@@ -199,7 +200,7 @@ public class orderComplete extends JFrame {
 			panel4.add(deoNo4);
 
 			JLabel deoMenuId4 = new JLabel(list.get(target + 3).getMenu());
-			deoMenuId4.setBounds(165, 25, 180, 15);
+			deoMenuId4.setBounds(165, 25, 180, 20);
 			deoMenuId4.setFont(tftFont2);
 			deoMenuId4.setForeground(new Color(103, 51, 53));
 			panel4.add(deoMenuId4);
@@ -231,7 +232,7 @@ public class orderComplete extends JFrame {
 			panel5.add(deoNo5);
 
 			JLabel deoMenuId5 = new JLabel(list.get(target + 4).getMenu());
-			deoMenuId5.setBounds(165, 25, 180, 15);
+			deoMenuId5.setBounds(165, 25, 180, 20);
 			deoMenuId5.setFont(tftFont2);
 			deoMenuId5.setForeground(new Color(103, 51, 53));
 			panel5.add(deoMenuId5);
@@ -263,7 +264,7 @@ public class orderComplete extends JFrame {
 			panel6.add(deoNo6);
 
 			JLabel deoMenuId6 = new JLabel(list.get(target + 5).getMenu());
-			deoMenuId6.setBounds(165, 25, 180, 15);
+			deoMenuId6.setBounds(165, 25, 180, 20);
 			deoMenuId6.setFont(tftFont2);
 			deoMenuId6.setForeground(new Color(103, 51, 53));
 			panel6.add(deoMenuId6);
@@ -330,8 +331,11 @@ public class orderComplete extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-//				main.setVisible(true);
-				// 그냥 메인은 새창 열어둬도 될듯?
+				Sql_Methods sqlm = new Sql_Methods();
+				// mainOrder insert
+				// detailOrder insert
+				// detailOrder milist.size() > 0 -> milist 전부 insert
+
 				MainFrame main = new MainFrame();
 				main.setVisible(true);
 			}

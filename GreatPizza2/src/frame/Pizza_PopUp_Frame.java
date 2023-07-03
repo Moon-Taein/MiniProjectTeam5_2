@@ -415,9 +415,11 @@ public class Pizza_PopUp_Frame extends JDialog {
 						menu.setUnderListTarget(((deoList1.size() / 3)) * 3);
 						menu.underOrderList(mo, ((deoList1.size() / 3)) * 3);
 					} else {
+						menu.setUnderListTarget((((deoList1.size() - 1) / 3)) * 3);
 						menu.underOrderList(mo, (((deoList1.size() - 1) / 3)) * 3);
 					}
 				} else {
+					menu.setUnderListTarget((((deoList1.size() - 1) / 3)) * 3);
 					menu.underOrderList(mo, (((deoList1.size() - 1) / 3)) * 3);
 				}
 				underListPanel.repaint();
