@@ -25,7 +25,7 @@ public class MainFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainFrame frame = new MainFrame();	
+					MainFrame frame = new MainFrame();
 					frame.setVisible(true);
 					frame.requestFocus();
 				} catch (Exception e) {
@@ -76,7 +76,7 @@ public class MainFrame extends JFrame {
 	private void BtnSetting() {
 		orderBtn = new JButton(icon.getOrderBtn());
 		orderBtn.setBounds(250, 760, 300, 120);
-		orderBtn.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("orderBtnRoll.png")));
+		orderBtn.setRolloverIcon(new ImageIcon(getClass().getClassLoader().getResource("OrderBtnRoll.png")));
 		util.invisible(orderBtn);
 		jlp.add(orderBtn, new Integer(2));
 
