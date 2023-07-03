@@ -41,7 +41,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 
 	// 피자_불고기피자M -> 불고기피자 라는 이름을 받아서 구현해보자
 	public Pizza_PopUp_Frame(String target, MainOrder mo, MenuFrame menu, int detailOrderCount,
-			JLayeredPane underListPanel, int underListTarget) {
+			JLayeredPane underListPanel) {
 
 		// parameter로 크기값 받고 return으로 해당크기의 tftfont 해주는
 		Font tftFont = getBMJUAFont(18f);
@@ -50,9 +50,6 @@ public class Pizza_PopUp_Frame extends JDialog {
 
 		setModal(true);
 		Sql_Methods sqm = new Sql_Methods();
-
-		// 메인메뉴 넘버
-		System.out.println(mo.getOrderNumber());
 
 		// 피자토핑 리스트 가져오기
 		List<String> list = sqm.findToppingPriceMenuId(target);
@@ -346,6 +343,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
+				menu.setVisible(true);
 			}
 		});
 		cancelButton.setBounds(450, 490, 143, 46);
@@ -395,7 +393,6 @@ public class Pizza_PopUp_Frame extends JDialog {
 				for (JRadioButton jrb : radioButtonList) {
 					if (jrb.isSelected()) {
 						int price = sqm.findPriceIngredient(jrb.getText());
-						System.out.println("이그는 왜 또 0원임" + price);
 						MenuItem mi = new MenuItem(menu.getDetailOrderCount(), jrb.getText(), price);
 						total_price += price;
 						deo.getMiList().add(mi);
@@ -406,29 +403,29 @@ public class Pizza_PopUp_Frame extends JDialog {
 				// 피자가격 + 모든 옵션 가격
 				total_price = total_price * Integer.valueOf(currentCount.getText());
 
-				System.out.println("모든옵션이 합쳐진 총금액은" + total_price);
 				deo.setDetailOrderFullPrice(total_price);
 				mo.getDeoList().add(deo);
 				List<DetailOrder> deoList1 = mo.getDeoList();
+
 				underListPanel.removeAll();
 				underListPanel.invalidate();
 				if (deoList1.size() > 3) {
-					if ((deoList1.size() - underListTarget + 3) % 3 == 1) {
-						menu.setUnderListTarget(underListTarget + 3);
-						menu.underOrderList(mo, menu.getUnderListTarget());
-						underListPanel.repaint();
+					if ((deoList1.size()) % 3 == 1) {
+						System.out.println("413줄에서 숫자확인" + (deoList1.size() / 3));
+						menu.setUnderListTarget(((deoList1.size() / 3)) * 3);
+						menu.underOrderList(mo, ((deoList1.size() / 3)) * 3);
 					} else {
-						menu.underOrderList(mo, underListTarget);
+						menu.underOrderList(mo, (((deoList1.size() - 1) / 3)) * 3);
 					}
 				} else {
-					menu.underOrderList(mo, underListTarget);
+					menu.underOrderList(mo, (((deoList1.size() - 1) / 3)) * 3);
 				}
 				underListPanel.repaint();
 
 				int mo_total_price = MenuFrame.final_total_price(mo);
 				MenuFrame.total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
-				System.out.println(mo.toString());
 				dispose();
+				menu.setVisible(true);
 			}
 		});
 		addButton.setBounds(600, 490, 143, 46);
