@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -50,7 +51,7 @@ public class MakePizzaFrame extends JFrame {
 
 	private int toppingOnAndOn;
 	private int toppingCount;
-	private HashMap<Integer, JLabel> toppingLabels = new HashMap<>(); // 토핑 이미지를 저장할 맵
+	private HashMap<JButton, ArrayList<JLabel>> toppingMap = new HashMap<>(); // 토핑 이미지를 저장할 맵
 
 //	/**
 //	 * Launch the application.ㅁ
@@ -327,14 +328,16 @@ public class MakePizzaFrame extends JFrame {
 			// util.invisible(toppingBtn);
 
 			x += width + horizontalGap;
+
+			if (count == 6) {
+				break;
+			}
+
 			count++;
 
 			if (count % 2 == 0) {
 				x = 23;
 				y += height + verticalGap;
-			}
-			if (count == 6) {
-				break;
 			}
 
 			toppingBtn.addActionListener(new ActionListener() {
@@ -342,28 +345,40 @@ public class MakePizzaFrame extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					JButton btn1 = (JButton) e.getSource();
+					ArrayList<JLabel> toppingList = toppingMap.get(btn1);
+					if (toppingList == null) {
+						toppingList = new ArrayList<>();
+						toppingMap.put(btn1, toppingList);
+					}
+
 					String str = btn1.getText();
 					System.out.println(str);
 					HashMap<String, byte[]> onTopping = sql.getOnTopping(str);
 					if (onTopping != null) {
+						if (toppingList.isEmpty()) {
+							for (Entry<String, byte[]> map : onTopping.entrySet()) {
+								if (toppingOnAndOn > 6) {
+									break;
+								}
+								String toppingName = map.getKey().concat(str);
+								byte[] imageData = map.getValue();
 
-						for (Entry<String, byte[]> map : onTopping.entrySet()) {
-							if (toppingOnAndOn >= 5) {
-								break;
+								ImageIcon imgOnTopping = new ImageIcon(imageData);
+								System.out.println(onTopping);
+
+								JLabel Jlbl = new JLabel(imgOnTopping);
+								Jlbl.setBounds(41, 172, 310, 400);
+
+								toppingList.add(Jlbl);
+
+								toppingOnAndOn++;
+								jlp.add(Jlbl, new Integer(toppingOnAndOn));
 							}
-							String toppingName = map.getKey().concat(str);
-							byte[] imageData = map.getValue();
-
-							ImageIcon imgOnTopping = new ImageIcon(imageData);
-							System.out.println(onTopping);
-
-							JLabel Jlbl = new JLabel(imgOnTopping);
-							Jlbl.setBounds(41, 172, 310, 400);
+						} else {
+							JLabel lastTopping = toppingList.remove(toppingList.size() - 1);
+							jlp.remove(lastTopping);
+							toppingOnAndOn--;
 							System.out.println(toppingOnAndOn);
-
-							toppingOnAndOn++;
-							jlp.add(Jlbl, new Integer(toppingOnAndOn));
-
 						}
 						jlp.revalidate();
 						jlp.repaint();
