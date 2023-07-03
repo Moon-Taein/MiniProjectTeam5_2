@@ -451,6 +451,7 @@ public class MenuFrame extends JFrame {
 
 					underListPanel.removeAll();
 					underListPanel.invalidate();
+					underListTarget = 0;
 					underOrderList(mo, 0);
 					underListPanel.repaint();
 
@@ -478,6 +479,7 @@ public class MenuFrame extends JFrame {
 					}
 					underListPanel.removeAll();
 					underListPanel.invalidate();
+					underListTarget = 0;
 					underOrderList(mo, 0);
 					underListPanel.repaint();
 
@@ -505,6 +507,7 @@ public class MenuFrame extends JFrame {
 					}
 					underListPanel.removeAll();
 					underListPanel.invalidate();
+					underListTarget = 0;
 					underOrderList(mo, 0);
 					underListPanel.repaint();
 
