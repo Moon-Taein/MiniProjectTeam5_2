@@ -399,6 +399,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 						MenuItem mi = new MenuItem(menu.getDetailOrderCount(), jrb.getText(), price);
 						total_price += price;
 						deo.getMiList().add(mi);
+
 					}
 				}
 
@@ -408,13 +409,25 @@ public class Pizza_PopUp_Frame extends JDialog {
 				System.out.println("모든옵션이 합쳐진 총금액은" + total_price);
 				deo.setDetailOrderFullPrice(total_price);
 				mo.getDeoList().add(deo);
+				List<DetailOrder> deoList1 = mo.getDeoList();
+				underListPanel.removeAll();
+				underListPanel.invalidate();
+				if (deoList1.size() > 3) {
+					if ((deoList1.size() - underListTarget + 3) % 3 == 1) {
+						menu.setUnderListTarget(underListTarget + 3);
+						menu.underOrderList(mo, menu.getUnderListTarget());
+						underListPanel.repaint();
+					} else {
+						menu.underOrderList(mo, underListTarget);
+					}
+				} else {
+					menu.underOrderList(mo, underListTarget);
+				}
+				underListPanel.repaint();
+
 				int mo_total_price = MenuFrame.final_total_price(mo);
 				MenuFrame.total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 				System.out.println(mo.toString());
-				underListPanel.removeAll();
-				underListPanel.invalidate();
-				menu.underOrderList(mo, underListTarget);
-				underListPanel.repaint();
 				dispose();
 			}
 		});

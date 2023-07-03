@@ -765,31 +765,46 @@ public class MenuFrame extends JFrame {
 //				detailOrderCount++;
 				int price = Integer.parseInt(sqm.findPriceMenuId(target.getText()));
 				List<DetailOrder> deoList1 = mo.getDeoList();
+
+				underListPanel.removeAll();
+				underListPanel.invalidate();
+				// 리스트에 없을때
 				if (!findNameInDeoList(deoList1, target.getText())) {
 					DetailOrder deo2 = new DetailOrder(++detailOrderCount, target.getText(), 1, mo.getOrderNumber(),
 							price);
 					mo.getDeoList().add(deo2);
+					if (deoList1.size() > 3) {
+						if ((deoList1.size() - underListTarget + 3) % 3 == 1) {
+							underListTarget += 3;
+							underOrderList(mo, underListTarget);
+							underListPanel.repaint();
+						} else {
+							underOrderList(mo, underListTarget);
+						}
+					} else {
+						underOrderList(mo, underListTarget);
+					}
+					underListPanel.repaint();
+
+					// 똑같은거 두번 눌렀을때
+					// 그 항목으로 이동해주는거?
 				} else {
 					for (int i = 0; i < deoList1.size(); i++) {
 						System.out.println("asdniaowjdio0" + deoList1.get(i).getMenu());
 						System.out.println("asdniaowjdio0" + target.getText());
 						System.out.println("두번 눌렀을때 리스트 사이즈는" + deoList1.size());
-//						System.out.println("+1" + deoList1.get(i).getMenu());
-//						System.out.println("+2" + target.getText());
 						if (deoList1.get(i).getMenu().equals(target.getText())) {
 							System.out.println("여기에 들어오긴하니");
 							deoList1.get(i).setMenu_count(deoList1.get(i).getMenu_count() + 1);
 							deoList1.get(i).setDetailOrderFullPrice(deoList1.get(i).getDetailOrderFullPrice() + price);
+							underOrderList(mo, underListTarget);
+							underListPanel.repaint();
 						}
 					}
 				}
 
 				int mo_total_price = final_total_price(mo);
 				total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
-				underListPanel.removeAll();
-				underListPanel.invalidate();
-				underOrderList(mo, underListTarget);
-				underListPanel.repaint();
 			}
 		};
 
@@ -934,6 +949,14 @@ public class MenuFrame extends JFrame {
 		util.invisible(beforebtn);
 	}
 
+	public int getUnderListTarget() {
+		return underListTarget;
+	}
+
+	public void setUnderListTarget(int underListTarget) {
+		this.underListTarget = underListTarget;
+	}
+
 	private void drinkTabBtn(int target) {
 		Sql_Methods sqm = new Sql_Methods();
 		List<Object> list = sqm.findImageAndMenuIdTarget("음료%", target);
@@ -950,17 +973,41 @@ public class MenuFrame extends JFrame {
 
 				// 여기서 만약 이미 같은 이름을 가진 애가 존재하면 if문을 써서 수량이랑 가격만 플러스 해주기
 				List<DetailOrder> deoList1 = mo.getDeoList();
-				if (deoList1.size() > 0) {
-					for (DetailOrder deo : deoList1) {
-						if (deo.getMenu().equals(target.getText())) {
-							deo.setMenu_count(deo.getMenu_count() + 1);
-							deo.setDetailOrderFullPrice(deo.getDetailOrderFullPrice() + price);
-						}
-					}
-				} else {
-					DetailOrder deo2 = new DetailOrder(detailOrderCount, target.getText(), 1, mo.getOrderNumber(),
+				underListPanel.removeAll();
+				underListPanel.invalidate();
+				// 리스트에 없을때
+				if (!findNameInDeoList(deoList1, target.getText())) {
+					DetailOrder deo2 = new DetailOrder(++detailOrderCount, target.getText(), 1, mo.getOrderNumber(),
 							price);
 					mo.getDeoList().add(deo2);
+					if (deoList1.size() > 3) {
+						if ((deoList1.size() - underListTarget + 3) % 3 == 1) {
+							underListTarget += 3;
+							underOrderList(mo, underListTarget);
+							underListPanel.repaint();
+						} else {
+							underOrderList(mo, underListTarget);
+						}
+					} else {
+						underOrderList(mo, underListTarget);
+					}
+					underListPanel.repaint();
+
+					// 똑같은거 두번 눌렀을때
+					// 그 항목으로 이동해주는거?
+				} else {
+					for (int i = 0; i < deoList1.size(); i++) {
+						System.out.println("asdniaowjdio0" + deoList1.get(i).getMenu());
+						System.out.println("asdniaowjdio0" + target.getText());
+						System.out.println("두번 눌렀을때 리스트 사이즈는" + deoList1.size());
+						if (deoList1.get(i).getMenu().equals(target.getText())) {
+							System.out.println("여기에 들어오긴하니");
+							deoList1.get(i).setMenu_count(deoList1.get(i).getMenu_count() + 1);
+							deoList1.get(i).setDetailOrderFullPrice(deoList1.get(i).getDetailOrderFullPrice() + price);
+							underOrderList(mo, underListTarget);
+							underListPanel.repaint();
+						}
+					}
 				}
 
 				// menuFrame 총금액 갱신
