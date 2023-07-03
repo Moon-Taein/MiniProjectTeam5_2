@@ -421,7 +421,11 @@ public class Sql_Methods {
 		try {
 			conn = DBUtil.getConnection();
 			stmt = conn.prepareStatement("SELECT * FROM ingredient WHERE ingredient_id like ?");
-			stmt.setString(1, "%" + string + "%");
+			if (!string.equals("소스")) {
+				stmt.setString(1, "%" + string + "%");
+			} else {
+				stmt.setString(1, string + "%");
+			}
 
 			rs = stmt.executeQuery();
 
@@ -513,6 +517,86 @@ public class Sql_Methods {
 		}
 
 		return topingBox;
+
+	}
+
+	public HashMap<String, byte[]> getOnSource(String string) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<String> sourceName = pizzamakeSetToping("소스");
+		byte[] bytes = null;
+		List<byte[]> sourceImg = new ArrayList<byte[]>();
+		HashMap<String, byte[]> sourceBox = new HashMap<>();
+
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement("SELECT * FROM ingredient WHERE ingredient_id like ?");
+			stmt.setString(1, string + "%");
+
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				bytes = rs.getBytes("image_box");
+				sourceImg.add(bytes);
+
+			}
+
+			for (int i = 0; i < sourceImg.size(); i++) {
+				sourceBox.put(sourceName.get(i), sourceImg.get(i));
+
+			}
+		} catch (
+
+		SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(rs);
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
+		}
+
+		return sourceBox;
+
+	}
+
+	public HashMap<String, byte[]> getOnSourceImg(String string) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<String> sourceName = pizzamakeSetToping("소스");
+		byte[] bytes = null;
+		List<byte[]> sourceImg = new ArrayList<byte[]>();
+		HashMap<String, byte[]> sourceBox = new HashMap<>();
+
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement("SELECT * FROM ingredient WHERE ingredient_id like ?");
+			stmt.setString(1, string + "%");
+
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				bytes = rs.getBytes("image");
+				sourceImg.add(bytes);
+
+			}
+
+			for (int i = 0; i < sourceImg.size(); i++) {
+				sourceBox.put(sourceName.get(i), sourceImg.get(i));
+
+			}
+		} catch (
+
+		SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(rs);
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
+		}
+
+		return sourceBox;
 
 	}
 

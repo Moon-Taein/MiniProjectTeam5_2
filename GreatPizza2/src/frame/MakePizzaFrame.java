@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.swing.ImageIcon;
@@ -32,25 +33,22 @@ public class MakePizzaFrame extends JFrame {
 	private int countEdge;
 
 	private HashMap<String, byte[]> edgeMap = sql.pizzamakeSetEdgeimg("엣지");
-	private HashMap<String, byte[]> topingMap = sql.getTopingImgInBox("토핑");
 
 	private JLabel edgeLbl;
 	private JLabel currentEdge;
 	private ImageIcon edgeIcon;
-	private int edgePage;
 	private ImagePanel2 topingPnl;
 
 	int toppingTarget = 0;
 
-	int currentPage;
-	int startIndex;
-	int endIndex;
-	int count;
-	int x;
-	int y;
+//	int currentPage;
+//	int startIndex;
+//	int endIndex;
+//	int count;
+//	int x;
+//	int y;
 
 	private int toppingOnAndOn;
-	private int toppingCount;
 	private HashMap<JButton, ArrayList<JLabel>> toppingMap = new HashMap<>(); // 토핑 이미지를 저장할 맵
 
 //	/**
@@ -104,28 +102,80 @@ public class MakePizzaFrame extends JFrame {
 	}
 
 	private void sourceBtnSetting(MenuFrame menu) {
-		JButton btn1 = new JButton(icon.getBulldak());
-		JButton btn2 = new JButton(icon.getHotSoy());
-		JButton btn3 = new JButton(icon.getSoy());
-		JButton btn4 = new JButton(icon.getCream());
-		JButton btn5 = new JButton(icon.getTomato());
+		int x = 411;
+		int y = 614;
+		int horizontalGap = 78;
 
-		util.invisible(btn1);
-		util.invisible(btn2);
-		util.invisible(btn3);
-		util.invisible(btn4);
-		util.invisible(btn5);
+		HashMap<String, byte[]> sourceArr = sql.getOnSource("소스");
 
-		btn1.setBounds(713, 614, 52, 98);
-		jlp.add(btn1, new Integer(1));
-		btn2.setBounds(639, 614, 52, 98);
-		jlp.add(btn2, new Integer(1));
-		btn3.setBounds(562, 614, 52, 98);
-		jlp.add(btn3, new Integer(1));
-		btn4.setBounds(485, 614, 52, 98);
-		jlp.add(btn4, new Integer(1));
-		btn5.setBounds(407, 614, 52, 98);
-		jlp.add(btn5, new Integer(1));
+		for (Map.Entry<String, byte[]> entry : sourceArr.entrySet()) {
+			String sourceName = entry.getKey();
+			byte[] imageData = entry.getValue();// 정렬한 key(소스이름)과 같은 이미지 저장
+			ImageIcon icon = new ImageIcon(imageData);
+
+			JButton sourceBtn = new JButton(icon);
+			// 왼쪽에서 오른쪽으로 버튼나열
+			sourceBtn.setBounds(x, y, 52, 98);
+			// sourceBtn.setText(sourceName);
+			jlp.add(sourceBtn, new Integer(4));
+			util.invisible(sourceBtn);
+
+			x += horizontalGap;
+
+			sourceBtn.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JButton selectedSourceBtn = (JButton) e.getSource();
+					HashMap<String, byte[]> onSourceMap = sql.getOnSourceImg("소스");
+
+					String str = selectedSourceBtn.getText();
+					System.out.println(str);
+//					HashMap<String, byte[]> onSource = sql.getOnSource(str);
+//					for(Entry<String, byte[]> map : onSource.entrySet()) {
+//						byte[] onSourceImg = map.getValue();
+//					}
+				}
+			});
+		}
+
+//		JButton btn1 = new JButton(icon.getBulldak());
+//		JButton btn2 = new JButton(icon.getHotSoy());
+//		JButton btn3 = new JButton(icon.getSoy());
+//		JButton btn4 = new JButton(icon.getCream());
+//		JButton btn5 = new JButton(icon.getTomato());
+//
+//		ActionListener actionSource = new ActionListener() {
+//			int count = 0;
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				JButton selectBtn = (JButton) e.getSource();
+//				if (count == 0) {
+//					if (selectBtn == btn1) {
+//						System.out.println("버튼1진입 " + count);
+//					}
+//				}
+//
+//			}
+//		};
+
+//		util.invisible(btn1);
+//		util.invisible(btn2);
+//		util.invisible(btn3);
+//		util.invisible(btn4);
+//		util.invisible(btn5);
+//
+//		btn1.setBounds(723, 614, 52, 98);
+//		jlp.add(btn1, new Integer(1));
+//		btn2.setBounds(645, 614, 52, 98);
+//		jlp.add(btn2, new Integer(1));
+//		btn3.setBounds(567, 614, 52, 98);
+//		jlp.add(btn3, new Integer(1));
+//		btn4.setBounds(489, 614, 52, 98);
+//		jlp.add(btn4, new Integer(1));
+//		btn5.setBounds(411, 614, 52, 98);
+//		jlp.add(btn5, new Integer(1));
 
 		// 취소,담기 버튼
 		// 취소있으니까 뒤로가기 없어도될듯
@@ -186,7 +236,7 @@ public class MakePizzaFrame extends JFrame {
 
 		currentEdge = new JLabel(edgeIcon);
 		currentEdge.setBounds(-10, 108, 410, 529);
-		jlp.add(currentEdge, new Integer(3));
+		jlp.add(currentEdge, new Integer(6));
 
 		rightBtn.addActionListener(new ActionListener() {
 
@@ -294,23 +344,23 @@ public class MakePizzaFrame extends JFrame {
 		HashMap<String, byte[]> topingArr = sql.getTopingImgInBox("토핑");
 
 		int itemsPerPage = 6; // 한 페이지에 보여줄 이미지 수
-		int totalPages = (int) Math.ceil((double) topingArr.size() / itemsPerPage); // 전체 페이지 수
 
-		currentPage = 3; // 현재 페이지
-		startIndex = (currentPage - 1) * itemsPerPage; // 시작 인덱스
-		endIndex = Math.min(startIndex + itemsPerPage, topingArr.size()); // 종료 인덱스
+		int currentPage = 3; // 현재 페이지
+		int startIndex = (currentPage - 1) * itemsPerPage; // 시작 인덱스
+		int endIndex = Math.min(startIndex + itemsPerPage, topingArr.size()); // 종료 인덱스
 
-		x = 23;
-		y = 17;
-		int width = 130;
+		int x = 23;
+		int y = 17;
+		int width = 135;
 		int height = 100;
 		int horizontalGap = 60;
 		int verticalGap = 66;
 
-		count = 0;
+		int count = 0;
 
 		// 조건문 수정해서 size 까지만 나올수 있도록
 		for (int i = 0; i < 6; i++) {
+
 			String topingName = topingNames.get(toppingTarget);
 			toppingTarget++;
 			byte[] imageData = topingArr.get(topingName);
@@ -325,7 +375,7 @@ public class MakePizzaFrame extends JFrame {
 			toppingBtn.setBounds(x, y, width, height);
 			toppingBtn.setText(topingName);
 			topingPnl.add(toppingBtn, new Integer(2));
-			// util.invisible(toppingBtn);
+			util.invisible(toppingBtn);
 
 			x += width + horizontalGap;
 
@@ -349,6 +399,7 @@ public class MakePizzaFrame extends JFrame {
 					if (toppingList == null) {
 						toppingList = new ArrayList<>();
 						toppingMap.put(btn1, toppingList);
+
 					}
 
 					String str = btn1.getText();
@@ -357,10 +408,10 @@ public class MakePizzaFrame extends JFrame {
 					if (onTopping != null) {
 						if (toppingList.isEmpty()) {
 							for (Entry<String, byte[]> map : onTopping.entrySet()) {
-								if (toppingOnAndOn > 6) {
+								if (toppingOnAndOn > 4) {
+									System.out.println("최대 다섯개까지 토핑추가 가능");
 									break;
 								}
-								String toppingName = map.getKey().concat(str);
 								byte[] imageData = map.getValue();
 
 								ImageIcon imgOnTopping = new ImageIcon(imageData);
@@ -372,6 +423,7 @@ public class MakePizzaFrame extends JFrame {
 								toppingList.add(Jlbl);
 
 								toppingOnAndOn++;
+								System.out.println(toppingOnAndOn);
 								jlp.add(Jlbl, new Integer(toppingOnAndOn));
 							}
 						} else {
@@ -412,4 +464,5 @@ public class MakePizzaFrame extends JFrame {
 			g.drawImage(img, 3, 0, null);
 		}
 	}
+
 }
