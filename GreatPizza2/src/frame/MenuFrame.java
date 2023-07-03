@@ -439,9 +439,20 @@ public class MenuFrame extends JFrame {
 		cancel1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("현재 undermenu1은 " + underMenu1.getText());
 				// 취소하면 그냥 처음리스트로 보여줄까?
 				// 아니면 해당 구역에서 사라지는걸 보여줘야 되나;
+				if (underMenu1 != null) {
+					System.out.println("현재 undermenu1은 " + underMenu1.getText());
+					int underMenu1Index = findListIndexDetailOrderList(list, underMenu1.getText());
+					System.out.println(underMenu1Index);
+					removeTargetInList(list, underMenu1Index);
+
+					underListPanel.removeAll();
+					underListPanel.invalidate();
+					underOrderList(mo, 0);
+					underListPanel.repaint();
+					System.out.println("1번째 삭제지점" + mo.getDeoList().toString());
+				}
 			}
 		});
 		util.invisible(cancel1);
@@ -453,7 +464,18 @@ public class MenuFrame extends JFrame {
 		cancel2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("현재 undermenu2은 " + underMenu2.getText());
+				if (underMenu2 != null) {
+					System.out.println("현재 undermenu2은 " + underMenu2.getText());
+					int underMenu2Index = findListIndexDetailOrderList(list, underMenu2.getText());
+					System.out.println(underMenu2Index);
+					removeTargetInList(list, underMenu2Index);
+
+					underListPanel.removeAll();
+					underListPanel.invalidate();
+					underOrderList(mo, 0);
+					underListPanel.repaint();
+					System.out.println("2번째 삭제지점" + mo.getDeoList().toString());
+				}
 			}
 		});
 		util.invisible(cancel2);
@@ -465,7 +487,19 @@ public class MenuFrame extends JFrame {
 		cancel3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("현재 undermenu3은 " + underMenu3.getText());
+				if (underMenu3 != null) {
+					System.out.println("현재 undermenu3은 " + underMenu3.getText());
+					int underMenu3Index = findListIndexDetailOrderList(list, underMenu3.getText());
+					System.out.println(underMenu3Index);
+					removeTargetInList(list, underMenu3Index);
+
+					underListPanel.removeAll();
+					underListPanel.invalidate();
+					underOrderList(mo, 0);
+					underListPanel.repaint();
+
+					System.out.println("3번째 삭제지점" + mo.getDeoList().toString());
+				}
 			}
 		});
 		util.invisible(cancel3);
@@ -506,6 +540,29 @@ public class MenuFrame extends JFrame {
 			}
 		});
 		jlp.add(buyListDownButton, new Integer(3));
+	}
+
+	// 하단바 삭제 메소드
+	public void removeTargetInList(List<DetailOrder> list, int underMenuIndex) {
+		System.out.println("삭제하기전 리스트의 사이즈는: " + list.size());
+		list.remove(underMenuIndex);
+		detailOrderCount--;
+		for (int i = underMenuIndex; i < list.size() - 1; i++) {
+			if (list.get(i + 1) != null) {
+				int targetNumber = list.get(i).getDetailOrderNumber();
+				list.get(i + 1).setDetailOrderNumber(targetNumber);
+			}
+		}
+	}
+
+	// 텍스트 기준으로 해당 타겟이 리스트의 인덱스 몇번째인지 알려주는거
+	public int findListIndexDetailOrderList(List<DetailOrder> list, String target) {
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getMenu().equals(target)) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	private void buttonSetting(MainFrame main) {
@@ -781,7 +838,6 @@ public class MenuFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JButton target = (JButton) e.getSource();
-//				detailOrderCount++;
 				int price = Integer.parseInt(sqm.findPriceMenuId(target.getText()));
 				List<DetailOrder> deoList1 = mo.getDeoList();
 
@@ -801,7 +857,7 @@ public class MenuFrame extends JFrame {
 							underOrderList(mo, underListTarget);
 						}
 					} else {
-						underOrderList(mo, underListTarget);
+						underOrderList(mo, 0);
 					}
 					underListPanel.repaint();
 
@@ -825,6 +881,8 @@ public class MenuFrame extends JFrame {
 
 				int mo_total_price = final_total_price(mo);
 				total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
+
+				System.out.println("사이드 버튼들 누를때" + mo.getDeoList().toString());
 			}
 		};
 
@@ -1006,7 +1064,7 @@ public class MenuFrame extends JFrame {
 							underOrderList(mo, underListTarget);
 						}
 					} else {
-						underOrderList(mo, underListTarget);
+						underOrderList(mo, 0);
 					}
 					underListPanel.repaint();
 
