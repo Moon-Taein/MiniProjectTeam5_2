@@ -453,6 +453,9 @@ public class MenuFrame extends JFrame {
 					underListPanel.invalidate();
 					underOrderList(mo, 0);
 					underListPanel.repaint();
+
+					int mo_total_price = final_total_price(mo);
+					total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 					System.out.println("1번째 삭제지점" + mo.getDeoList().toString());
 				}
 			}
@@ -477,6 +480,9 @@ public class MenuFrame extends JFrame {
 					underListPanel.invalidate();
 					underOrderList(mo, 0);
 					underListPanel.repaint();
+
+					int mo_total_price = final_total_price(mo);
+					total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 					System.out.println("2번째 삭제지점" + mo.getDeoList().toString());
 				}
 			}
@@ -502,6 +508,8 @@ public class MenuFrame extends JFrame {
 					underOrderList(mo, 0);
 					underListPanel.repaint();
 
+					int mo_total_price = final_total_price(mo);
+					total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
 					System.out.println("3번째 삭제지점" + mo.getDeoList().toString());
 				}
 			}
