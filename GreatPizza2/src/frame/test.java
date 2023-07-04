@@ -1,16 +1,14 @@
 package frame;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.Color;
-import javax.swing.JLayeredPane;
-import java.awt.BorderLayout;
-import javax.swing.SwingConstants;
 
 public class test extends JFrame {
 
@@ -42,14 +40,14 @@ public class test extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		
+
 		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane.setBackground(Color.RED);
 		contentPane.add(layeredPane);
 		layeredPane.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblNewLabel = new JLabel("기본");
-		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel.setFont(new Font("함초롬바탕", Font.BOLD, 40));
-		layeredPane.add(lblNewLabel);
+
+		JLabel lblNewLabel = new JLabel("dsafewfawefawf");
+		lblNewLabel.setBackground(Color.RED);
+		contentPane.add(lblNewLabel);
 	}
 }

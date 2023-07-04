@@ -40,6 +40,10 @@ public class MakePizzaFrame extends JFrame {
 	private JLabel currentEdge;
 	private ImageIcon edgeIcon;
 	private ImagePanel2 topingPnl;
+	private ImageIcon sourceIcon;
+
+	private String currentSourceTarget;
+	private ArrayList<JLabel> toppingList;
 
 	int toppingTarget = 0;
 
@@ -50,7 +54,7 @@ public class MakePizzaFrame extends JFrame {
 //	int x;
 //	int y;
 
-	private int toppingOnAndOn;
+	private int toppingOnAndOn = 1;
 	private HashMap<JButton, ArrayList<JLabel>> toppingMap = new HashMap<>(); // 토핑 이미지를 저장할 맵
 
 //	/**
@@ -93,7 +97,7 @@ public class MakePizzaFrame extends JFrame {
 		jlp.setLayout(null);
 
 		jlp.add(lbl);
-		jlp.add(topingPnl, new Integer(2));
+		jlp.add(topingPnl, new Integer(1));
 
 		setContentPane(jlp);
 
@@ -109,6 +113,11 @@ public class MakePizzaFrame extends JFrame {
 		int horizontalGap = 78;
 
 		HashMap<String, byte[]> sourceArr = sql.getOnSource("소스");
+		HashMap<String, byte[]> onSourceMap = sql.getOnSourceImg("소스");
+
+		JLayeredPane sourceJlp = new JLayeredPane();
+		sourceJlp.setBounds(-10, 108, 410, 529);
+		jlp.add(sourceJlp, new Integer(2));
 
 		for (Map.Entry<String, byte[]> entry : sourceArr.entrySet()) {
 			String sourceName = entry.getKey();
@@ -125,28 +134,38 @@ public class MakePizzaFrame extends JFrame {
 			sourceBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 
 			jlp.add(sourceBtn, new Integer(3));
-			util.invisible(sourceBtn);
 
 			x += horizontalGap;
 
 			sourceBtn.addMouseListener(new MouseAdapter() {
+				private JLabel selectedSourceBtn;
+				private JLabel sourceLbl;
 
 				@Override
 				public void mouseClicked(MouseEvent e) {
-
-					JLabel selectedSourceBtn = (JLabel) e.getSource();
-
+					selectedSourceBtn = (JLabel) e.getSource();
 					String str = selectedSourceBtn.getText();
+					if (currentSourceTarget != null && currentSourceTarget.equals(str)) {
+						sourceJlp.remove(sourceLbl);
+						sourceJlp.revalidate();
+						sourceJlp.repaint();
+						currentSourceTarget = null;
 
-					HashMap<String, byte[]> onSourceMap = sql.getOnSourceImg("소스");
-					System.out.println(onSourceMap.toString());
-					byte[] imgArr = onSourceMap.get(str);
-					ImageIcon onSourceIcon = new ImageIcon(imgArr);
+					} else {
 
-					JLabel sourceLbl = new JLabel(onSourceIcon);
-					sourceLbl.setBounds(-10, 108, 410, 529);
-					jlp.add(sourceLbl, new Integer(1));
+						currentSourceTarget = str;
 
+						byte[] imgArr = onSourceMap.get(str);
+						ImageIcon onSourceIcon = new ImageIcon(imgArr);
+
+						sourceLbl = new JLabel(onSourceIcon);
+
+						sourceLbl.setBounds(0, 0, 410, 529);
+						sourceJlp.removeAll();
+						sourceJlp.add(sourceLbl, new Integer(1));
+						sourceJlp.revalidate();
+						sourceJlp.repaint();
+					}
 				}
 			});
 		}
@@ -202,6 +221,12 @@ public class MakePizzaFrame extends JFrame {
 		jlp.add(add, new Integer(2));
 		util.invisible(add);
 		add.setRolloverIcon(icon.getAddBright());
+		add.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 
 		JButton backBtn = new JButton(icon.getBack());
 		backBtn.setBounds(12, 10, 150, 70);
@@ -352,6 +377,7 @@ public class MakePizzaFrame extends JFrame {
 	}
 
 	private void showTopping(int toppingTarget) {
+		toppingList = new ArrayList<>();
 		List<String> topingNames = sql.pizzamakeSetToping("토핑");
 		HashMap<String, byte[]> topingArr = sql.getTopingImgInBox("토핑");
 
@@ -361,7 +387,7 @@ public class MakePizzaFrame extends JFrame {
 		int startIndex = (currentPage - 1) * itemsPerPage; // 시작 인덱스
 		int endIndex = Math.min(startIndex + itemsPerPage, topingArr.size()); // 종료 인덱스
 
-		int x = 23;
+		int x = 21;
 		int y = 17;
 		int width = 135;
 		int height = 100;
@@ -387,8 +413,13 @@ public class MakePizzaFrame extends JFrame {
 			toppingBtn.setBounds(x, y, width, height);
 			toppingBtn.setText(topingName);
 
-			topingPnl.add(toppingBtn, new Integer(2));
+			topingPnl.add(toppingBtn, new Integer(3));
 			util.invisible(toppingBtn);
+
+			toppingBtn.setFont(new Font("굴림", Font.PLAIN, 1));
+
+			toppingBtn.setVerticalTextPosition(SwingConstants.BOTTOM); // 텍스트를 가운데에 정렬
+			toppingBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 
 			x += width + horizontalGap;
 
@@ -408,7 +439,7 @@ public class MakePizzaFrame extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					JButton btn1 = (JButton) e.getSource();
-					ArrayList<JLabel> toppingList = toppingMap.get(btn1);
+					toppingList = toppingMap.get(btn1);
 					if (toppingList == null) {
 						toppingList = new ArrayList<>();
 						toppingMap.put(btn1, toppingList);
@@ -421,7 +452,7 @@ public class MakePizzaFrame extends JFrame {
 					if (onTopping != null) {
 						if (toppingList.isEmpty()) {
 							for (Entry<String, byte[]> map : onTopping.entrySet()) {
-								if (toppingOnAndOn > 4) {
+								if (toppingOnAndOn > 5) {
 									System.out.println("최대 다섯개까지 토핑추가 가능");
 									break;
 								}
@@ -442,6 +473,7 @@ public class MakePizzaFrame extends JFrame {
 						} else {
 							JLabel lastTopping = toppingList.remove(toppingList.size() - 1);
 							jlp.remove(lastTopping);
+							toppingList.remove(toppingList.size() - 1);
 							toppingOnAndOn--;
 						}
 						jlp.revalidate();
