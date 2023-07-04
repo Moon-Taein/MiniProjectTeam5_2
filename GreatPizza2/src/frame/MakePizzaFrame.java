@@ -48,7 +48,7 @@ public class MakePizzaFrame extends JFrame {
 	private ArrayList<JLabel> toppingList;
 
 	int toppingTarget = 0;
-	int topingCount = 2;
+	int topingCount = 3;
 
 	private JButton previousButton = null;
 	private JLabel toppingLbl;
@@ -169,7 +169,7 @@ public class MakePizzaFrame extends JFrame {
 
 						sourceLbl.setBounds(0, 0, 410, 529);
 						sourceJlp.removeAll();
-						sourceJlp.add(sourceLbl, new Integer(1));
+						sourceJlp.add(sourceLbl, new Integer(2));
 						sourceJlp.revalidate();
 						sourceJlp.repaint();
 					}
@@ -280,7 +280,7 @@ public class MakePizzaFrame extends JFrame {
 
 		currentEdge = new JLabel(edgeIcon);
 		currentEdge.setBounds(-10, 108, 410, 529);
-		jlp.add(currentEdge, new Integer(6));
+		jlp.add(currentEdge, new Integer(8));
 
 		rightBtn.addActionListener(new ActionListener() {
 
@@ -386,7 +386,7 @@ public class MakePizzaFrame extends JFrame {
 	private void showTopping(int toppingTarget) {
 		topingJP = new JLayeredPane();
 		topingJP.setBounds(41, 172, 310, 400);
-		jlp.add(topingJP, new Integer(1));
+		jlp.add(topingJP, new Integer(3));
 
 		toppingList = new ArrayList<>();
 		List<String> topingNames = sql.pizzamakeSetToping("토핑");
@@ -460,7 +460,7 @@ public class MakePizzaFrame extends JFrame {
 						toppingLbl = new JLabel(icon);
 						toppingLbl.setBounds(0, 0, 310, 400);
 
-						if (topingCount <= 6) {
+						if (topingCount <= 7) {
 							topingJP.add(toppingLbl, new Integer(topingCount));
 							topingCount++;
 
@@ -468,6 +468,7 @@ public class MakePizzaFrame extends JFrame {
 							System.out.println(topingCount + "5개초과함");
 						}
 					}
+					// ㅁㅁ
 
 //					toppingList = toppingMap.get(btn1);
 //					if (toppingList == null) {
