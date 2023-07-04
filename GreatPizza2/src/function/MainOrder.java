@@ -18,7 +18,12 @@ public class MainOrder {
 		super();
 		this.orderNumber = orderNumber;
 		this.total_Price = 0;
-		this.date = LocalDate.now().toString();
+		LocalDate localDate;
+		localDate = LocalDate.now();
+		int year = localDate.getYear();
+		int month = localDate.getMonthValue();
+		int day = localDate.getDayOfMonth();
+		this.date = year + "-" + month + "-" + day;
 		String pattern = "HH:mm";
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
 		this.time = LocalTime.now().format(formatter).toString();
