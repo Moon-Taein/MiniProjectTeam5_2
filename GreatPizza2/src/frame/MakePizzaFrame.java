@@ -144,7 +144,7 @@ public class MakePizzaFrame extends JFrame {
 					ImageIcon onSourceIcon = new ImageIcon(imgArr);
 
 					JLabel sourceLbl = new JLabel(onSourceIcon);
-					sourceLbl.setBounds(100, 100, 100, 100);
+					sourceLbl.setBounds(-10, 108, 410, 529);
 					jlp.add(sourceLbl, new Integer(1));
 
 				}
@@ -428,7 +428,7 @@ public class MakePizzaFrame extends JFrame {
 								byte[] imageData = map.getValue();
 
 								ImageIcon imgOnTopping = new ImageIcon(imageData);
-								System.out.println(onTopping);
+								System.out.println(imgOnTopping);
 
 								JLabel Jlbl = new JLabel(imgOnTopping);
 								Jlbl.setBounds(41, 172, 310, 400);
@@ -437,7 +437,7 @@ public class MakePizzaFrame extends JFrame {
 
 								toppingOnAndOn++;
 								System.out.println(toppingOnAndOn);
-								jlp.add(Jlbl, new Integer(toppingOnAndOn));
+								jlp.add(Jlbl, new Integer(toppingOnAndOn + 1));
 							}
 						} else {
 							JLabel lastTopping = toppingList.remove(toppingList.size() - 1);
