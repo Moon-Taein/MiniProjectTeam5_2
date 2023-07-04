@@ -443,7 +443,6 @@ public class MakePizzaFrame extends JFrame {
 							JLabel lastTopping = toppingList.remove(toppingList.size() - 1);
 							jlp.remove(lastTopping);
 							toppingOnAndOn--;
-							System.out.println(toppingOnAndOn);
 						}
 						jlp.revalidate();
 						jlp.repaint();
