@@ -33,8 +33,10 @@ public class MakePizzaFrame extends JFrame {
 	private invisibility util = new invisibility();
 	private Sql_Methods sql = new Sql_Methods();
 	private int countEdge;
+	private String topingStr;
 
 	private HashMap<String, byte[]> edgeMap = sql.pizzamakeSetEdgeimg("엣지");
+	private HashMap<String, byte[]> topingMap;
 
 	private JLabel edgeLbl;
 	private JLabel currentEdge;
@@ -46,6 +48,10 @@ public class MakePizzaFrame extends JFrame {
 	private ArrayList<JLabel> toppingList;
 
 	int toppingTarget = 0;
+	int topingCount = 2;
+
+	private JButton previousButton = null;
+	private JLabel toppingLbl;
 
 //	int currentPage;
 //	int startIndex;
@@ -55,7 +61,8 @@ public class MakePizzaFrame extends JFrame {
 //	int y;
 
 	private int toppingOnAndOn = 1;
-	private HashMap<JButton, ArrayList<JLabel>> toppingMap = new HashMap<>(); // 토핑 이미지를 저장할 맵
+
+	private JLayeredPane topingJP;
 
 //	/**
 //	 * Launch the application.ㅁ
@@ -133,7 +140,7 @@ public class MakePizzaFrame extends JFrame {
 			sourceBtn.setVerticalTextPosition(SwingConstants.BOTTOM); // 텍스트를 가운데에 정렬
 			sourceBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 
-			jlp.add(sourceBtn, new Integer(3));
+			jlp.add(sourceBtn, new Integer(2));
 
 			x += horizontalGap;
 
@@ -377,6 +384,10 @@ public class MakePizzaFrame extends JFrame {
 	}
 
 	private void showTopping(int toppingTarget) {
+		topingJP = new JLayeredPane();
+		topingJP.setBounds(41, 172, 310, 400);
+		jlp.add(topingJP, new Integer(1));
+
 		toppingList = new ArrayList<>();
 		List<String> topingNames = sql.pizzamakeSetToping("토핑");
 		HashMap<String, byte[]> topingArr = sql.getTopingImgInBox("토핑");
@@ -414,7 +425,7 @@ public class MakePizzaFrame extends JFrame {
 			toppingBtn.setText(topingName);
 
 			topingPnl.add(toppingBtn, new Integer(3));
-			util.invisible(toppingBtn);
+			// util.invisible(toppingBtn);
 
 			toppingBtn.setFont(new Font("굴림", Font.PLAIN, 1));
 
@@ -438,48 +449,68 @@ public class MakePizzaFrame extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					System.out.println(topingCount + "버튼액션진입시");
 					JButton btn1 = (JButton) e.getSource();
-					toppingList = toppingMap.get(btn1);
-					if (toppingList == null) {
-						toppingList = new ArrayList<>();
-						toppingMap.put(btn1, toppingList);
+					topingStr = btn1.getText();
+					topingMap = sql.getOnTopping(topingStr);
 
-					}
+					for (Entry<String, byte[]> entry : topingMap.entrySet()) {
+						byte[] imgArr = entry.getValue();
+						ImageIcon icon = new ImageIcon(imgArr);
+						toppingLbl = new JLabel(icon);
+						toppingLbl.setBounds(0, 0, 310, 400);
 
-					String str = btn1.getText();
-					System.out.println(str);
-					HashMap<String, byte[]> onTopping = sql.getOnTopping(str);
-					if (onTopping != null) {
-						if (toppingList.isEmpty()) {
-							for (Entry<String, byte[]> map : onTopping.entrySet()) {
-								if (toppingOnAndOn > 5) {
-									System.out.println("최대 다섯개까지 토핑추가 가능");
-									break;
-								}
-								byte[] imageData = map.getValue();
+						if (topingCount <= 6) {
+							topingJP.add(toppingLbl, new Integer(topingCount));
+							topingCount++;
 
-								ImageIcon imgOnTopping = new ImageIcon(imageData);
-								System.out.println(imgOnTopping);
-
-								JLabel Jlbl = new JLabel(imgOnTopping);
-								Jlbl.setBounds(41, 172, 310, 400);
-
-								toppingList.add(Jlbl);
-
-								toppingOnAndOn++;
-								System.out.println(toppingOnAndOn);
-								jlp.add(Jlbl, new Integer(toppingOnAndOn + 1));
-							}
 						} else {
-							JLabel lastTopping = toppingList.remove(toppingList.size() - 1);
-							jlp.remove(lastTopping);
-							toppingList.remove(toppingList.size() - 1);
-							toppingOnAndOn--;
+							System.out.println(topingCount + "5개초과함");
 						}
-						jlp.revalidate();
-						jlp.repaint();
 					}
+
+//					toppingList = toppingMap.get(btn1);
+//					if (toppingList == null) {
+//						toppingList = new ArrayList<>();
+//						toppingMap.put(btn1, toppingList);
+//
+//					}
+//
+//					String str = btn1.getText();
+//					System.out.println(str);
+//					HashMap<String, byte[]> onTopping = sql.getOnTopping(str);
+//					if (onTopping != null) {
+//						if (toppingList.isEmpty()) {
+//							for (Entry<String, byte[]> map : onTopping.entrySet()) {
+//								if (toppingOnAndOn > 5) {
+//									System.out.println("최대 다섯개까지 토핑추가 가능");
+//									break;
+//								}
+//								byte[] imageData = map.getValue();
+//
+//								ImageIcon imgOnTopping = new ImageIcon(imageData);
+//								System.out.println(imgOnTopping);
+//
+//								JLabel Jlbl = new JLabel(imgOnTopping);
+//								Jlbl.setBounds(41, 172, 310, 400);
+//
+//								toppingList.add(Jlbl);
+//
+//								toppingOnAndOn++;
+//								System.out.println(toppingOnAndOn);
+//								jlp.add(Jlbl, new Integer(toppingOnAndOn + 1));
+//							}
+//						} else {
+//							JLabel lastTopping = toppingList.remove(toppingList.size() - 1);
+//							jlp.remove(lastTopping);
+//							toppingList.remove(toppingList.size() - 1);
+//							toppingOnAndOn--;
+//						}
+//						jlp.revalidate();
+//						jlp.repaint();
+//					}
 				}
+
 			});
 
 		}
