@@ -362,6 +362,66 @@ public class Sql_Methods {
 		return list;
 	}
 
+	// 토핑% 로 검색
+	public List<Object> findImageAndIngredient_IdTarget(String name, int target) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<Object> list = new ArrayList<>();
+		byte[] bytes = null;
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement(
+					"select ingredient_id, image_box from ingredient where ingredient_id like ? order by no limit 6 offset ?");
+			stmt.setString(1, name);
+			stmt.setInt(2, target);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				String ingredient_id = rs.getString("ingredient_id");
+				bytes = rs.getBytes("image_box");
+				list.add(ingredient_id);
+				list.add(bytes);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(rs);
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
+		}
+		System.out.println(list.toString());
+		System.out.println(list.size());
+		return list;
+	}
+
+	// name으로 topping_Image 가져오기
+	public byte[] findImageIngredientTarget(String name) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		byte[] bytes = null;
+		try {
+			conn = DBUtil.getConnection();
+			stmt = conn.prepareStatement("select image from ingredient where ingredient_id = ?");
+			stmt.setString(1, name);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				bytes = rs.getBytes("image");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.close(rs);
+			DBUtil.close(stmt);
+			DBUtil.close(conn);
+		}
+		return bytes;
+	}
+
 	public int findMainOrderCount() {
 		Connection conn = null;
 		PreparedStatement stmt = null;

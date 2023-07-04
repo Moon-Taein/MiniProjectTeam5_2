@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
+import javax.swing.GrayFilter;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,6 +23,9 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import function.DetailOrder;
+import function.MainOrder;
+import function.MenuItem;
 import function.Sql_Methods;
 import img.imageIcon;
 import utilty.invisibility;
@@ -63,6 +66,7 @@ public class MakePizzaFrame extends JFrame {
 	private int toppingOnAndOn = 1;
 
 	private JLayeredPane topingJP;
+	private List<JLabel> plusToppingList = new ArrayList<>();
 
 //	/**
 //	 * Launch the application.ㅁ
@@ -83,9 +87,9 @@ public class MakePizzaFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MakePizzaFrame(MenuFrame menu) {
+	public MakePizzaFrame(MenuFrame menu, MainOrder mo, JLayeredPane underListPanel) {
 		frameSetting();
-		sourceBtnSetting(menu);
+		sourceBtnSetting(menu, mo, underListPanel);
 		edgeSetting();
 		showTopping(toppingTarget);
 		afterBeforeBtnSetting();
@@ -106,6 +110,10 @@ public class MakePizzaFrame extends JFrame {
 		jlp.add(lbl);
 		jlp.add(topingPnl, new Integer(1));
 
+		topingJP = new JLayeredPane();
+		topingJP.setBounds(41, 172, 310, 400);
+		jlp.add(topingJP, new Integer(3));
+
 		setContentPane(jlp);
 
 		setUndecorated(true);
@@ -114,7 +122,7 @@ public class MakePizzaFrame extends JFrame {
 		setLocationRelativeTo(null);
 	}
 
-	private void sourceBtnSetting(MenuFrame menu) {
+	private void sourceBtnSetting(MenuFrame menu, MainOrder mo, JLayeredPane underListPanel) {
 		int x = 411;
 		int y = 614;
 		int horizontalGap = 78;
@@ -177,49 +185,19 @@ public class MakePizzaFrame extends JFrame {
 			});
 		}
 
-//		JButton btn1 = new JButton(icon.getBulldak());
-//		JButton btn2 = new JButton(icon.getHotSoy());
-//		JButton btn3 = new JButton(icon.getSoy());
-//		JButton btn4 = new JButton(icon.getCream());
-//		JButton btn5 = new JButton(icon.getTomato());
-//
-//		ActionListener actionSource = new ActionListener() {
-//			int count = 0;
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				JButton selectBtn = (JButton) e.getSource();
-//				if (count == 0) {
-//					if (selectBtn == btn1) {
-//						System.out.println("버튼1진입 " + count);
-//					}
-//				}
-//
-//			}
-//		};
-//
-//		util.invisible(btn1);
-//		util.invisible(btn2);
-//		util.invisible(btn3);
-//		util.invisible(btn4);
-//		util.invisible(btn5);
-//
-//		btn1.setBounds(723, 614, 52, 98);
-//		jlp.add(btn1, new Integer(1));
-//		btn2.setBounds(645, 614, 52, 98);
-//		jlp.add(btn2, new Integer(1));
-//		btn3.setBounds(567, 614, 52, 98);
-//		jlp.add(btn3, new Integer(1));
-//		btn4.setBounds(489, 614, 52, 98);
-//		jlp.add(btn4, new Integer(1));
-//		btn5.setBounds(411, 614, 52, 98);
-//		jlp.add(btn5, new Integer(1));
-
 		// 취소,담기 버튼
 		// 취소있으니까 뒤로가기 없어도될듯
 		JButton cancle = new JButton(icon.getCancle());
 		cancle.setBounds(90, 775, 280, 70);
 		jlp.add(cancle, new Integer(2));
+		cancle.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				menu.setVisible(true);
+			}
+		});
 		util.invisible(cancle);
 		cancle.setRolloverIcon(icon.getCancleBright());
 
@@ -232,6 +210,66 @@ public class MakePizzaFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int total_price = 0;
+				// detailorder 생성
+				menu.setDetailOrderCount((menu.getDetailOrderCount()) + 1);
+				DetailOrder deo = new DetailOrder(menu.getDetailOrderCount(), "피자_나만의피자", 1, mo.getOrderNumber(), 0);
+				// menuItem 추가해주고
+				MenuItem miSource = new MenuItem(menu.getDetailOrderCount(), "소스_" + currentSourceTarget,
+						sql.findPriceIngredient("소스_" + currentSourceTarget)); // 소스찾았고
+				total_price += miSource.getMenuItemPrice();
+				deo.getMiList().add(miSource);
+				System.out.println("엣지_" + edgeLbl.getText()); // 엣지고
+				MenuItem miEdge = new MenuItem(menu.getDetailOrderCount(), "엣지_" + edgeLbl.getText(),
+						sql.findPriceIngredient("엣지_" + edgeLbl.getText()));
+				total_price += miEdge.getMenuItemPrice();
+				deo.getMiList().add(miEdge);
+				if (plusToppingList.size() > 1) {
+					for (JLabel lbl : plusToppingList) {
+						MenuItem miTopping = new MenuItem(menu.getDetailOrderCount(), lbl.getText(),
+								sql.findPriceIngredient(lbl.getText()));
+						deo.getMiList().add(miTopping);
+						total_price += miTopping.getMenuItemPrice();
+					}
+				}
+
+				// 토탈 코스트 넣어주고
+				total_price += 9900;
+				deo.setDetailOrderFullPrice(total_price);
+
+				// mo에 넣어주고
+				mo.getDeoList().add(deo);
+
+				// 하단바 새로고쳐주고
+				List<DetailOrder> deoList1 = mo.getDeoList();
+				underListPanel.removeAll();
+				underListPanel.invalidate();
+				if (deoList1.size() > 3) {
+					if ((deoList1.size()) % 3 == 1) {
+//						System.out.println("413줄에서 숫자확인" + (deoList1.size() / 3));
+						menu.setUnderListTarget(((deoList1.size() / 3)) * 3);
+						menu.underOrderList(mo, ((deoList1.size() / 3)) * 3);
+					} else {
+						menu.setUnderListTarget((((deoList1.size() - 1) / 3)) * 3);
+						menu.underOrderList(mo, (((deoList1.size() - 1) / 3)) * 3);
+					}
+				} else {
+					menu.setUnderListTarget((((deoList1.size() - 1) / 3)) * 3);
+					menu.underOrderList(mo, (((deoList1.size() - 1) / 3)) * 3);
+				}
+				underListPanel.repaint();
+
+				int mo_total_price = MenuFrame.final_total_price(mo);
+				MenuFrame.total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
+
+//				System.out.println("최종 나만의피자로 들어가는지 " + mo.getDeoList().toString());
+//				System.out.println("잘들어가니" + deo.getMiList().toString());
+
+				dispose();
+				menu.setVisible(true);
+
+				//
+
 			}
 		});
 
@@ -383,139 +421,175 @@ public class MakePizzaFrame extends JFrame {
 
 	}
 
+	public int getTopingCount() {
+		return topingCount;
+	}
+
+	public void setTopingCount(int topingCount) {
+		this.topingCount = topingCount;
+	}
+
 	private void showTopping(int toppingTarget) {
-		topingJP = new JLayeredPane();
-		topingJP.setBounds(41, 172, 310, 400);
-		jlp.add(topingJP, new Integer(3));
 
-		toppingList = new ArrayList<>();
-		List<String> topingNames = sql.pizzamakeSetToping("토핑");
-		HashMap<String, byte[]> topingArr = sql.getTopingImgInBox("토핑");
+		List<Object> list = sql.findImageAndIngredient_IdTarget("토핑%", toppingTarget);
 
-		int itemsPerPage = 6; // 한 페이지에 보여줄 이미지 수
+		ActionListener al = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JButton btnTarget = (JButton) e.getSource();
+				String str = btnTarget.getText();
+				System.out.println(str);
+				byte[] targetImage = sql.findImageIngredientTarget(str);
+				System.out.println(str + " " + targetImage);
 
-		int currentPage = 3; // 현재 페이지
-		int startIndex = (currentPage - 1) * itemsPerPage; // 시작 인덱스
-		int endIndex = Math.min(startIndex + itemsPerPage, topingArr.size()); // 종료 인덱스
+				// 화면에 뿌려주기
+				ImageIcon icon = new ImageIcon(targetImage);
+				toppingLbl = new JLabel(icon);
+				toppingLbl.setText(str);
+				toppingLbl.setBounds(0, 0, 310, 400);
 
-		int x = 21;
-		int y = 17;
+				if (topingCount < 8) {
+					topingJP.add(toppingLbl, new Integer(topingCount));
+					plusToppingList.add(toppingLbl);
+					System.out.println("라벨리스트사이즈는" + plusToppingList.size());
+					System.out.println(plusToppingList.toString());
+					topingCount++;
+					System.out.println(topingCount);
+				} else {
+					System.out.println(topingCount + "5개초과함");
+					topingJP.remove(plusToppingList.get(4));
+					topingJP.remove(plusToppingList.get(3));
+					topingJP.remove(plusToppingList.get(2));
+					topingJP.remove(plusToppingList.get(1));
+					topingJP.remove(plusToppingList.get(0));
+					plusToppingList.remove(4);
+					plusToppingList.remove(3);
+					plusToppingList.remove(2);
+					plusToppingList.remove(1);
+					plusToppingList.remove(0);
+					topingCount = 3;
+					topingJP.repaint();
+				}
+			}
+		};
+
 		int width = 135;
 		int height = 100;
-		int horizontalGap = 60;
-		int verticalGap = 66;
 
-		int count = 0;
-
-		// 조건문 수정해서 size 까지만 나올수 있도록
-		for (int i = 0; i < 6; i++) {
-
-			String topingName = topingNames.get(toppingTarget);
-			toppingTarget++;
-			byte[] imageData = topingArr.get(topingName);
-			ImageIcon icon = new ImageIcon(imageData);
-
-			// 눌러서 상호작용 있으니 버튼으로 바꾸기
-			// 누를때마다 만들고있는 피자에 이미지 겹쳐주고
-			// menuitem 생성해서
-			// 나만의피자 detailorder에 넣어주기
-
-			JButton toppingBtn = new JButton(icon);
-			toppingBtn.setBounds(x, y, width, height);
-			toppingBtn.setText(topingName);
-
-			topingPnl.add(toppingBtn, new Integer(3));
-			// util.invisible(toppingBtn);
-
-			toppingBtn.setFont(new Font("굴림", Font.PLAIN, 1));
-
-			toppingBtn.setVerticalTextPosition(SwingConstants.BOTTOM); // 텍스트를 가운데에 정렬
-			toppingBtn.setHorizontalTextPosition(SwingConstants.CENTER);
-
-			x += width + horizontalGap;
-
-			if (count == 6) {
-				break;
-			}
-
-			count++;
-
-			if (count % 2 == 0) {
-				x = 23;
-				y += height + verticalGap;
-			}
-
-			toppingBtn.addActionListener(new ActionListener() {
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					System.out.println(topingCount + "버튼액션진입시");
-					JButton btn1 = (JButton) e.getSource();
-					topingStr = btn1.getText();
-					topingMap = sql.getOnTopping(topingStr);
-
-					for (Entry<String, byte[]> entry : topingMap.entrySet()) {
-						byte[] imgArr = entry.getValue();
-						ImageIcon icon = new ImageIcon(imgArr);
-						toppingLbl = new JLabel(icon);
-						toppingLbl.setBounds(0, 0, 310, 400);
-
-						if (topingCount <= 7) {
-							topingJP.add(toppingLbl, new Integer(topingCount));
-							topingCount++;
-
-						} else {
-							System.out.println(topingCount + "5개초과함");
-						}
-					}
-					// ㅁㅁ
-
-//					toppingList = toppingMap.get(btn1);
-//					if (toppingList == null) {
-//						toppingList = new ArrayList<>();
-//						toppingMap.put(btn1, toppingList);
-//
-//					}
-//
-//					String str = btn1.getText();
-//					System.out.println(str);
-//					HashMap<String, byte[]> onTopping = sql.getOnTopping(str);
-//					if (onTopping != null) {
-//						if (toppingList.isEmpty()) {
-//							for (Entry<String, byte[]> map : onTopping.entrySet()) {
-//								if (toppingOnAndOn > 5) {
-//									System.out.println("최대 다섯개까지 토핑추가 가능");
-//									break;
-//								}
-//								byte[] imageData = map.getValue();
-//
-//								ImageIcon imgOnTopping = new ImageIcon(imageData);
-//								System.out.println(imgOnTopping);
-//
-//								JLabel Jlbl = new JLabel(imgOnTopping);
-//								Jlbl.setBounds(41, 172, 310, 400);
-//
-//								toppingList.add(Jlbl);
-//
-//								toppingOnAndOn++;
-//								System.out.println(toppingOnAndOn);
-//								jlp.add(Jlbl, new Integer(toppingOnAndOn + 1));
-//							}
-//						} else {
-//							JLabel lastTopping = toppingList.remove(toppingList.size() - 1);
-//							jlp.remove(lastTopping);
-//							toppingList.remove(toppingList.size() - 1);
-//							toppingOnAndOn--;
-//						}
-//						jlp.revalidate();
-//						jlp.repaint();
-//					}
-				}
-
-			});
+		// 가져와서 뿌려주기;
+		if (list.size() > 0) {
+			ImageIcon img = new ImageIcon((byte[]) list.get(1));
+			JButton btn1 = new JButton(img);
+			btn1.setText((String) list.get(0));
+			btn1.setBounds(19, 0, 150, 130);
+			btn1.setRolloverIcon(grayImageIcon(img));
+			btn1.addActionListener(al);
+			topingPnl.add(btn1, new Integer(3));
+			util.invisible(btn1);
 
 		}
 
+		if (list.size() > 3) {
+			ImageIcon img = new ImageIcon((byte[]) list.get(3));
+			JButton btn2 = new JButton(img);
+			btn2.setText((String) list.get(2));
+			btn2.setBounds(210, 0, 150, 130);
+			btn2.setRolloverIcon(grayImageIcon(img));
+			btn2.addActionListener(al);
+			topingPnl.add(btn2, new Integer(3));
+			util.invisible(btn2);
+
+		}
+
+		if (list.size() > 5) {
+			ImageIcon img = new ImageIcon((byte[]) list.get(5));
+			JButton btn3 = new JButton(img);
+			btn3.setText((String) list.get(4));
+			btn3.setBounds(19, 160, 150, 130);
+			btn3.setRolloverIcon(grayImageIcon(img));
+			btn3.addActionListener(al);
+			topingPnl.add(btn3, new Integer(3));
+			util.invisible(btn3);
+		}
+
+		if (list.size() > 7) {
+			ImageIcon img = new ImageIcon((byte[]) list.get(7));
+			JButton btn4 = new JButton(img);
+			btn4.setText((String) list.get(6));
+			btn4.setBounds(210, 160, 150, 130);
+			btn4.setRolloverIcon(grayImageIcon(img));
+			btn4.addActionListener(al);
+			topingPnl.add(btn4, new Integer(3));
+			util.invisible(btn4);
+
+		}
+
+		if (list.size() > 9) {
+			ImageIcon img = new ImageIcon((byte[]) list.get(9));
+			JButton btn5 = new JButton(img);
+			btn5.setText((String) list.get(8));
+			btn5.setBounds(19, 320, 150, 130);
+			btn5.setRolloverIcon(grayImageIcon(img));
+			btn5.addActionListener(al);
+			topingPnl.add(btn5, new Integer(3));
+			util.invisible(btn5);
+
+		}
+
+		if (list.size() > 11) {
+			ImageIcon img = new ImageIcon((byte[]) list.get(11));
+			JButton btn6 = new JButton(img);
+			btn6.setText((String) list.get(10));
+			btn6.setBounds(210, 320, 150, 130);
+			btn6.setRolloverIcon(grayImageIcon(img));
+			btn6.addActionListener(al);
+			topingPnl.add(btn6, new Integer(3));
+			util.invisible(btn6);
+
+		}
+
+		JButton afterButton = new JButton(icon.getMiniAfter());
+		afterButton.setBounds(650, 550, 50, 50);
+		afterButton.setRolloverIcon(icon.getMiniAfterRoll());
+		util.invisible(afterButton);
+		afterButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				topingPnl.removeAll();
+				setToppingTarget(getToppingTarget() + 6);
+				showTopping(getToppingTarget());
+				topingPnl.repaint();
+			}
+		});
+		jlp.add(afterButton, new Integer(3));
+
+		JButton beforeBtn = new JButton(icon.getMiniBefore());
+		beforeBtn.setBounds(500, 550, 50, 50);
+		beforeBtn.setRolloverIcon(icon.getMiniBeforeRoll());
+		util.invisible(beforeBtn);
+		beforeBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (getToppingTarget() > 0) {
+					topingPnl.removeAll();
+					setToppingTarget(getToppingTarget() - 6);
+					showTopping(getToppingTarget());
+					topingPnl.repaint();
+				}
+
+			}
+		});
+		jlp.add(beforeBtn, new Integer(3));
+
+	}
+
+	// imageIcon 을 gray로 바꿔줘서 반환
+	private ImageIcon grayImageIcon(ImageIcon img) {
+		Image normalImage = img.getImage();
+		Image grayImage = GrayFilter.createDisabledImage(normalImage);
+		ImageIcon grayImg = new ImageIcon(grayImage);
+		return grayImg;
 	}
 
 	public int getToppingTarget() {

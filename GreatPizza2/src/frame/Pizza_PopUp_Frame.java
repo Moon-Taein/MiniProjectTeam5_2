@@ -405,8 +405,8 @@ public class Pizza_PopUp_Frame extends JDialog {
 
 				deo.setDetailOrderFullPrice(total_price);
 				mo.getDeoList().add(deo);
-				List<DetailOrder> deoList1 = mo.getDeoList();
 
+				List<DetailOrder> deoList1 = mo.getDeoList();
 				underListPanel.removeAll();
 				underListPanel.invalidate();
 				if (deoList1.size() > 3) {

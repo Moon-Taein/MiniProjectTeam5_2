@@ -169,7 +169,7 @@ public class MenuFrame extends JFrame {
 		makePizzaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				MakePizzaFrame newFrame = new MakePizzaFrame(MenuFrame.this);
+				MakePizzaFrame newFrame = new MakePizzaFrame(MenuFrame.this, mo, underListPanel);
 
 			}
 		});
