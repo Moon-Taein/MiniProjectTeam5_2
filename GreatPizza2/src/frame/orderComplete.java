@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 
 import function.DetailOrder;
 import function.MainOrder;
+import function.MenuItem;
 import function.Sql_Methods;
 import img.imageIcon;
 import utilty.invisibility;
@@ -332,11 +333,24 @@ public class orderComplete extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				Sql_Methods sqlm = new Sql_Methods();
+
 				// mainOrder insert
+				sqlm.mainOrderInsert(mo);
 				// detailOrder insert
 				// detailOrder milist.size() > 0 -> milist 전부 insert
+				List<DetailOrder> deoList = mo.getDeoList();
+				for (DetailOrder deo : deoList) {
+					sqlm.detailOrderInsert(deo);
+					if (deo.getMiList().size() > 0) {
+						List<MenuItem> optionList = deo.getMiList();
+						for (MenuItem menu : optionList) {
+							sqlm.addIngredientInsert(menu);
+						}
+					}
+				}
 
 				MainFrame main = new MainFrame();
+				System.out.println(mo.toString());
 				main.setVisible(true);
 			}
 		});

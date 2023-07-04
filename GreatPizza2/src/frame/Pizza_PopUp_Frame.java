@@ -426,6 +426,7 @@ public class Pizza_PopUp_Frame extends JDialog {
 
 				int mo_total_price = MenuFrame.final_total_price(mo);
 				MenuFrame.total_priceLabel.setText(String.valueOf(mo_total_price) + "원");
+
 				dispose();
 				menu.setVisible(true);
 			}

@@ -62,8 +62,8 @@ public class Sql_Methods {
 		return false;
 	}
 
-	public static boolean menuitemInsert(MenuItem mi) {
-		String sql = "insert into menuitem (detailorder_no, ingredient_id) values (?,?)";
+	public static boolean addIngredientInsert(MenuItem mi) {
+		String sql = "insert into addIngredient (detailorder_no, ingredient_id) values (?,?)";
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		// 세팅해줘서 넣어주기
