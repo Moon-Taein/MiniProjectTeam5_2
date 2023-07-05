@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +47,7 @@ public class MakePizzaFrame extends JFrame {
 	private ImageIcon edgeIcon;
 	private ImagePanel2 topingPnl;
 	private ImageIcon sourceIcon;
+	private Font tftFont1 = getBMJUAFont(18f);
 
 	private String currentSourceTarget;
 	private ArrayList<JLabel> toppingList;
@@ -83,6 +85,19 @@ public class MakePizzaFrame extends JFrame {
 //			}
 //		});
 //	}
+	private Font getBMJUAFont(float f) {
+		// TFT 폰트 파일 로드
+		InputStream fontStream = Pizza_PopUp_Frame.class.getResourceAsStream("/popup/BMJUA_ttf.ttf");
+		Font tftFont;
+		try {
+			tftFont = Font.createFont(Font.TRUETYPE_FONT, fontStream);
+			tftFont = tftFont.deriveFont(f);
+			return tftFont;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	/**
 	 * Create the frame.
@@ -103,6 +118,21 @@ public class MakePizzaFrame extends JFrame {
 		topingPnl = new ImagePanel2(icon.getMakePizzaToppingFrame().getImage());
 		topingPnl.setBounds(415, 65, 360, 480);
 		topingPnl.setOpaque(true);
+
+		JLabel lblNewLabel = new JLabel("소스와 엣지는 하나씩 고를 수 있습니다.");
+		lblNewLabel.setFont(tftFont1);
+		lblNewLabel.setBounds(65, 80, 340, 48);
+		jlp.add(lblNewLabel);
+
+		JLabel lblNewLabel_1 = new JLabel("토핑은 '다섯개'까지 고를 수 있습니다.");
+		lblNewLabel_1.setFont(tftFont1);
+		lblNewLabel_1.setBounds(73, 100, 327, 48);
+		jlp.add(lblNewLabel_1);
+
+		JLabel lblNewLabel_1_1 = new JLabel("'다섯개'이상 고르면 초기화됩니다.");
+		lblNewLabel_1_1.setFont(tftFont1);
+		lblNewLabel_1_1.setBounds(80, 120, 296, 48);
+		jlp.add(lblNewLabel_1_1);
 
 		jlp.setPreferredSize(new Dimension(icon.getMainFrame().getIconWidth(), icon.getMainFrame().getIconHeight()));
 		jlp.setLayout(null);
@@ -131,7 +161,7 @@ public class MakePizzaFrame extends JFrame {
 		HashMap<String, byte[]> onSourceMap = sql.getOnSourceImg("소스");
 
 		JLayeredPane sourceJlp = new JLayeredPane();
-		sourceJlp.setBounds(-10, 108, 410, 529);
+		sourceJlp.setBounds(-5, 108, 410, 529);
 		jlp.add(sourceJlp, new Integer(2));
 
 		for (Map.Entry<String, byte[]> entry : sourceArr.entrySet()) {
@@ -446,7 +476,7 @@ public class MakePizzaFrame extends JFrame {
 				ImageIcon icon = new ImageIcon(targetImage);
 				toppingLbl = new JLabel(icon);
 				toppingLbl.setText(str);
-				toppingLbl.setBounds(0, 0, 310, 400);
+				toppingLbl.setBounds(7, 0, 310, 400);
 
 				if (topingCount < 8) {
 					topingJP.add(toppingLbl, new Integer(topingCount));
