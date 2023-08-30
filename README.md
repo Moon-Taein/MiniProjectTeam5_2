@@ -28,8 +28,8 @@
 두 프로그램이 하나의 데이터베이스를 이용하여 연결되는 프로그램으로 제작
 <img src="https://github.com/Moon-Taein/MiniProjectTeam5_2/assets/130747714/6696a216-0bd2-4196-b9f8-84e6064da9f1" alt=""/>
 *키오스크는...*
-- 실시간으로 키오스크 주문 받기
-- 정확한 재고관리 및 그래프를 이용한 재정확인으로 매출확인의 편의성 제공
+- 토핑추가, 사이즈, 엣지변경 등 맞춤형 피자 주문 가능
+- 손님이 직접 제작할 수 있는 나만의 피자 주문 가능
 
 ## 시작 가이드
 1. MySQL 더미집 import
@@ -54,7 +54,7 @@
 
 ## 화면 구성 & 주요 기능
 
-### wiki에서 확인
+### [wiki](https://github.com/Moon-Taein/MiniProjectTeam5_2/wiki)에서 확인
 
 ## ERD
 <img src="https://github.com/Moon-Taein/MiniprojectTeam5_1/assets/130747714/a02e9cc9-a63e-4164-ad70-a36f493742e7">
