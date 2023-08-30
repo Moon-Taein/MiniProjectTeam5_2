@@ -24,7 +24,7 @@
 </table>
 
 ### 기획
-**키오스크로 주문, [포스기](https://github.com/Moon-Taein/MiniProjectTeam5_2)로 관리**
+**키오스크로 주문, [포스기](https://github.com/Moon-Taein/MiniProjectTeam5_1)로 관리**
 두 프로그램이 하나의 데이터베이스를 이용하여 연결되는 프로그램으로 제작
 <img src="https://github.com/Moon-Taein/MiniProjectTeam5_2/assets/130747714/6696a216-0bd2-4196-b9f8-84e6064da9f1" alt=""/>
 *키오스크는...*
