@@ -52,9 +52,19 @@
 <img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white">
 </div>  
 
-## 화면 구성 & 주요 기능
+## 화면 구성
 
 ### [wiki](https://github.com/Moon-Taein/MiniProjectTeam5_2/wiki)에서 확인
+
+## 주요 기능
+### 실시간 주문 반영
+- 키오스크에서 주문한 내역이 포스기에 실시간 등록 될 수 있도록 함
+
+### 실시간 메뉴 등록
+- 포스기에서 메뉴 등록 시에 키오스크 '피자 주문'에서 바로 주문할 수 있도록 함
+
+### 실시간 재료 등록
+- 포스기에서 재료 등록 시에 키오스크 '나만의 피자'에서 바로 추가할 수 있도록 함
 
 ## ERD
 <img src="https://github.com/Moon-Taein/MiniprojectTeam5_1/assets/130747714/a02e9cc9-a63e-4164-ad70-a36f493742e7">
