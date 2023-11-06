@@ -15,7 +15,7 @@ public class test extends JFrame {
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
+	 *Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
